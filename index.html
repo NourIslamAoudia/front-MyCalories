@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NutriTrack Pro - Connexion</title>
+    <title>NutriTrack Pro - Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -175,9 +175,34 @@
             margin-bottom: 20px;
             font-size: 0.9rem;
             display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease-out;
         }
 
-        /* Responsive */
+        .success-message.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background-color: #f0f0f0;
+            border-radius: 2px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background-color: var(--primary-light);
+            border-radius: 2px;
+            transition: width 1.5s ease-out;
+        }
+
         @media (max-width: 480px) {
             .auth-card {
                 padding: 30px 20px;
@@ -195,30 +220,33 @@
             <div class="logo">
                 <i class="fas fa-utensils"></i>
             </div>
-            <h1 class="auth-title">Bienvenue sur NutriTrack</h1>
-            <p class="auth-subtitle">Connectez-vous pour suivre votre nutrition</p>
+            <h1 class="auth-title">Welcome to NutriTrack</h1>
+            <p class="auth-subtitle">Sign in to track your nutrition</p>
             
             <div class="success-message" id="successMessage"></div>
+            <div class="progress-container">
+                <div class="progress-bar" id="loginProgressBar"></div>
+            </div>
             
             <form class="auth-form" id="loginForm">
                 <div class="form-group">
-                    <label for="loginUsername">Nom d'utilisateur</label>
+                    <label for="loginUsername">Username</label>
                     <input type="text" id="loginUsername" class="form-control" required>
                     <div class="error-message" id="loginUsernameError"></div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="loginPassword">Mot de passe</label>
+                    <label for="loginPassword">Password</label>
                     <input type="password" id="loginPassword" class="form-control" required>
                     <i class="fas fa-eye password-toggle" id="toggleLoginPassword"></i>
                     <div class="error-message" id="loginPasswordError"></div>
                 </div>
                 
-                <button type="submit" class="auth-btn">Se connecter</button>
+                <button type="submit" class="auth-btn">Sign In</button>
             </form>
             
             <p class="auth-switch">
-                Pas encore de compte ? <a href="#" id="showRegister">S'inscrire</a>
+                Don't have an account? <a href="#" id="showRegister">Sign Up</a>
             </p>
         </div>
         
@@ -226,37 +254,40 @@
             <div class="logo">
                 <i class="fas fa-utensils"></i>
             </div>
-            <h1 class="auth-title">Créer un compte</h1>
-            <p class="auth-subtitle">Rejoignez NutriTrack pour commencer</p>
+            <h1 class="auth-title">Create an Account</h1>
+            <p class="auth-subtitle">Join NutriTrack to get started</p>
             
             <div class="success-message" id="registerSuccessMessage"></div>
+            <div class="progress-container">
+                <div class="progress-bar" id="registerProgressBar"></div>
+            </div>
             
             <form class="auth-form" id="registerForm">
                 <div class="form-group">
-                    <label for="registerUsername">Nom d'utilisateur</label>
+                    <label for="registerUsername">Username</label>
                     <input type="text" id="registerUsername" class="form-control" required>
                     <div class="error-message" id="registerUsernameError"></div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="registerPassword">Mot de passe</label>
+                    <label for="registerPassword">Password</label>
                     <input type="password" id="registerPassword" class="form-control" required>
                     <i class="fas fa-eye password-toggle" id="toggleRegisterPassword"></i>
                     <div class="error-message" id="registerPasswordError"></div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="confirmPassword">Confirmer le mot de passe</label>
+                    <label for="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" class="form-control" required>
                     <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
                     <div class="error-message" id="confirmPasswordError"></div>
                 </div>
                 
-                <button type="submit" class="auth-btn">S'inscrire</button>
+                <button type="submit" class="auth-btn">Sign Up</button>
             </form>
             
             <p class="auth-switch">
-                Déjà un compte ? <a href="#" id="showLogin">Se connecter</a>
+                Already have an account? <a href="#" id="showLogin">Sign In</a>
             </p>
         </div>
     </div>
@@ -274,6 +305,8 @@
         const registerForm = document.getElementById('registerForm');
         const successMessage = document.getElementById('successMessage');
         const registerSuccessMessage = document.getElementById('registerSuccessMessage');
+        const loginProgressBar = document.getElementById('loginProgressBar');
+        const registerProgressBar = document.getElementById('registerProgressBar');
         
         // Toggle password visibility
         document.querySelectorAll('.password-toggle').forEach(toggle => {
@@ -308,8 +341,12 @@
                 el.textContent = '';
             });
             
-            successMessage.style.display = 'none';
-            registerSuccessMessage.style.display = 'none';
+            successMessage.classList.remove('show');
+            registerSuccessMessage.classList.remove('show');
+            
+            // Reset progress bars
+            loginProgressBar.style.width = '0';
+            registerProgressBar.style.width = '0';
         }
         
         // Show error message for a specific field
@@ -317,6 +354,21 @@
             const errorElement = document.getElementById(fieldId + 'Error');
             errorElement.textContent = message;
             errorElement.style.display = 'block';
+        }
+        
+        // Show success message with animation
+        function showSuccess(messageElement, message, progressBar) {
+            messageElement.textContent = message;
+            messageElement.classList.add('show');
+            
+            // Reset progress bar
+            progressBar.style.width = '0';
+            
+            // Force reflow to reset animation
+            void progressBar.offsetWidth;
+            
+            // Start animation
+            progressBar.style.width = '100%';
         }
         
         // Handle login form submission
@@ -329,12 +381,12 @@
             
             // Basic validation
             if (!username) {
-                showError('loginUsername', 'Le nom d\'utilisateur est requis');
+                showError('loginUsername', 'Username is required');
                 return;
             }
             
             if (!password) {
-                showError('loginPassword', 'Le mot de passe est requis');
+                showError('loginPassword', 'Password is required');
                 return;
             }
             
@@ -350,19 +402,18 @@
                 const data = await response.json();
                 
                 if (!response.ok) {
-                    throw new Error(data.message || 'Échec de la connexion');
+                    throw new Error(data.message || 'Login failed');
                 }
                 
                 // Save token to localStorage
                 localStorage.setItem('nutritrack_token', data.token);
                 
-                // Show success message
-                successMessage.textContent = 'Connexion réussie ! Redirection...';
-                successMessage.style.display = 'block';
+                // Show success message with animation
+                showSuccess(successMessage, 'Login successful! Redirecting...', loginProgressBar);
                 
                 // Redirect to dashboard or main page after 1.5 seconds
                 setTimeout(() => {
-                    window.location.href = 'foods.html'; // Change to your dashboard URL
+                    window.location.href = 'foods.html';
                 }, 1500);
                 
             } catch (error) {
@@ -382,17 +433,17 @@
             
             // Validation
             if (!username) {
-                showError('registerUsername', 'Le nom d\'utilisateur est requis');
+                showError('registerUsername', 'Username is required');
                 return;
             }
             
             if (!password) {
-                showError('registerPassword', 'Le mot de passe est requis');
+                showError('registerPassword', 'Password is required');
                 return;
             }
             
             if (password !== confirmPassword) {
-                showError('confirmPassword', 'Les mots de passe ne correspondent pas');
+                showError('confirmPassword', 'Passwords do not match');
                 return;
             }
             
@@ -408,23 +459,22 @@
                 const data = await response.json();
                 
                 if (!response.ok) {
-                    throw new Error(data.message || 'Échec de l\'inscription');
+                    throw new Error(data.message || 'Registration failed');
                 }
                 
                 // Save token to localStorage
                 localStorage.setItem('nutritrack_token', data.token);
                 
-                // Show success message and switch to login
-                registerSuccessMessage.textContent = 'Inscription réussie ! Vous allez être redirigé...';
-                registerSuccessMessage.style.display = 'block';
+                // Show success message with animation
+                showSuccess(registerSuccessMessage, 'Registration successful! Redirecting...', registerProgressBar);
                 
                 // Redirect after 1.5 seconds
                 setTimeout(() => {
-                    window.location.href = 'foods.html'; // Change to your dashboard URL
+                    window.location.href = 'foods.html';
                 }, 1500);
                 
             } catch (error) {
-                if (error.message.includes('existe déjà')) {
+                if (error.message.includes('already exists')) {
                     showError('registerUsername', error.message);
                 } else {
                     showError('registerPassword', error.message);
@@ -435,7 +485,7 @@
         
         // Check if user is already logged in
         if (localStorage.getItem('nutritrack_token')) {
-            window.location.href = 'foods.html'; // Redirect if already logged in
+            window.location.href = 'foods.html';
         }
     </script>
 </body>
