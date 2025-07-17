@@ -677,24 +677,54 @@
             document.getElementById('sex').value = data.sex || 'male';
         }
 
-        async function updateProfile(profileData) {
-            try {
-                toggleSaveButton(true);
-                
-                const data = await fetchWithAuth('https://my-calories-two.vercel.app/profil', {
-                    method: 'PUT',
-                    body: JSON.stringify(profileData)
-                });
-                
-                updateProfileUI(data);
-                calculateCalories();
-                showToast('Profile updated successfully!', 'success');
-            } catch (error) {
-                console.error('Failed to update profile:', error);
-            } finally {
-                toggleSaveButton(false);
-            }
-        }
+        // Modifiez la fonction updateProfile comme ceci :
+async function updateProfile(profileData) {
+    try {
+        toggleSaveButton(true);
+        
+        const data = await fetchWithAuth('https://my-calories-two.vercel.app/profil', {
+            method: 'PUT',
+            body: JSON.stringify(profileData)
+        });
+        
+        // Mise à jour explicite de l'UI avec les nouvelles données
+        updateProfileUI({
+            ...data,
+            age: profileData.age,       // On s'assure d'utiliser les nouvelles valeurs
+            height: profileData.height,
+            weight: profileData.weight,
+            sex: profileData.sex
+        });
+        
+        calculateCalories();
+        showToast('Profile updated successfully!', 'success');
+    } catch (error) {
+        console.error('Failed to update profile:', error);
+        showToast('Failed to update profile. Please try again.', 'error');
+    } finally {
+        toggleSaveButton(false);
+    }
+}
+
+    // Et modifiez légèrement updateProfileUI pour plus de robustesse :
+    function updateProfileUI(data) {
+        if (!data) return; // Garde-fou
+        
+        // Mise à jour des valeurs dans l'interface
+        document.getElementById('profile-username').textContent = data.username || 'User';
+        document.getElementById('profile-email').textContent = data.email || 'N/A';
+        
+        // Formatage des valeurs avec unités
+        document.getElementById('profile-age').textContent = data.age ? `${data.age} yrs` : '--';
+        document.getElementById('profile-height').textContent = data.height ? `${data.height} cm` : '--';
+        document.getElementById('profile-weight').textContent = data.weight ? `${data.weight} kg` : '--';
+        
+        // Mise à jour des champs du formulaire
+        document.getElementById('age').value = data.age || '';
+        document.getElementById('height').value = data.height || '';
+        document.getElementById('weight').value = data.weight || '';
+        if (data.sex) document.getElementById('sex').value = data.sex;
+    }
 
         async function calculateCalories() {
             const age = document.getElementById('age').value;
