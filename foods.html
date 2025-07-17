@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTrack Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00C853;
+            --primary-light: #5EFC82;
+            --primary-dark: #009624;
+            --secondary-color: #FF6D00;
+            --secondary-light: #FF9E40;
+            --accent-color: #2962FF;
+            --light-color: #F5F5F6;
+            --dark-color: #263238;
+            --text-color: #37474F;
+            --text-light: #78909C;
+            --card-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --success-color: #00C853;
+            --warning-color: #FFAB00;
+            --danger-color: #FF5252;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        @supports (font-variation-settings: normal) {
+            * { font-family: 'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
+        }
+
+        body {
+            background-color: #FAFAFA;
+            color: var(--text-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 400;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            margin-top:10px;
+        }
+
+        .results-count {
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+        }
+
+        .results-count span {
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .nutrition-summary {
+            display: flex;
+            gap: 20px;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .summary-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .calories-icon { background-color: var(--danger-color); }
+        .protein-icon { background-color: var(--accent-color); }
+        .carbs-icon { background-color: var(--warning-color); }
+        .fat-icon { background-color: var(--success-color); }
+
+        .summary-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .summary-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .filter-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            margin-top: 20px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 14px 25px;
+            padding-left: 50px;
+            border: 2px solid #E0E0E0;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.2);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .category-filter {
+            min-width: 220px;
+        }
+
+        .category-filter select {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #E0E0E0;
+            border-radius: 30px;
+            font-size: 1rem;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 1em;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .category-filter select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.2);
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 10px;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid #EEEEEE;
+        }
+
+        .food-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-light);
+        }
+
+        .food-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .food-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .food-card:hover .food-image img {
+            transform: scale(1.1);
+        }
+
+        .food-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(255, 109, 0, 0.3);
+        }
+
+        .food-info {
+            padding: 25px;
+        }
+
+        .food-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .food-calories {
+            font-size: 1.2rem;
+            color: var(--danger-color);
+            font-weight: 700;
+        }
+
+        .food-category {
+            display: inline-block;
+            background-color: rgba(41, 98, 255, 0.1);
+            color: var(--accent-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .nutrition-facts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .nutrition-item {
+            flex: 1;
+            min-width: 90px;
+            text-align: center;
+            padding: 12px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .food-card:hover .nutrition-item {
+            background-color: #f0f0f0;
+        }
+
+        .nutrition-value {
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 3px;
+        }
+
+        .protein-value { color: var(--accent-color); }
+        .carbs-value { color: var(--warning-color); }
+        .fat-value { color: var(--success-color); }
+
+        .nutrition-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+            grid-column: 1 / -1;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            opacity: 0.7;
+        }
+
+        .empty-text {
+            color: var(--text-light);
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .empty-action {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 200, 83, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .empty-action:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 200, 83, 0.4);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1200px) {
+            .food-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nutrition-summary {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .filter-controls {
+                flex-direction: column;
+            }
+
+            .search-box, .category-filter {
+                width: 100%;
+            }
+
+            .food-grid {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 20px;
+            }
+            
+            .stats-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .food-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .food-card {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <script>
+        fetch('header.html')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+                // Petit délai pour s'assurer que le DOM est bien mis à jour
+                setTimeout(initHeader, 50);
+            })
+            .catch(error => {
+                console.error('Error loading header:', error);
+            });
+
+        function initHeader() {
+            const header = document.querySelector('.main-header');
+            if (!header) {
+                console.error('Header element not found');
+                return;
+            }
+
+            let lastScroll = window.pageYOffset;
+            const scrollThreshold = 10;
+            let isScrollingDown = false;
+            let scrollTimeout;
+
+            // Animation au scroll
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+                
+                clearTimeout(scrollTimeout);
+                
+                // Scroll vers le bas
+                if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
+                    if (!isScrollingDown) {
+                        header.style.transform = 'translateY(-100%)';
+                        isScrollingDown = true;
+                    }
+                } 
+                // Scroll vers le haut
+                else if (currentScroll < lastScroll) {
+                    header.style.transform = 'translateY(0)';
+                    isScrollingDown = false;
+                }
+                
+                lastScroll = currentScroll;
+                
+                // Réafficher le header si on reste en haut de page
+                scrollTimeout = setTimeout(() => {
+                    if (window.pageYOffset <= scrollThreshold) {
+                        header.style.transform = 'translateY(0)';
+                        isScrollingDown = false;
+                    }
+                }, 100);
+            });
+
+            // Hamburger menu functionality
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.main-nav');
+            
+            if (hamburger && nav) {
+                // Toggle hamburger menu
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('hamburger-active');
+                    nav.classList.toggle('nav-active');
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+                        hamburger.classList.remove('hamburger-active');
+                        nav.classList.remove('nav-active');
+                    }
+                });
+                
+                // Logout functionality
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        localStorage.removeItem('nutritrack_token');
+                        window.location.href = '/index.html';
+                    });
+                }
+                
+                // Close mobile menu when clicking nav links
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    if (link.id !== 'logoutBtn') {
+                        link.addEventListener('click', () => {
+                            hamburger.classList.remove('hamburger-active');
+                            nav.classList.remove('nav-active');
+                        });
+                    }
+                });
+            }
+            
+            // Ajouter un padding au body pour compenser le header fixed
+            document.body.style.paddingTop = `${header.offsetHeight}px`;
+        }
+    </script>
+
+    <div class="container">
+        <div class="filter-controls">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search foods (e.g., apple, chicken...)">
+            </div>
+            <div class="category-filter">
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="results-count">Showing <span id="resultsCount">0</span> foods</div>
+            <div class="nutrition-summary">
+                <div class="summary-item">
+                    <div class="summary-icon calories-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div>
+                        <div class="summary-value" id="totalCalories">0</div>
+                        <div class="summary-label">Calories</div>
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-icon protein-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div>
+                        <div class="summary-value" id="totalProtein">0g</div>
+                        <div class="summary-label">Protein</div>
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-icon carbs-icon">
+                        <i class="fas fa-bread-slice"></i>
+                    </div>
+                    <div>
+                        <div class="summary-value" id="totalCarbs">0g</div>
+                        <div class="summary-label">Carbs</div>
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-icon fat-icon">
+                        <i class="fas fa-bacon"></i>
+                    </div>
+                    <div>
+                        <div class="summary-value" id="totalFat">0g</div>
+                        <div class="summary-label">Fat</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="food-grid" id="foodGrid">
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Food Manager Class - Version simplifiée
+        class FoodManager {
+            constructor() {
+                this.foods = [];
+                this.filteredFoods = [];
+                this.categories = new Set();
+                this.API_URL = "https://my-calories-two.vercel.app/foods/allfood";
+                
+                // DOM Elements
+                this.domElements = {
+                    foodGrid: document.getElementById('foodGrid'),
+                    searchInput: document.getElementById('searchInput'),
+                    categoryFilter: document.getElementById('categoryFilter'),
+                    resultsCount: document.getElementById('resultsCount'),
+                    totalCalories: document.getElementById('totalCalories'),
+                    totalProtein: document.getElementById('totalProtein'),
+                    totalCarbs: document.getElementById('totalCarbs'),
+                    totalFat: document.getElementById('totalFat')
+                };
+                
+                // Initialize
+                this.initEventListeners();
+                this.fetchFoods();
+            }
+            
+            initEventListeners() {
+                // Search functionality
+                this.domElements.searchInput.addEventListener('input', () => {
+                    this.filterFoods();
+                    this.updateResultsCount();
+                });
+                
+                // Category filter
+                this.domElements.categoryFilter.addEventListener('change', () => {
+                    this.filterFoods();
+                    this.updateResultsCount();
+                });
+            }
+            
+            async fetchFoods() {
+                try {
+                    this.showLoading();
+                    const response = await fetch(this.API_URL);
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    
+                    this.foods = await response.json();
+                    this.extractCategories();
+                    this.filterFoods();
+                    this.updateResultsCount();
+                    this.updateTotalNutrition();
+                } catch (error) {
+                    console.error('Error fetching foods:', error);
+                    this.showError();
+                }
+            }
+            
+            extractCategories() {
+                this.categories.clear();
+                this.foods.forEach(food => this.categories.add(food.category));
+                
+                // Update category filter dropdown
+                this.domElements.categoryFilter.innerHTML = `
+                    <option value="">All Categories</option>
+                    ${Array.from(this.categories).sort().map(category => 
+                        `<option value="${category}">${category}</option>`
+                    ).join('')}
+                `;
+            }
+            
+            filterFoods() {
+                const searchTerm = this.domElements.searchInput.value.toLowerCase();
+                const selectedCategory = this.domElements.categoryFilter.value;
+                
+                this.filteredFoods = this.foods.filter(food => {
+                    const matchesSearch = food.name.toLowerCase().includes(searchTerm);
+                    const matchesCategory = selectedCategory === '' || food.category === selectedCategory;
+                    return matchesSearch && matchesCategory;
+                });
+                
+                this.renderFoods();
+                this.updateTotalNutrition();
+            }
+            
+            renderFoods() {
+                if (this.filteredFoods.length === 0) {
+                    this.domElements.foodGrid.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <p class="empty-text">No foods found matching your criteria</p>
+                            <button class="empty-action" onclick="foodManager.resetFilters()">Reset Filters</button>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                this.domElements.foodGrid.innerHTML = this.filteredFoods.map(food => `
+                    <div class="food-card">
+                        ${food.category === 'Fruits' ? '<span class="food-badge"><i class="fas fa-seedling"></i> Fresh</span>' : ''}
+                        ${food.category === 'Dairy' ? '<span class="food-badge"><i class="fas fa-cheese"></i> Dairy</span>' : ''}
+                        <div class="food-image">
+                            <img src="${food.photoUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'}" alt="${food.name}" loading="lazy">
+                        </div>
+                        <div class="food-info">
+                            <div class="food-name">
+                                ${food.name}
+                                <span class="food-calories">${food.caloriesPer100g} kcal</span>
+                            </div>
+                            <span class="food-category">${food.category}</span>
+                            <div class="nutrition-facts">
+                                <div class="nutrition-item">
+                                    <div class="nutrition-value protein-value">${food.proteinPer100g}g</div>
+                                    <div class="nutrition-label">Protein</div>
+                                </div>
+                                <div class="nutrition-item">
+                                    <div class="nutrition-value carbs-value">${food.carbsPer100g}g</div>
+                                    <div class="nutrition-label">Carbs</div>
+                                </div>
+                                <div class="nutrition-item">
+                                    <div class="nutrition-value fat-value">${food.fatPer100g}g</div>
+                                    <div class="nutrition-label">Fat</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            updateResultsCount() {
+                this.domElements.resultsCount.textContent = this.filteredFoods.length;
+            }
+            
+            updateTotalNutrition() {
+                const totalCalories = this.filteredFoods.reduce((sum, food) => sum + food.caloriesPer100g, 0);
+                const totalProtein = this.filteredFoods.reduce((sum, food) => sum + food.proteinPer100g, 0);
+                const totalCarbs = this.filteredFoods.reduce((sum, food) => sum + food.carbsPer100g, 0);
+                const totalFat = this.filteredFoods.reduce((sum, food) => sum + food.fatPer100g, 0);
+                
+                this.domElements.totalCalories.textContent = totalCalories.toFixed(0);
+                this.domElements.totalProtein.textContent = totalProtein.toFixed(1) + 'g';
+                this.domElements.totalCarbs.textContent = totalCarbs.toFixed(1) + 'g';
+                this.domElements.totalFat.textContent = totalFat.toFixed(1) + 'g';
+            }
+            
+            resetFilters() {
+                this.domElements.searchInput.value = '';
+                this.domElements.categoryFilter.value = '';
+                this.filterFoods();
+                this.updateResultsCount();
+            }
+            
+            showLoading() {
+                this.domElements.foodGrid.innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                `;
+            }
+            
+            showError() {
+                this.domElements.foodGrid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <p class="empty-text">Failed to load foods. Please try again later.</p>
+                        <button class="empty-action" onclick="foodManager.fetchFoods()">Retry</button>
+                    </div>
+                `;
+            }
+        }
+        
+        // Initialize the application when DOM is loaded
+        let foodManager;
+        document.addEventListener('DOMContentLoaded', () => {
+            foodManager = new FoodManager();
+        });
+    </script>
+</body>
+</html>

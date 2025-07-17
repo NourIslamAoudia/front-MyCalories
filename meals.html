@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        @supports (font-variation-settings: normal) {
+            * { font-family: 'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
+        }
+
+        body {
+            background-color: #FAFAFA;
+            color: var(--text-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+    <div id="header-placeholder"></div>
+
+    <script>
+        fetch('header.html')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(html => {
+                document.getElementById('header-placeholder').innerHTML = html;
+                // Petit délai pour s'assurer que le DOM est bien mis à jour
+                setTimeout(initHeader, 50);
+            })
+            .catch(error => {
+                console.error('Error loading header:', error);
+            });
+
+        function initHeader() {
+            const header = document.querySelector('.main-header');
+            if (!header) {
+                console.error('Header element not found');
+                return;
+            }
+
+            let lastScroll = window.pageYOffset;
+            const scrollThreshold = 10;
+            let isScrollingDown = false;
+            let scrollTimeout;
+
+            // Animation au scroll
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+                
+                clearTimeout(scrollTimeout);
+                
+                // Scroll vers le bas
+                if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
+                    if (!isScrollingDown) {
+                        header.style.transform = 'translateY(-100%)';
+                        isScrollingDown = true;
+                    }
+                } 
+                // Scroll vers le haut
+                else if (currentScroll < lastScroll) {
+                    header.style.transform = 'translateY(0)';
+                    isScrollingDown = false;
+                }
+                
+                lastScroll = currentScroll;
+                
+                // Réafficher le header si on reste en haut de page
+                scrollTimeout = setTimeout(() => {
+                    if (window.pageYOffset <= scrollThreshold) {
+                        header.style.transform = 'translateY(0)';
+                        isScrollingDown = false;
+                    }
+                }, 100);
+            });
+
+            // Hamburger menu functionality
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.main-nav');
+            
+            if (hamburger && nav) {
+                // Toggle hamburger menu
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('hamburger-active');
+                    nav.classList.toggle('nav-active');
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+                        hamburger.classList.remove('hamburger-active');
+                        nav.classList.remove('nav-active');
+                    }
+                });
+                
+                // Logout functionality
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        localStorage.removeItem('nutritrack_token');
+                        window.location.href = '/index.html';
+                    });
+                }
+                
+                // Close mobile menu when clicking nav links
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    if (link.id !== 'logoutBtn') {
+                        link.addEventListener('click', () => {
+                            hamburger.classList.remove('hamburger-active');
+                            nav.classList.remove('nav-active');
+                        });
+                    }
+                });
+            }
+            
+            // Ajouter un padding au body pour compenser le header fixed
+            document.body.style.paddingTop = `${header.offsetHeight}px`;
+        }
+    </script>
+</body>
+</html>

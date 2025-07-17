@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriTrack Header</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00c853;
+            --text-color: #333;
+            --danger-color: #f44336;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+        .main-header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            will-change: transform; /* Optimisation pour les animations */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .main-nav {
+            transition: var(--transition);
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: var(--transition);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+            background-color: rgba(0, 200, 83, 0.1);
+        }
+        
+        .nav-link i {
+            font-size: 1.1rem;
+        }
+        
+        .logout {
+            color: var(--danger-color);
+        }
+        
+        .logout:hover {
+            color: white;
+            background-color: var(--danger-color);
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            padding: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+        }
+        
+        .hamburger-box {
+            width: 30px;
+            height: 24px;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .hamburger-inner {
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger-inner::before,
+        .hamburger-inner::after {
+            content: "";
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            position: absolute;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger-inner::before {
+            top: -8px;
+        }
+        
+        .hamburger-inner::after {
+            top: 8px;
+        }
+        
+        /* Active hamburger animation */
+        .hamburger-active .hamburger-inner {
+            background-color: transparent;
+        }
+        
+        .hamburger-active .hamburger-inner::before {
+            transform: translateY(8px) rotate(45deg);
+        }
+        
+        .hamburger-active .hamburger-inner::after {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        
+        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .main-nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: white;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                padding: 0;
+                gap: 0;
+            }
+            
+            .nav-link {
+                padding: 15px 20px;
+                border-bottom: 1px solid #eee;
+                border-radius: 0;
+                justify-content: flex-start;
+            }
+            
+            .nav-link:last-child {
+                border-bottom: none;
+            }
+            
+            .nav-active {
+                max-height: 300px;
+            }
+        }
+
+        /* Demo content */
+        .demo-content {
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .demo-content h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .demo-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .status.success {
+            background-color: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .status.error {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>NutriTrack</span>
+                </a>
+                
+                <nav class="main-nav">
+                    <ul class="nav-list">
+                        <li><a href="/foods.html" class="nav-link"><i class="fas fa-utensils"></i> Foods</a></li>
+                        <li><a href="/meals.html" class="nav-link"><i class="fas fa-utensils"></i> Meals</a></li>
+                        <li><a href="/profile.html" class="nav-link"><i class="fas fa-user"></i> Profile</a></li>
+                        <li><button id="logoutBtn" class="nav-link logout"><i class="fas fa-sign-out-alt"></i> Logout</button></li>
+                    </ul>
+                </nav>
+                
+                <button class="hamburger" aria-label="Menu">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </header>
+</body>
+
+</html>
