@@ -117,11 +117,44 @@
 
     /* Summary cards */
     .summary-cards {
-        display: grid;
-        grid-template-columns: 1fr; /* Single column on small screens */
-        gap: 1rem;
-        margin-bottom: 1.5rem; /* Reduced margin */
-    }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+/* Calories */
+.summary-card.calories {
+  background-color: #FFF3E0; /* jaune clair */
+  border: 1px solid #FFE0B2;
+}
+
+/* Protéines */
+.summary-card.protein {
+  background-color: #E8F5E9; /* vert clair */
+  border: 1px solid #C8E6C9;
+}
+
+/* Glucides (Carbs) */
+.summary-card.carbs {
+  background-color: #E3F2FD; /* bleu clair */
+  border: 1px solid #BBDEFB;
+}
+
+/* Lipides (Fat) */
+.summary-card.fat {
+  background-color: #FCE4EC; /* rose clair */
+  border: 1px solid #F8BBD0;
+}
+
+/* Style commun */
+.summary-card {
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 
     .summary-card {
         background: white;
@@ -626,22 +659,23 @@
                 <h3>Calories</h3>
                 <p id="total-calories">0 kcal</p>
                 <div class="progress">
-                    <div class="progress-bar" id="calories-progress"></div>
+                <div class="progress-bar" id="calories-progress"></div>
                 </div>
             </div>
-            <div class="summary-card">
+            <div class="summary-card protein">
                 <h3>Protein</h3>
                 <p id="total-protein">0g</p>
             </div>
-            <div class="summary-card">
+            <div class="summary-card carbs">
                 <h3>Carbs</h3>
                 <p id="total-carbs">0g</p>
             </div>
-            <div class="summary-card">
+            <div class="summary-card fat">
                 <h3>Fat</h3>
                 <p id="total-fat">0g</p>
             </div>
-        </div>
+            </div>
+
 
         <div class="meals-container" id="meals-container">
             <div class="loading">
