@@ -699,8 +699,8 @@
     </div>
 
     <script>
-        token = localStorage.getItem('nutritrack_token');
-        if (!token) {
+        // if the token is not present, redirect to login and if expires, remove it
+        if (!localStorage.getItem('nutritrack_token')) {
             window.location.href = '/index.html';
         }
         document.addEventListener('DOMContentLoaded', function() {
