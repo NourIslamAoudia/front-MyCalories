@@ -67,6 +67,8 @@
         max-width: 300px; /* Limit width on larger screens */
     }
 
+
+
     .date-btn {
         background: none;
         border: none;
@@ -117,11 +119,19 @@
 
     /* Summary cards */
     .summary-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 16px;
-    margin-bottom: 20px;
-}
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+            }
+
+
+.food-details .calories { color: #FF5722; }   /* Deep Orange */
+.food-details .protein  { color: #4CAF50; }   /* Green */
+.food-details .carbs    { color: #2196F3; }   /* Blue */
+.food-details .fat      { color: #9C27B0; }   /* Purple */
+.food-details .amount   { color: #666666; }   /* Dark Grey */
+
 
 /* Calories */
 .summary-card.calories {
@@ -275,25 +285,50 @@
         border-bottom: none;
     }
 
-    .food-info {
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem; /* More space */
-        flex-grow: 1; /* Allow info to take available space */
-        margin-right: 0.5rem; /* Space before actions */
-    }
+    .food-photo {
+    width: 60px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 12px; /* Augmenté pour plus d'espace */
+    vertical-align: middle; /* Meilleur alignement avec le texte */
+}
 
-    .food-name {
-        font-weight: 500;
-        font-size: 1rem;
-    }
+.food-info {
+    display: inline-flex; /* Changé à inline-flex pour un meilleur contrôle */
+    align-items: center; /* Alignement vertical */
+    gap: 1rem; /* Espacement entre éléments */
+    flex-grow: 1;
+}
+
+.food-name {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-right: 12px; /* Espace après le nom */
+    min-width: 120px; /* Largeur minimale pour le nom */
+}
 
     .food-details {
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem; /* Smaller gap for wrapped items */
-        font-size: 0.8rem; /* Slightly smaller for details */
+        align-items: center;
+        gap: 1rem; /* Espacement régulier */
+        font-size: 0.85rem; /* Taille légèrement augmentée */
         color: var(--text-light);
+        flex-wrap: wrap; /* Permet le retour à la ligne si nécessaire */
+    }
+
+    /* Styles spécifiques pour chaque détail nutritionnel */
+    .food-details > span {
+        white-space: nowrap; /* Empêche le retour à la ligne */
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+
+    /* Style spécifique pour la quantité */
+    .amount {
+        font-weight: 600; /* Plus gras pour distinction */
+        color: var(--text-color); /* Couleur plus visible */
+        margin-left: 8px;
     }
 
     .food-actions {
@@ -636,6 +671,54 @@
             margin-right: auto;
         }
     }
+    @media (max-width: 480px) {
+
+
+/* Photo de l'aliment */
+.food-photo {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0; /* Empêche le rétrécissement */
+}
+
+/* Conteneur principal des infos */
+.food-info {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    min-width: 200px; /* Largeur minimale avant adaptation */
+}
+
+/* Nom de l'aliment */
+.food-name {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-right: 12px;
+    min-width: 120px;
+    flex: 1;
+}
+
+/* Détails nutritionnels */
+.food-details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+/* Style des badges nutritionnels */
+.food-details > span {
+    white-space: nowrap;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+    }
 </style>
 
     <div id="header-placeholder"></div>
@@ -933,14 +1016,25 @@
                             return `
                             <div class="food-item" data-food-id="${food._id}" data-item-id="${item._id}">
                                 <div class="food-info">
+                                    <!-- Photo de l'aliment -->
+                                        <img
+                                            src="${food.photoUrl}"
+                                            alt="${food.name}"
+                                            class="food-photo"
+                                        />
                                     <span class="food-name">${food.name}</span>
                                     <div class="food-details">
-                                        <span>${itemCalories} kcal</span>
-                                        <span>${itemProtein}g protein</span>
-                                        <span>${itemCarbs}g carbs</span>
-                                        <span>${itemFat}g fat</span>
-                                        <span>${amountInGrams}g</span>
+                                        <span class="calories">${itemCalories} kcal</span>
+                                        <span class="protein">${itemProtein}g protein</span>
+                                        <span class="carbs">${itemCarbs}g carbs</span>
+                                        <span class="fat" style="margin-top:4px">${itemFat}g fat</span>
+                                        <span class="amount" style="font-weight:bold; font-size:0.8rem;background-color: rgba(0,0,0,0.03);">
+                                            Amount: ${amountInGrams}g
+                                        </span>
+
+
                                     </div>
+
                                 </div>
                                 <div class="food-actions">
                                     <button class="action-btn edit-food-item-btn" data-meal-id="${meal._id}" data-item-id="${item._id}">
