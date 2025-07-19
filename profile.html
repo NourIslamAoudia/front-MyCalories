@@ -288,6 +288,38 @@
             margin-top: 8px;
         }
 
+        .calorie-goal-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #E5E7EB;
+        }
+
+        .calorie-goal-input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            align-items: flex-end;
+        }
+
+        .calorie-goal-input-group .form-control {
+            flex-grow: 1;
+        }
+
+        .current-goal-display {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .current-goal-display .label {
+            color: var(--text-color);
+            font-weight: 500;
+            margin-right: 8px;
+        }
+
         /* Toast Notification */
         .toast {
             position: fixed;
@@ -359,6 +391,14 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 12px;
+            }
+
+            .calorie-goal-input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .calorie-goal-input-group .btn {
+                width: 100%;
             }
         }
 
@@ -474,6 +514,26 @@
                         <div class="calorie-label">Weight Gain</div>
                         <div class="calorie-description">To gain 0.5kg/week</div>
                     </div>
+                </div>
+
+                <div class="calorie-goal-section">
+                    <h2 class="section-title">Custom Calorie Goal</h2>
+                    <p style="color: var(--text-light); font-size: 14px; margin-top: 8px;">Set your own daily calorie target to track your progress.</p>
+                    <div class="current-goal-display">
+                        <span class="label">Current Goal:</span>
+                        <span id="currentCaloriesGoal">-- kcal</span>
+                    </div>
+                    <form id="calorieGoalForm" class="form-group" style="margin-top: 20px;">
+                        <label for="caloriesGoalInput" class="form-label">New Daily Goal (kcal)</label>
+                        <div class="calorie-goal-input-group">
+                            <input type="number" class="form-control" id="caloriesGoalInput" name="caloriesGoal" min="500" max="5000" placeholder="e.g., 2000" required>
+                            <button type="submit" class="btn btn-primary" id="saveGoalBtn">
+                                <span id="saveGoalBtnText">Set Goal</span>
+                                <span id="saveGoalBtnSpinner" class="spinner" style="display: none;"></span>
+                            </button>
+                        </div>
+                        <div class="error-message" id="caloriesGoal-error"></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -596,11 +656,13 @@
                 });
             });
 
-            // Load profile data
+            // Load profile data and calorie goal
             loadProfileData();
+            loadCaloriesGoal();
 
             // Setup form validation
             setupFormValidation();
+            setupCalorieGoalValidation();
         });
 
         // API Functions
@@ -665,66 +727,51 @@
         }
 
         function updateProfileUI(data) {
+            if (!data) return; // Garde-fou
+            
+            // Mise à jour des valeurs dans l'interface
             document.getElementById('profile-username').textContent = data.username || 'User';
             document.getElementById('profile-email').textContent = data.email || 'N/A';
+            
+            // Formatage des valeurs avec unités
             document.getElementById('profile-age').textContent = data.age ? `${data.age} yrs` : '--';
             document.getElementById('profile-height').textContent = data.height ? `${data.height} cm` : '--';
             document.getElementById('profile-weight').textContent = data.weight ? `${data.weight} kg` : '--';
             
+            // Mise à jour des champs du formulaire
             document.getElementById('age').value = data.age || '';
             document.getElementById('height').value = data.height || '';
             document.getElementById('weight').value = data.weight || '';
-            document.getElementById('sex').value = data.sex || 'male';
+            if (data.sex) document.getElementById('sex').value = data.sex;
         }
 
-        // Modifiez la fonction updateProfile comme ceci :
-async function updateProfile(profileData) {
-    try {
-        toggleSaveButton(true);
-        
-        const data = await fetchWithAuth('https://my-calories-two.vercel.app/profil', {
-            method: 'PUT',
-            body: JSON.stringify(profileData)
-        });
-        
-        // Mise à jour explicite de l'UI avec les nouvelles données
-        updateProfileUI({
-            ...data,
-            age: profileData.age,       // On s'assure d'utiliser les nouvelles valeurs
-            height: profileData.height,
-            weight: profileData.weight,
-            sex: profileData.sex
-        });
-        
-        calculateCalories();
-        showToast('Profile updated successfully!', 'success');
-    } catch (error) {
-        console.error('Failed to update profile:', error);
-        showToast('Failed to update profile. Please try again.', 'error');
-    } finally {
-        toggleSaveButton(false);
-    }
-}
-
-    // Et modifiez légèrement updateProfileUI pour plus de robustesse :
-    function updateProfileUI(data) {
-        if (!data) return; // Garde-fou
-        
-        // Mise à jour des valeurs dans l'interface
-        document.getElementById('profile-username').textContent = data.username || 'User';
-        document.getElementById('profile-email').textContent = data.email || 'N/A';
-        
-        // Formatage des valeurs avec unités
-        document.getElementById('profile-age').textContent = data.age ? `${data.age} yrs` : '--';
-        document.getElementById('profile-height').textContent = data.height ? `${data.height} cm` : '--';
-        document.getElementById('profile-weight').textContent = data.weight ? `${data.weight} kg` : '--';
-        
-        // Mise à jour des champs du formulaire
-        document.getElementById('age').value = data.age || '';
-        document.getElementById('height').value = data.height || '';
-        document.getElementById('weight').value = data.weight || '';
-        if (data.sex) document.getElementById('sex').value = data.sex;
-    }
+        async function updateProfile(profileData) {
+            try {
+                toggleSaveButton(true);
+                
+                const data = await fetchWithAuth('https://my-calories-two.vercel.app/profil', {
+                    method: 'PUT',
+                    body: JSON.stringify(profileData)
+                });
+                
+                // Mise à jour explicite de l'UI avec les nouvelles données
+                updateProfileUI({
+                    ...data,
+                    age: profileData.age,       // On s'assure d'utiliser les nouvelles valeurs
+                    height: profileData.height,
+                    weight: profileData.weight,
+                    sex: profileData.sex
+                });
+                
+                calculateCalories();
+                showToast('Profile updated successfully!', 'success');
+            } catch (error) {
+                console.error('Failed to update profile:', error);
+                showToast('Failed to update profile. Please try again.', 'error');
+            } finally {
+                toggleSaveButton(false);
+            }
+        }
 
         async function calculateCalories() {
             const age = document.getElementById('age').value;
@@ -765,6 +812,68 @@ async function updateProfile(profileData) {
             calorieValues[3].textContent = data.gain !== undefined ? Math.round(data.gain) : '--';
         }
 
+        // Calorie Goal Functions
+        async function loadCaloriesGoal() {
+            try {
+                document.getElementById('currentCaloriesGoal').textContent = 'Loading...';
+                
+                const token = localStorage.getItem('nutritrack_token');
+                console.log('Token:', token);
+                if (!token) throw new Error('No authentication token');
+
+                // Fixed endpoint URL to match backend route
+                const response = await fetch('http://localhost:1234/profil/caloriesGolal', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch data');
+                
+                const data = await response.json();
+                updateCaloriesGoalUI(data.caloriesGoal);
+                
+            } catch (error) {
+                console.error('Failed to load calorie goal:', error);
+                document.getElementById('currentCaloriesGoal').textContent = '-- kcal';
+            }
+        }
+
+        function updateCaloriesGoalUI(goal) {
+            document.getElementById('currentCaloriesGoal').textContent = goal ? `${Math.round(goal)} kcal` : '-- kcal';
+            document.getElementById('caloriesGoalInput').value = goal || '';
+        }
+
+        async function updateCaloriesGoal(goal) {
+            try {
+                toggleSaveGoalButton(true);
+                
+                const token = localStorage.getItem('nutritrack_token');
+                if (!token) throw new Error('No authentication token');
+
+                // Fixed endpoint URL to match backend route
+                const response = await fetch('http://localhost:1234/profil/caloriesGolal', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ caloriesGoal: goal })
+                });
+
+                if (!response.ok) throw new Error('Update failed');
+
+                const data = await response.json();
+                updateCaloriesGoalUI(data.caloriesGoal);
+                showToast('Calorie goal updated successfully!', 'success');
+                
+            } catch (error) {
+                console.error('Failed to update calorie goal:', error);
+                showToast('Failed to update calorie goal. Please try again.', 'error');
+            } finally {
+                toggleSaveGoalButton(false);
+            }
+        }
         // UI Functions
         function toggleSaveButton(isLoading) {
             const saveBtn = document.getElementById('saveBtn');
@@ -779,6 +888,22 @@ async function updateProfile(profileData) {
                 saveBtn.disabled = false;
                 saveBtnText.textContent = 'Save Changes';
                 saveBtnSpinner.style.display = 'none';
+            }
+        }
+
+        function toggleSaveGoalButton(isLoading) {
+            const saveGoalBtn = document.getElementById('saveGoalBtn');
+            const saveGoalBtnText = document.getElementById('saveGoalBtnText');
+            const saveGoalBtnSpinner = document.getElementById('saveGoalBtnSpinner');
+
+            if (isLoading) {
+                saveGoalBtn.disabled = true;
+                saveGoalBtnText.textContent = 'Saving...';
+                saveGoalBtnSpinner.style.display = 'inline-block';
+            } else {
+                saveGoalBtn.disabled = false;
+                saveGoalBtnText.textContent = 'Set Goal';
+                saveGoalBtnSpinner.style.display = 'none';
             }
         }
 
@@ -888,6 +1013,33 @@ async function updateProfile(profileData) {
             heightInput.addEventListener('change', calculateCalories);
             weightInput.addEventListener('change', calculateCalories);
             document.getElementById('sex').addEventListener('change', calculateCalories);
+        }
+
+        function setupCalorieGoalValidation() {
+            const caloriesGoalInput = document.getElementById('caloriesGoalInput');
+            const calorieGoalForm = document.getElementById('calorieGoalForm');
+            const saveGoalBtn = document.getElementById('saveGoalBtn');
+
+            const validateCalorieGoal = () => {
+                const isValid = validateInput(caloriesGoalInput, 500, 5000, 'caloriesGoal-error');
+                saveGoalBtn.disabled = !isValid;
+                return isValid;
+            };
+
+            // Initial validation for calorie goal
+            saveGoalBtn.disabled = !validateCalorieGoal();
+
+            caloriesGoalInput.addEventListener('input', validateCalorieGoal);
+
+            calorieGoalForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!validateCalorieGoal()) {
+                    showToast('Please enter a valid calorie goal.', 'error');
+                    return;
+                }
+                const newGoal = parseInt(caloriesGoalInput.value);
+                updateCaloriesGoal(newGoal);
+            });
         }
     </script>
 </body>
