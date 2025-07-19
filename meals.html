@@ -17,12 +17,12 @@
         --light-color: #F5F5F6;
         --dark-color: #263238;
         --text-color: #37474F;
-        --text-light: #78909C;
+        --text-light: #607D8B; /* Improved contrast */
         --card-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
         --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         --success-color: #00C853;
-        --warning-color: #FFAB00;
-        --danger-color: #FF5252;
+        --warning-color: #FF8F00; /* Improved contrast */
+        --danger-color: #FF3D00; /* Improved contrast */
     }
     * {
         margin: 0;
@@ -46,45 +46,43 @@
     .container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 1rem; /* Adjusted for mobile */
+        padding: 1rem;
     }
 
     /* Date selector */
     .date-selector {
         display: flex;
-        flex-direction: column; /* Stack vertically on mobile */
-        align-items: center; /* Center items when stacked */
+        flex-direction: column;
+        align-items: center;
         gap: 1rem;
-        margin-bottom: 1.5rem; /* Reduced margin */
+        margin-bottom: 1.5rem;
         margin-top: 1rem;
     }
 
     .date-nav {
         display: flex;
         align-items: center;
-        justify-content: space-between; /* Distribute items */
-        width: 100%; /* Take full width */
-        max-width: 300px; /* Limit width on larger screens */
+        justify-content: space-between;
+        width: 100%;
+        max-width: 300px;
     }
-
-
 
     .date-btn {
         background: none;
         border: none;
-        font-size: 1.5rem; /* Larger touch target */
+        font-size: 1.5rem;
         color: var(--text-color);
         cursor: pointer;
-        padding: 0.75rem; /* Larger touch target */
+        padding: 0.75rem;
         border-radius: 50%;
         transition: var(--transition);
-        display: flex; /* For better icon centering */
+        display: flex;
         align-items: center;
         justify-content: center;
     }
 
     .date-btn:hover:not(:disabled) {
-        background-color: rgba(0, 0, 0, 0.08); /* Slightly darker hover */
+        background-color: rgba(0, 0, 0, 0.08);
     }
 
     .date-btn:disabled {
@@ -94,7 +92,7 @@
 
     .current-date {
         font-weight: 600;
-        font-size: 1.2rem; /* Slightly larger */
+        font-size: 1.2rem;
         min-width: 180px;
         text-align: center;
     }
@@ -103,14 +101,14 @@
         background-color: var(--primary-color);
         color: white;
         border: none;
-        padding: 0.75rem 1.5rem; /* Larger padding */
-        border-radius: 6px; /* Slightly more rounded */
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
         font-weight: 500;
         cursor: pointer;
         transition: var(--transition);
-        width: 100%; /* Full width on mobile */
-        max-width: 200px; /* Limit width on larger screens */
-        margin-top: 0.5rem; /* Space from date nav */
+        width: 100%;
+        max-width: 200px;
+        margin-top: 0.5rem;
     }
 
     .today-btn:hover {
@@ -119,87 +117,74 @@
 
     /* Summary cards */
     .summary-cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 20px;
-            }
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        margin-bottom: 20px;
+    }
 
+    .food-details .calories { color: #FF5722; }
+    .food-details .protein  { color: #4CAF50; }
+    .food-details .carbs    { color: #2196F3; }
+    .food-details .fat      { color: #9C27B0; }
+    .food-details .amount   { color: #666666; }
 
-.food-details .calories { color: #FF5722; }   /* Deep Orange */
-.food-details .protein  { color: #4CAF50; }   /* Green */
-.food-details .carbs    { color: #2196F3; }   /* Blue */
-.food-details .fat      { color: #9C27B0; }   /* Purple */
-.food-details .amount   { color: #666666; }   /* Dark Grey */
+    /* Summary card colors */
+    .summary-card.calories {
+        background-color: #FFF3E0;
+        border: 1px solid #FFE0B2;
+    }
 
+    .summary-card.protein {
+        background-color: #E8F5E9;
+        border: 1px solid #C8E6C9;
+    }
 
-/* Calories */
-.summary-card.calories {
-  background-color: #FFF3E0; /* jaune clair */
-  border: 1px solid #FFE0B2;
-}
+    .summary-card.carbs {
+        background-color: #E3F2FD;
+        border: 1px solid #BBDEFB;
+    }
 
-/* Protéines */
-.summary-card.protein {
-  background-color: #E8F5E9; /* vert clair */
-  border: 1px solid #C8E6C9;
-}
-
-/* Glucides (Carbs) */
-.summary-card.carbs {
-  background-color: #E3F2FD; /* bleu clair */
-  border: 1px solid #BBDEFB;
-}
-
-/* Lipides (Fat) */
-.summary-card.fat {
-  background-color: #FCE4EC; /* rose clair */
-  border: 1px solid #F8BBD0;
-}
-
-/* Style commun */
-.summary-card {
-  padding: 16px;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-
-    .summary-card {
-        background: white;
-        border-radius: 12px; /* More rounded corners */
-        padding: 1.25rem; /* Slightly reduced padding */
-        box-shadow: var(--card-shadow);
-        transition: var(--transition);
+    .summary-card.fat {
+        background-color: #FCE4EC;
+        border: 1px solid #F8BBD0;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .summary-card {
+        padding: 16px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: var(--card-shadow);
+        transition: var(--transition);
     }
 
     .summary-card:hover {
-        transform: translateY(-3px); /* More pronounced lift */
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12); /* Stronger shadow on hover */
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
     }
 
     .summary-card h3 {
-        font-size: 0.85rem; /* Slightly smaller */
+        font-size: 0.85rem;
         color: var(--text-light);
         margin-bottom: 0.4rem;
         font-weight: 500;
     }
 
     .summary-card p {
-        font-size: 1.6rem; /* Slightly larger for emphasis */
-        font-weight: 700; /* Bolder */
+        font-size: 1.6rem;
+        font-weight: 700;
         color: var(--text-color);
     }
 
     .calories .progress {
-        height: 6px; /* Thicker progress bar */
+        height: 6px;
         background-color: #e0e0e0;
         border-radius: 3px;
-        margin-top: 0.75rem; /* More space */
+        margin-top: 0.75rem;
         overflow: hidden;
     }
 
@@ -208,34 +193,34 @@
         background-color: var(--primary-color);
         width: 0%;
         transition: width 0.5s ease;
-        border-radius: 3px; /* Match outer radius */
+        border-radius: 3px;
     }
 
     /* Meals section */
     .meals-container {
         display: flex;
         flex-direction: column;
-        gap: 1.25rem; /* Reduced gap */
+        gap: 1.25rem;
     }
 
     .meal-card {
         background: white;
-        border-radius: 12px; /* More rounded corners */
+        border-radius: 12px;
         box-shadow: var(--card-shadow);
         overflow: hidden;
         transition: var(--transition);
     }
 
     .meal-card:hover {
-        transform: translateY(-3px); /* More pronounced lift */
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12); /* Stronger shadow on hover */
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
     }
 
     .meal-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 1rem 1.25rem; /* Adjusted padding */
+        padding: 1rem 1.25rem;
         background-color: var(--light-color);
         border-bottom: 1px solid #eee;
     }
@@ -243,14 +228,14 @@
     .meal-title {
         display: flex;
         align-items: center;
-        gap: 0.6rem; /* Slightly larger gap */
+        gap: 0.6rem;
         font-weight: 600;
-        font-size: 1.05rem; /* Slightly larger title */
+        font-size: 1.05rem;
     }
 
     .meal-actions {
         display: flex;
-        gap: 0.25rem; /* Reduced gap between action buttons */
+        gap: 0.25rem;
     }
 
     .action-btn {
@@ -258,26 +243,26 @@
         border: none;
         color: var(--text-light);
         cursor: pointer;
-        font-size: 1.1rem; /* Larger icon size */
+        font-size: 1.1rem;
         transition: var(--transition);
-        padding: 0.5rem; /* Larger touch target */
-        border-radius: 6px; /* Slightly more rounded */
+        padding: 0.5rem;
+        border-radius: 6px;
     }
 
     .action-btn:hover {
         color: var(--text-color);
-        background-color: rgba(0, 0, 0, 0.08); /* Slightly darker hover */
+        background-color: rgba(0, 0, 0, 0.08);
     }
 
     .meal-content {
-        padding: 1.25rem; /* Adjusted padding */
+        padding: 1.25rem;
     }
 
     .food-item {
         display: flex;
         justify-content: space-between;
-        align-items: flex-start; /* Align to top for multi-line details */
-        padding: 0.8rem 0; /* Slightly more padding */
+        align-items: flex-start;
+        padding: 0.8rem 0;
         border-bottom: 1px solid #f0f0f0;
     }
 
@@ -286,54 +271,51 @@
     }
 
     .food-photo {
-    width: 60px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-right: 12px; /* Augmenté pour plus d'espace */
-    vertical-align: middle; /* Meilleur alignement avec le texte */
-}
+        width: 60px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-right: 12px;
+    }
 
-.food-info {
-    display: inline-flex; /* Changé à inline-flex pour un meilleur contrôle */
-    align-items: center; /* Alignement vertical */
-    gap: 1rem; /* Espacement entre éléments */
-    flex-grow: 1;
-}
+    .food-info {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        flex-grow: 1;
+    }
 
-.food-name {
-    font-weight: 500;
-    font-size: 1rem;
-    margin-right: 12px; /* Espace après le nom */
-    min-width: 120px; /* Largeur minimale pour le nom */
-}
+    .food-name {
+        font-weight: 500;
+        font-size: 1rem;
+        margin-right: 12px;
+        min-width: 120px;
+    }
 
     .food-details {
         display: flex;
         align-items: center;
-        gap: 1rem; /* Espacement régulier */
-        font-size: 0.85rem; /* Taille légèrement augmentée */
+        gap: 1rem;
+        font-size: 0.85rem;
         color: var(--text-light);
-        flex-wrap: wrap; /* Permet le retour à la ligne si nécessaire */
+        flex-wrap: wrap;
     }
 
-    /* Styles spécifiques pour chaque détail nutritionnel */
     .food-details > span {
-        white-space: nowrap; /* Empêche le retour à la ligne */
+        white-space: nowrap;
         padding: 4px 8px;
         border-radius: 4px;
     }
 
-    /* Style spécifique pour la quantité */
     .amount {
-        font-weight: 600; /* Plus gras pour distinction */
-        color: var(--text-color); /* Couleur plus visible */
+        font-weight: 600;
+        color: var(--text-color);
         margin-left: 8px;
     }
 
     .food-actions {
         display: flex;
-        gap: 0.25rem; /* Reduced gap */
+        gap: 0.25rem;
     }
 
     .add-food-btn {
@@ -345,15 +327,15 @@
         border: none;
         font-weight: 500;
         cursor: pointer;
-        padding: 0.75rem 0; /* Larger touch target */
+        padding: 0.75rem 0;
         margin-top: 0.5rem;
         transition: var(--transition);
-        font-size: 0.95rem; /* Slightly larger text */
+        font-size: 0.95rem;
     }
 
     .add-food-btn:hover {
         color: var(--primary-dark);
-        text-decoration: underline; /* Add underline for better feedback */
+        text-decoration: underline;
     }
 
     .add-meal-btn {
@@ -370,31 +352,31 @@
         font-weight: 500;
         cursor: pointer;
         transition: var(--transition);
-        margin-top: 1.5rem; /* Increased margin */
+        margin-top: 1.5rem;
         margin-bottom: 2rem;
-        font-size: 1.1rem; /* Larger text */
+        font-size: 1.1rem;
     }
 
     .add-meal-btn:hover {
         background-color: var(--primary-dark);
-        box-shadow: 0 4px 10px rgba(0, 200, 83, 0.3); /* Subtle shadow on hover */
+        box-shadow: 0 4px 10px rgba(0, 200, 83, 0.3);
     }
 
     /* Empty state */
     .empty-state {
         text-align: center;
-        padding: 2rem 1rem; /* Adjusted padding */
+        padding: 2rem 1rem;
         color: var(--text-light);
     }
 
     .empty-state i {
-        font-size: 3.5rem; /* Slightly larger icon */
+        font-size: 3.5rem;
         margin-bottom: 1rem;
         color: #e0e0e0;
     }
 
     .empty-state p {
-        margin-bottom: 1.25rem; /* Reduced margin */
+        margin-bottom: 1.25rem;
         font-size: 1rem;
     }
 
@@ -405,10 +387,10 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: rgba(0, 0, 0, 0.6); /* Darker overlay */
+        background-color: rgba(0, 0, 0, 0.6);
         display: flex;
         justify-content: center;
-        align-items: flex-end; /* Align to bottom on mobile */
+        align-items: flex-end;
         z-index: 1000;
         opacity: 0;
         visibility: hidden;
@@ -418,28 +400,28 @@
     .modal-overlay.active {
         opacity: 1;
         visibility: visible;
-        align-items: center; /* Center when active */
+        align-items: center;
     }
 
     .modal {
         background-color: white;
-        border-radius: 16px 16px 0 0; /* Rounded top corners for bottom sheet style */
-        width: 100%; /* Full width on mobile */
+        border-radius: 16px 16px 0 0;
+        width: 100%;
         max-width: 500px;
         max-height: 90vh;
         overflow-y: auto;
-        transform: translateY(100%); /* Slide in from bottom */
+        transform: translateY(100%);
         transition: all 0.3s ease;
-        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1); /* Shadow for bottom sheet */
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .modal-overlay.active .modal {
         transform: translateY(0);
-        border-radius: 8px; /* Standard radius when centered on larger screens */
+        border-radius: 8px;
     }
 
     .modal-header {
-        padding: 1.25rem 1.5rem; /* Adjusted padding */
+        padding: 1.25rem 1.5rem;
         border-bottom: 1px solid #eee;
         display: flex;
         justify-content: space-between;
@@ -447,15 +429,15 @@
     }
 
     .modal-title {
-        font-weight: 700; /* Bolder title */
-        font-size: 1.15rem; /* Slightly larger */
+        font-weight: 700;
+        font-size: 1.15rem;
         color: var(--dark-color);
     }
 
     .modal-close {
         background: none;
         border: none;
-        font-size: 1.8rem; /* Larger close button */
+        font-size: 1.8rem;
         cursor: pointer;
         color: var(--text-light);
         padding: 0.2rem;
@@ -473,12 +455,12 @@
     }
 
     .form-group {
-        margin-bottom: 1.25rem; /* Reduced margin */
+        margin-bottom: 1.25rem;
     }
 
     .form-label {
         display: block;
-        margin-bottom: 0.6rem; /* More space below label */
+        margin-bottom: 0.6rem;
         font-weight: 500;
         font-size: 0.95rem;
         color: var(--text-color);
@@ -486,18 +468,18 @@
 
     .form-control {
         width: 100%;
-        padding: 0.85rem; /* Increased padding for easier tapping */
-        border: 1px solid #ccc; /* Slightly darker border */
-        border-radius: 8px; /* More rounded corners */
+        padding: 0.85rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
         font-size: 1rem;
         transition: var(--transition);
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05); /* Subtle inner shadow */
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     .form-control:focus {
         outline: none;
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.25); /* Larger, more visible focus ring */
+        box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.25);
     }
 
     .form-select {
@@ -518,12 +500,12 @@
 
     .btn {
         padding: 0.75rem 1.5rem;
-        border-radius: 6px; /* More rounded buttons */
+        border-radius: 6px;
         font-weight: 500;
         cursor: pointer;
         transition: var(--transition);
         border: none;
-        font-size: 1rem; /* Consistent button font size */
+        font-size: 1rem;
     }
 
     .btn-primary {
@@ -537,18 +519,18 @@
     }
 
     .btn-primary:disabled {
-        opacity: 0.6; /* More distinct disabled state */
+        opacity: 0.6;
         cursor: not-allowed;
     }
 
     .btn-outline {
         background: none;
-        border: 1px solid #bbb; /* Slightly darker border */
+        border: 1px solid #bbb;
         color: var(--text-color);
     }
 
     .btn-outline:hover {
-        background-color: #f0f0f0; /* Clearer hover for outline */
+        background-color: #f0f0f0;
         border-color: #999;
     }
 
@@ -559,12 +541,12 @@
         align-items: center;
         justify-content: center;
         padding: 2rem;
-        gap: 0.8rem; /* Reduced gap */
+        gap: 0.8rem;
         color: var(--text-light);
     }
 
     .spinner {
-        width: 2.2rem; /* Slightly smaller spinner */
+        width: 2.2rem;
         height: 2.2rem;
         border: 4px solid rgba(0, 0, 0, 0.1);
         border-radius: 50%;
@@ -577,24 +559,24 @@
     }
 
     .food-result-item {
-        padding: 0.9rem 0.75rem; /* More vertical padding */
+        padding: 0.9rem 0.75rem;
         border-bottom: 1px solid #eee;
         cursor: pointer;
         transition: background-color 0.2s ease;
     }
 
     .food-result-item:hover {
-        background-color: #f5f5f5; /* Lighter hover */
+        background-color: #f5f5f5;
     }
     .food-result-item:last-child {
         border-bottom: none;
     }
 
     .food-result-item div:first-child {
-        font-size: 1rem; /* Slightly larger food name */
+        font-size: 1rem;
     }
     .food-result-item div:last-child {
-        font-size: 0.8rem; /* Slightly smaller details */
+        font-size: 0.8rem;
         margin-top: 0.3rem;
     }
 
@@ -605,28 +587,27 @@
     }
     #selected-food-info {
         margin-bottom: 1rem;
-        padding: 1rem; /* Adjusted padding */
-        background: #fcfcfc; /* Lighter background */
-        border: 1px solid #eee; /* Light border */
+        padding: 1rem;
+        background: #fcfcfc;
+        border: 1px solid #eee;
         border-radius: 8px;
-        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Subtle inset shadow */
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
     }
     #selected-food-info div:first-child {
-        font-size: 1.05rem; /* Selected food name size */
+        font-size: 1.05rem;
         margin-bottom: 0.5rem;
     }
     #selected-food-info div:last-child {
-        font-size: 0.85rem; /* Selected food details size */
+        font-size: 0.85rem;
     }
 
-
     /* Responsive adjustments */
-    @media (min-width: 481px) { /* Adjustments for tablets and larger phones */
+    @media (min-width: 481px) {
         .container {
             padding: 1.5rem;
         }
         .date-selector {
-            flex-direction: row; /* Back to row for tablets */
+            flex-direction: row;
             justify-content: space-between;
             align-items: center;
         }
@@ -638,20 +619,20 @@
             margin-top: 0;
         }
         .summary-cards {
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* More flexible grid */
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1.25rem;
         }
         .modal {
-            transform: translateY(20px); /* Reset transform for centering */
-            border-radius: 8px; /* Standard radius */
-            align-self: center; /* Center vertically */
+            transform: translateY(20px);
+            border-radius: 8px;
+            align-self: center;
         }
         .modal-overlay.active .modal {
             transform: translateY(0);
         }
     }
 
-    @media (min-width: 769px) { /* Desktop adjustments */
+    @media (min-width: 769px) {
         .container {
             padding: 2rem;
         }
@@ -666,60 +647,56 @@
             padding: 1.5rem;
         }
         .add-meal-btn {
-            max-width: 250px; /* Limit width on desktop */
+            max-width: 250px;
             margin-left: auto;
             margin-right: auto;
         }
     }
+
     @media (max-width: 480px) {
+        .food-photo {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
 
+        .food-info {
+            display: flex;
+            flex: 1;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            min-width: 200px;
+        }
 
-/* Photo de l'aliment */
-.food-photo {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 6px;
-    flex-shrink: 0; /* Empêche le rétrécissement */
-}
+        .food-name {
+            font-weight: 500;
+            font-size: 1rem;
+            margin-right: 12px;
+            min-width: 120px;
+            flex: 1;
+        }
 
-/* Conteneur principal des infos */
-.food-info {
-    display: flex;
-    flex: 1;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-    min-width: 200px; /* Largeur minimale avant adaptation */
-}
+        .food-details {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
 
-/* Nom de l'aliment */
-.food-name {
-    font-weight: 500;
-    font-size: 1rem;
-    margin-right: 12px;
-    min-width: 120px;
-    flex: 1;
-}
-
-/* Détails nutritionnels */
-.food-details {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.85rem;
-    color: var(--text-light);
-}
-
-/* Style des badges nutritionnels */
-.food-details > span {
-    white-space: nowrap;
-    padding: 4px 8px;
-    border-radius: 4px;
-}
+        .food-details > span {
+            white-space: nowrap;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
     }
 </style>
+</head>
+<body>
 
     <div id="header-placeholder"></div>
 
@@ -741,7 +718,7 @@
             <div class="summary-card calories">
                 <h3>Calories</h3>
                 <p id="total-calories">0 kcal</p>
-                <div class="progress">
+                <div class="progress" style="display:none">
                 <div class="progress-bar" id="calories-progress"></div>
                 </div>
             </div>
@@ -757,8 +734,7 @@
                 <h3>Fat</h3>
                 <p id="total-fat">0g</p>
             </div>
-            </div>
-
+        </div>
 
         <div class="meals-container" id="meals-container">
             <div class="loading">
@@ -807,7 +783,7 @@
                     <input type="text" id="food-search" class="form-control" placeholder="Search for food...">
                 </div>
                 <div id="food-results" style="max-height: 300px; overflow-y: auto; border: 1px solid #eee; border-radius: 4px; margin-top: 1rem;">
-                    </div>
+                </div>
                 <div class="form-group" id="selected-food-container" style="display: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #eee;">
                     <h4>Selected Food</h4>
                     <div id="selected-food-info" style="margin-bottom: 1rem;"></div>
@@ -824,1039 +800,1023 @@
         </div>
     </div>
 
-   <script>
-    token = localStorage.getItem('nutritrack_token');
-        if (!token) {
-            window.location.href = '/index.html';
-        }
-    // Global variables
-    let currentDate = new Date();
-    let mealsData = [];
-    let currentMealId = null;
-    let selectedFood = null;
-    let currentFoodItemId = null;
-    const dailyCalorieGoal = 2000;
-    const API_BASE_URL = 'https://my-calories-two.vercel.app'; // Base API URL
-
-    // DOM elements
-    const currentDateEl = document.getElementById('current-date');
-    const prevDayBtn = document.getElementById('prev-day');
-    const nextDayBtn = document.getElementById('next-day');
-    const todayBtn = document.getElementById('today-btn');
-    const mealsContainer = document.getElementById('meals-container');
-    const addMealBtn = document.getElementById('add-meal-btn');
-    const mealModal = document.getElementById('meal-modal');
-    const closeMealModal = document.getElementById('close-meal-modal');
-    const cancelMealBtn = document.getElementById('cancel-meal');
-    const saveMealBtn = document.getElementById('save-meal');
-    const mealNameInput = document.getElementById('meal-name');
-    const mealTimeInput = document.getElementById('meal-time');
-
-    const foodModal = document.getElementById('food-modal');
-    const closeFoodModal = document.getElementById('close-food-modal');
-    const cancelFoodBtn = document.getElementById('cancel-food');
-    const saveFoodBtn = document.getElementById('save-food');
-    const foodSearchInput = document.getElementById('food-search');
-    const foodResultsDiv = document.getElementById('food-results');
-    const selectedFoodContainer = document.getElementById('selected-food-container');
-    const selectedFoodInfo = document.getElementById('selected-food-info');
-    const foodAmountInput = document.getElementById('food-amount');
-
-    const totalCaloriesEl = document.getElementById('total-calories');
-    const totalProteinEl = document.getElementById('total-protein');
-    const totalCarbsEl = document.getElementById('total-carbs');
-    const totalFatEl = document.getElementById('total-fat');
-    const caloriesProgress = document.getElementById('calories-progress');
-
-    // Utility Functions
-    function showLoading(element) {
-        element.innerHTML = `
-            <div class="loading">
-                <div class="spinner"></div>
-                <p>Loading...</p>
-            </div>
-        `;
-    }
-
-    function showError(element, message) {
-        element.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-exclamation-triangle" style="color: var(--danger-color);"></i>
-                <p>${message}</p>
-                <button class="today-btn" onclick="fetchMeals()">Retry</button>
-            </div>
-        `;
-    }
-
-    function showToast(message, type = 'success') {
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type}`;
-        toast.innerHTML = `
-            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
-            <span>${message}</span>
-        `;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-    }
-
-    function formatDate(date) {
-        const options = { weekday: 'long', month: 'short', day: 'numeric' };
-        return date.toLocaleDateString('en-US', options);
-    }
-
-    function formatTime(timeString) {
-        if (!timeString) return '';
-        const [hours, minutes] = timeString.split(':');
-        const date = new Date();
-        date.setHours(hours, minutes);
-        return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-    }
-
-    function isValidObjectId(id) {
-        return /^[0-9a-fA-F]{24}$/.test(id);
-    }
-
-    // Fetch meals for the current date
-    async function fetchMeals() {
-        const token = localStorage.getItem('nutritrack_token');
-        if (!token) {
-            window.location.href = '/index.html';
-            return;
-        }
-
-        showLoading(mealsContainer);
-
-        try {
-            const dateStr = currentDate.toISOString().split('T')[0];
-            const response = await fetch(`${API_BASE_URL}/meals/per-day?date=${dateStr}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch meals');
+    <script>
+        // Enhanced token check
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('nutritrack_token');
+            if (!token) {
+                window.location.href = '/index.html';
+                return;
             }
 
-            mealsData = await response.json();
-            renderMeals();
-            updateNutritionSummary();
-        } catch (error) {
-            console.error('Error fetching meals:', error);
-            showError(mealsContainer, 'Failed to load meals. Please try again.');
-        }
-    }
+            // Load header
+            fetch('header.html')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('header-placeholder').innerHTML = html;
+                    setTimeout(() => {
+                        initHeader();
+                        initApp();
+                    }, 50);
+                })
+                .catch(error => {
+                    console.error('Error loading header:', error);
+                    // Fallback header
+                    document.getElementById('header-placeholder').innerHTML = `
+                        <header class="main-header">
+                            <div class="container">
+                                <a href="/" class="logo">NutriTrack Pro</a>
+                                <button id="logoutBtn" class="btn btn-primary">Logout</button>
+                            </div>
+                        </header>
+                    `;
+                    initHeader();
+                    initApp();
+                });
+        });
 
-    // Render meals in the UI
-    function renderMeals() {
-        if (mealsData.length === 0) {
-            mealsContainer.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-utensils"></i>
-                    <p>No meals recorded for this day</p>
-                    <button class="today-btn" id="add-first-meal">Add Your First Meal</button>
+        // Global variables
+        let currentDate = new Date();
+        let mealsData = [];
+        let currentMealId = null;
+        let selectedFood = null;
+        let currentFoodItemId = null;
+        const dailyCalorieGoal = 2000;
+        const API_BASE_URL = 'https://my-calories-two.vercel.app';
+
+        // DOM elements
+        const currentDateEl = document.getElementById('current-date');
+        const prevDayBtn = document.getElementById('prev-day');
+        const nextDayBtn = document.getElementById('next-day');
+        const todayBtn = document.getElementById('today-btn');
+        const mealsContainer = document.getElementById('meals-container');
+        const addMealBtn = document.getElementById('add-meal-btn');
+        const mealModal = document.getElementById('meal-modal');
+        const closeMealModal = document.getElementById('close-meal-modal');
+        const cancelMealBtn = document.getElementById('cancel-meal');
+        const saveMealBtn = document.getElementById('save-meal');
+        const mealNameInput = document.getElementById('meal-name');
+        const mealTimeInput = document.getElementById('meal-time');
+
+        const foodModal = document.getElementById('food-modal');
+        const closeFoodModal = document.getElementById('close-food-modal');
+        const cancelFoodBtn = document.getElementById('cancel-food');
+        const saveFoodBtn = document.getElementById('save-food');
+        const foodSearchInput = document.getElementById('food-search');
+        const foodResultsDiv = document.getElementById('food-results');
+        const selectedFoodContainer = document.getElementById('selected-food-container');
+        const selectedFoodInfo = document.getElementById('selected-food-info');
+        const foodAmountInput = document.getElementById('food-amount');
+
+        const totalCaloriesEl = document.getElementById('total-calories');
+        const totalProteinEl = document.getElementById('total-protein');
+        const totalCarbsEl = document.getElementById('total-carbs');
+        const totalFatEl = document.getElementById('total-fat');
+        const caloriesProgress = document.getElementById('calories-progress');
+
+        // Utility Functions
+        function showLoading(element) {
+            element.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading...</p>
                 </div>
             `;
-            document.getElementById('add-first-meal').addEventListener('click', () => {
-                mealModal.classList.add('active');
+        }
+
+        function showError(element, message) {
+            element.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-exclamation-triangle" style="color: var(--danger-color);"></i>
+                    <p>${message}</p>
+                    <button class="today-btn" onclick="fetchMeals()">Retry</button>
+                </div>
+            `;
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function formatDate(date) {
+            const options = { weekday: 'long', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        function formatTime(timeString) {
+            if (!timeString) return '';
+            const [hours, minutes] = timeString.split(':');
+            const date = new Date();
+            date.setHours(hours, minutes);
+            return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function isValidObjectId(id) {
+            return /^[0-9a-fA-F]{24}$/.test(id);
+        }
+
+        // Fetch meals for the current date
+        async function fetchMeals() {
+            const token = localStorage.getItem('nutritrack_token');
+            if (!token) {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            showLoading(mealsContainer);
+
+            try {
+                const dateStr = currentDate.toISOString().split('T')[0];
+                const response = await fetch(`${API_BASE_URL}/meals/per-day?date=${dateStr}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch meals');
+                }
+
+                mealsData = await response.json();
+                renderMeals();
+                updateNutritionSummary();
+            } catch (error) {
+                console.error('Error fetching meals:', error);
+                showError(mealsContainer, 'Failed to load meals. Please try again.');
+            }
+        }
+
+        // Render meals in the UI
+        function renderMeals() {
+            if (mealsData.length === 0) {
+                mealsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-utensils"></i>
+                        <p>No meals recorded for this day</p>
+                        <button class="today-btn" id="add-first-meal">Add Your First Meal</button>
+                    </div>
+                `;
+                document.getElementById('add-first-meal').addEventListener('click', () => {
+                    mealModal.classList.add('active');
+                    mealNameInput.value = '';
+                    mealTimeInput.value = '';
+                    document.querySelector('#meal-modal .modal-title').textContent = 'Add New Meal';
+                    saveMealBtn.textContent = 'Save';
+                    delete saveMealBtn.dataset.mealId;
+                });
+                return;
+            }
+
+            mealsContainer.innerHTML = '';
+
+            mealsData.sort((a, b) => {
+                const timeA = a.time || '00:00';
+                const timeB = b.time || '00:00';
+                return timeA.localeCompare(timeB);
+            });
+
+            mealsData.forEach(meal => {
+                const mealCard = document.createElement('div');
+                mealCard.className = 'meal-card';
+                mealCard.dataset.mealId = meal._id;
+
+                const mealCalories = meal.calories || 0;
+                const mealProteinGrams = Math.round((meal.proteinCalories || 0) / 4 * 10) / 10;
+                const mealCarbGrams = Math.round((meal.carbCalories || 0) / 4 * 10) / 10;
+                const mealFatGrams = Math.round((meal.fatCalories || 0) / 9 * 10) / 10;
+
+                mealCard.innerHTML = `
+                    <div class="meal-header">
+                        <div class="meal-title">
+                            <i class="fas fa-${getMealIcon(meal.name)}"></i>
+                            <span>${meal.name}</span>
+                            ${meal.time ? `<span>• ${formatTime(meal.time)}</span>` : ''}
+                        </div>
+                        <div class="meal-actions">
+                            <button class="action-btn add-food-to-meal-btn" data-meal-id="${meal._id}">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class="action-btn edit-meal-btn" data-meal-id="${meal._id}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete-meal-btn" data-meal-id="${meal._id}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="meal-content">
+                        ${meal.items && meal.items.length > 0 ?
+                            meal.items.map(item => {
+                                const food = item.food;
+                                const amountInGrams = item.amount;
+                                const factor = amountInGrams / 100;
+
+                                const itemCalories = Math.round(food.caloriesPer100g * factor);
+                                const itemProtein = Math.round(food.proteinPer100g * factor);
+                                const itemCarbs = Math.round(food.carbsPer100g * factor);
+                                const itemFat = Math.round(food.fatPer100g * factor);
+
+                                return `
+                                <div class="food-item" data-food-id="${food._id}" data-item-id="${item._id}">
+                                    <div class="food-info">
+                                        <img
+                                            src="${food.photoUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'}"
+                                            alt="${food.name}"
+                                            class="food-photo"
+                                        />
+                                        <span class="food-name">${food.name}</span>
+                                        <div class="food-details">
+                                            <span class="calories">${itemCalories} kcal</span>
+                                            <span class="protein">${itemProtein}g protein</span>
+                                            <span class="carbs">${itemCarbs}g carbs</span>
+                                            <span class="fat">${itemFat}g fat</span>
+                                            <span class="amount" style="font-weight:bold; font-size:0.8rem;background-color: rgba(0,0,0,0.03);">
+                                                Amount: ${amountInGrams}g
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="food-actions">
+                                        <button class="action-btn edit-food-item-btn" data-meal-id="${meal._id}" data-item-id="${item._id}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete-food-item-btn" data-meal-id="${meal._id}" data-item-id="${item._id}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                `;
+                            }).join('') :
+                            `<p style="color: var(--text-light); text-align: center; margin-bottom: 1rem;">No food items added yet</p>`
+                        }
+                        <button class="add-food-btn add-food-to-meal-btn" data-meal-id="${meal._id}">
+                            <i class="fas fa-plus"></i> Add Food
+                        </button>
+                    </div>
+                    <div style="padding: 0 1.5rem 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-light);">
+                            <span>Meal Total:</span>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                                <span>${mealCalories} kcal</span>
+                                <span>${mealProteinGrams}g protein</span>
+                                <span>${mealCarbGrams}g carbs</span>
+                                <span>${mealFatGrams}g fat</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                mealsContainer.appendChild(mealCard);
+            });
+
+            attachMealCardEventListeners();
+        }
+
+        function handleMealCardClick(e) {
+            const target = e.target.closest('.action-btn, .add-food-btn, .add-food-to-meal-btn');
+            if (!target) return;
+
+            const mealId = target.dataset.mealId;
+            const itemId = target.dataset.itemId || target.dataset.foodId;
+
+            if (!mealId) {
+                console.error('Missing mealId on:', target);
+                return;
+            }
+
+            try {
+                if (target.classList.contains('add-food-btn') || 
+                    target.classList.contains('add-food-to-meal-btn')) {
+                    currentMealId = mealId;
+                    foodModal.classList.add('active');
+                    foodSearchInput.focus();
+                    resetFoodModal();
+                } 
+                else if (target.classList.contains('edit-meal-btn')) {
+                    if (!isValidObjectId(mealId)) {
+                        showToast('Invalid meal ID format', 'error');
+                        return;
+                    }
+                    editMeal(mealId);
+                } 
+                else if (target.classList.contains('delete-meal-btn')) {
+                    if (!isValidObjectId(mealId)) {
+                        showToast('Invalid meal ID format', 'error');
+                        return;
+                    }
+                    deleteMeal(mealId);
+                } 
+                else if (target.classList.contains('edit-food-item-btn')) {
+                    if (!itemId || !isValidObjectId(itemId)) {
+                        showToast('Invalid food item ID', 'error');
+                        return;
+                    }
+                    editFoodItem(mealId, itemId);
+                } 
+                else if (target.classList.contains('delete-food-item-btn')) {
+                    if (!itemId || !isValidObjectId(itemId)) {
+                        showToast('Invalid food item ID', 'error');
+                        return;
+                    }
+                    deleteFoodItem(mealId, itemId);
+                }
+            } catch (error) {
+                console.error('Error handling meal card click:', error);
+                showToast('Action failed: ' + error.message, 'error');
+            }
+        }
+
+        function attachMealCardEventListeners() {
+            mealsContainer.removeEventListener('click', handleMealCardClick);
+            mealsContainer.addEventListener('click', handleMealCardClick);
+            
+            const addFirstMealBtn = document.getElementById('add-first-meal');
+            if (addFirstMealBtn) {
+                addFirstMealBtn.addEventListener('click', () => {
+                    mealModal.classList.add('active');
+                    mealNameInput.value = '';
+                    mealTimeInput.value = '';
+                    document.querySelector('#meal-modal .modal-title').textContent = 'Add New Meal';
+                    saveMealBtn.textContent = 'Save';
+                    delete saveMealBtn.dataset.mealId;
+                });
+            }
+        }
+
+        function getMealIcon(mealName) {
+            const name = mealName.toLowerCase();
+            if (name.includes('breakfast')) return 'sun';
+            if (name.includes('lunch')) return 'utensils';
+            if (name.includes('dinner')) return 'moon';
+            if (name.includes('snack')) return 'cookie';
+            return 'utensils';
+        }
+
+        function updateNutritionSummary() {
+            let totalCalories = 0;
+            let totalProteinCalories = 0;
+            let totalCarbCalories = 0;
+            let totalFatCalories = 0;
+
+            mealsData.forEach(meal => {
+                totalCalories += meal.calories || 0;
+                totalProteinCalories += meal.proteinCalories || 0;
+                totalCarbCalories += meal.carbCalories || 0;
+                totalFatCalories += meal.fatCalories || 0;
+            });
+
+            const totalProteinGrams = Math.round(totalProteinCalories / 4 * 10) / 10;
+            const totalCarbGrams = Math.round(totalCarbCalories / 4 * 10) / 10;
+            const totalFatGrams = Math.round(totalFatCalories / 9 * 10) / 10;
+
+            totalCaloriesEl.textContent = `${totalCalories} kcal`;
+            totalProteinEl.textContent = `${totalProteinGrams}g`;
+            totalCarbsEl.textContent = `${totalCarbGrams}g`;
+            totalFatEl.textContent = `${totalFatGrams}g`;
+
+            const progressPercent = Math.min((totalCalories / dailyCalorieGoal) * 100, 100);
+            caloriesProgress.style.width = `${progressPercent}%`;
+            caloriesProgress.style.backgroundColor = totalCalories > dailyCalorieGoal ? 'var(--danger-color)' : 'var(--primary-color)';
+        }
+
+        async function searchFoods(query) {
+            const token = localStorage.getItem('nutritrack_token');
+            if (!token) {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            foodResultsDiv.innerHTML = `<div class="loading" style="padding: 1rem;"><div class="spinner" style="width: 1.5rem; height: 1.5rem;"></div><p style="font-size: 0.9rem;">Searching...</p></div>`;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/foods?search=${encodeURIComponent(query)}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to search foods');
+                }
+
+                const foods = await response.json();
+                displayFoodResults(foods);
+            } catch (error) {
+                console.error('Error searching foods:', error);
+                foodResultsDiv.innerHTML = `<p style="padding: 1rem; color: var(--danger-color);">Failed to search foods. Please try again.</p>`;
+            }
+        }
+
+        function displayFoodResults(foods) {
+            if (foods.length === 0) {
+                foodResultsDiv.innerHTML = `<p style="padding: 1rem; color: var(--text-light);">No foods found. Try a different search term.</p>`;
+                return;
+            }
+
+            foodResultsDiv.innerHTML = foods.map(food => `
+                <div class="food-result-item" data-food-id="${food._id}">
+                    <div style="font-weight: 500;">${food.name}</div>
+                    <div style="display: flex; gap: 1rem; font-size: 0.85rem; color: var(--text-light); margin-top: 0.25rem;">
+                        <span>${food.caloriesPer100g} kcal/100g</span>
+                        <span>${food.proteinPer100g}g protein/100g</span>
+                        <span>${food.carbsPer100g}g carbs/100g</span>
+                        <span>${food.fatPer100g}g fat/100g</span>
+                    </div>
+                </div>
+            `).join('');
+
+            foodResultsDiv.querySelectorAll('.food-result-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const foodId = item.dataset.foodId;
+                    const food = foods.find(f => f._id === foodId);
+                    selectFood(food);
+                });
+            });
+        }
+
+        function selectFood(food) {
+            selectedFood = food;
+            selectedFoodContainer.style.display = 'block';
+            selectedFoodInfo.innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
+                    <div style="font-weight: 600;">${food.name}</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; font-size: 0.85rem; color: var(--text-color);">
+                        <span>Calories: ${food.caloriesPer100g} kcal/100g</span>
+                        <span>Protein: ${food.proteinPer100g}g/100g</span>
+                        <span>Carbs: ${food.carbsPer100g}g/100g</span>
+                        <span>Fat: ${food.fatPer100g}g/100g</span>
+                    </div>
+                </div>
+            `;
+            saveFoodBtn.disabled = false;
+            foodAmountInput.focus();
+        }
+
+        async function addMeal(mealData) {
+            const token = localStorage.getItem('nutritrack_token');
+            if (!token) {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            try {
+                saveMealBtn.disabled = true;
+                saveMealBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+                const response = await fetch(`${API_BASE_URL}/meals`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(mealData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to add meal');
+                }
+
+                const newMeal = await response.json();
+                mealsData.push(newMeal);
+                renderMeals();
+                updateNutritionSummary();
+                mealModal.classList.remove('active');
+                showToast('Meal added successfully');
+            } catch (error) {
+                console.error('Error adding meal:', error);
+                showToast('Failed to add meal. Please try again.', 'error');
+            } finally {
+                saveMealBtn.disabled = false;
+                saveMealBtn.innerHTML = 'Save';
+            }
+        }
+
+        function editMeal(mealId) {
+            const meal = mealsData.find(m => m._id === mealId);
+            if (!meal) {
+                showToast('Meal not found for editing', 'error');
+                return;
+            }
+
+            mealNameInput.value = meal.name;
+            mealTimeInput.value = meal.time || '';
+            document.querySelector('#meal-modal .modal-title').textContent = 'Edit Meal';
+            saveMealBtn.textContent = 'Update';
+            saveMealBtn.dataset.mealId = mealId;
+            mealModal.classList.add('active');
+        }
+
+        async function updateMeal(mealId, mealData) {
+            const token = localStorage.getItem('nutritrack_token');
+            if (!token) {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            try {
+                saveMealBtn.disabled = true;
+                saveMealBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+
+                const response = await fetch(`${API_BASE_URL}/meals/${mealId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(mealData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update meal');
+                }
+
+                const updatedMeal = await response.json();
+                const index = mealsData.findIndex(m => m._id === mealId);
+                if (index !== -1) {
+                    mealsData[index] = updatedMeal;
+                }
+
+                renderMeals();
+                updateNutritionSummary();
+                mealModal.classList.remove('active');
+                showToast('Meal updated successfully');
+            } catch (error) {
+                console.error('Error updating meal:', error);
+                showToast('Failed to update meal. Please try again.', 'error');
+            } finally {
+                saveMealBtn.disabled = false;
+                saveMealBtn.innerHTML = 'Update';
+            }
+        }
+
+        async function deleteMeal(mealId) {
+            if (!confirm('Are you sure you want to delete this meal and all its food items?')) {
+                return;
+            }
+
+            const token = localStorage.getItem('nutritrack_token');
+            if (!token) {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            try {
+                const deleteBtn = document.querySelector(`.delete-meal-btn[data-meal-id="${mealId}"]`);
+                if (deleteBtn) {
+                    deleteBtn.disabled = true;
+                    deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                }
+
+                const response = await fetch(`${API_BASE_URL}/meals/${mealId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to delete meal');
+                }
+
+                mealsData = mealsData.filter(m => m._id !== mealId);
+                renderMeals();
+                updateNutritionSummary();
+                showToast('Meal deleted successfully');
+            } catch (error) {
+                console.error('Error deleting meal:', error);
+                showToast('Failed to delete meal. Please try again.', 'error');
+            }
+        }
+
+        function resetFoodModal() {
+            currentMealId = null;
+            selectedFood = null;
+            currentFoodItemId = null;
+            selectedFoodContainer.style.display = 'none';
+            selectedFoodInfo.innerHTML = '';
+            foodAmountInput.value = '100';
+            saveFoodBtn.disabled = true;
+            foodSearchInput.value = '';
+            foodResultsDiv.innerHTML = '';
+            document.querySelector('#food-modal .modal-title').textContent = 'Add Food to Meal';
+            saveFoodBtn.textContent = 'Add Food';
+        }
+
+        async function addFoodToMeal(mealId, foodId, amount) {
+            const token = localStorage.getItem('nutritrack_token');
+            if (!token) {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            try {
+                saveFoodBtn.disabled = true;
+                saveFoodBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
+                
+                const response = await fetch(`${API_BASE_URL}/meals/${mealId}/items`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        food: foodId,
+                        amount: parseInt(amount)
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to add food to meal');
+                }
+
+                const updatedMeal = await response.json();
+                const index = mealsData.findIndex(m => m._id === mealId);
+                if (index !== -1) {
+                    mealsData[index] = updatedMeal;
+                }
+
+                renderMeals();
+                updateNutritionSummary();
+                foodModal.classList.remove('active');
+                resetFoodModal();
+                showToast('Food added to meal successfully');
+            } catch (error) {
+                console.error('Error adding food to meal:', error);
+                showToast('Failed to add food to meal. Please try again.', 'error');
+            } finally {
+                saveFoodBtn.disabled = false;
+                saveFoodBtn.innerHTML = 'Add Food';
+            }
+        }
+
+        function editFoodItem(mealId, itemId) {
+            const meal = mealsData.find(m => m._id === mealId);
+            if (!meal) {
+                showToast('Meal not found', 'error');
+                return;
+            }
+
+            const foodItem = meal.items.find(i => i._id === itemId);
+            if (!foodItem) {
+                showToast('Food item not found in meal', 'error');
+                return;
+            }
+
+            currentMealId = mealId;
+            currentFoodItemId = itemId;
+            selectedFood = foodItem.food;
+
+            selectedFoodContainer.style.display = 'block';
+            selectedFoodInfo.innerHTML = `
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
+                    <div style="font-weight: 600;">${foodItem.food.name}</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; font-size: 0.85rem; color: var(--text-color);">
+                        <span>Calories: ${foodItem.food.caloriesPer100g} kcal/100g</span>
+                        <span>Protein: ${foodItem.food.proteinPer100g}g/100g</span>
+                        <span>Carbs: ${foodItem.food.carbsPer100g}g/100g</span>
+                        <span>Fat: ${foodItem.food.fatPer100g}g/100g</span>
+                    </div>
+                </div>
+            `;
+            foodAmountInput.value = foodItem.amount;
+            saveFoodBtn.disabled = false;
+            foodSearchInput.value = foodItem.food.name;
+            foodResultsDiv.innerHTML = '';
+            document.querySelector('#food-modal .modal-title').textContent = 'Edit Food Item';
+            saveFoodBtn.textContent = 'Update Food';
+            foodModal.classList.add('active');
+            foodAmountInput.focus();
+        }
+
+        async function updateFoodItem(mealId, itemId, amount) {
+            const token = localStorage.getItem('nutritrack_token');
+            if (!token) {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            try {
+                saveFoodBtn.disabled = true;
+                saveFoodBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+                
+                const response = await fetch(`${API_BASE_URL}/meals/${mealId}/items/${itemId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        amount: parseInt(amount)
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update food item');
+                }
+
+                const updatedMeal = await response.json();
+                const index = mealsData.findIndex(m => m._id === mealId);
+                if (index !== -1) {
+                    mealsData[index] = updatedMeal;
+                }
+
+                renderMeals();
+                updateNutritionSummary();
+                foodModal.classList.remove('active');
+                resetFoodModal();
+                showToast('Food item updated successfully');
+            } catch (error) {
+                console.error('Error updating food item:', error);
+                showToast('Failed to update food item. Please try again.', 'error');
+            } finally {
+                saveFoodBtn.disabled = false;
+                saveFoodBtn.innerHTML = 'Update Food';
+            }
+        }
+
+        async function deleteFoodItem(mealId, itemId) {
+            if (!confirm('Are you sure you want to remove this food from the meal?')) {
+                return;
+            }
+
+            const token = localStorage.getItem('nutritrack_token');
+            if (!token) {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            try {
+                const deleteBtn = document.querySelector(`.delete-food-item-btn[data-meal-id="${mealId}"][data-item-id="${itemId}"]`);
+                if (deleteBtn) {
+                    deleteBtn.disabled = true;
+                    deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                }
+                
+                const response = await fetch(`${API_BASE_URL}/meals/${mealId}/items/${itemId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to delete food item');
+                }
+
+                const result = await response.json();
+
+                if (result.meal) {
+                    const mealIndex = mealsData.findIndex(m => m._id === mealId);
+                    if (mealIndex !== -1) {
+                        mealsData[mealIndex] = result.meal;
+                        calculateMealTotals(mealsData[mealIndex]);
+                    }
+                } else {
+                    mealsData = mealsData.filter(m => m._id !== mealId);
+                }
+
+                renderMeals();
+                updateNutritionSummary();
+                showToast('Food item removed successfully');
+
+            } catch (error) {
+                console.error('Error deleting food item:', error);
+                showToast(error.message || 'Failed to delete food item. Please try again.', 'error');
+                
+                const deleteBtn = document.querySelector(`.delete-food-item-btn[data-meal-id="${mealId}"][data-item-id="${itemId}"]`);
+                if (deleteBtn) {
+                    deleteBtn.disabled = false;
+                    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                }
+            }
+        }
+
+        function calculateMealTotals(meal) {
+            let calories = 0;
+            let proteinCalories = 0;
+            let carbCalories = 0;
+            let fatCalories = 0;
+
+            meal.items.forEach(item => {
+                const food = item.food;
+                const factor = item.amount / 100;
+                
+                calories += food.caloriesPer100g * factor;
+                proteinCalories += food.proteinPer100g * factor * 4;
+                carbCalories += food.carbsPer100g * factor * 4;
+                fatCalories += food.fatPer100g * factor * 9;
+            });
+
+            meal.calories = Math.round(calories);
+            meal.proteinCalories = Math.round(proteinCalories);
+            meal.carbCalories = Math.round(carbCalories);
+            meal.fatCalories = Math.round(fatCalories);
+        }
+
+        function updateDateDisplay() {
+            currentDateEl.textContent = formatDate(currentDate);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const selectedDate = new Date(currentDate);
+            selectedDate.setHours(0, 0, 0, 0);
+            nextDayBtn.disabled = selectedDate >= today;
+        }
+
+        function initHeader() {
+            const header = document.querySelector('.main-header');
+            if (!header) {
+                console.error('Header element not found');
+                return;
+            }
+
+            let lastScroll = window.pageYOffset;
+            const scrollThreshold = 10;
+            let isScrollingDown = false;
+            let scrollTimeout;
+
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+                clearTimeout(scrollTimeout);
+
+                if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
+                    if (!isScrollingDown) {
+                        header.style.transform = 'translateY(-100%)';
+                        isScrollingDown = true;
+                    }
+                } else if (currentScroll < lastScroll) {
+                    header.style.transform = 'translateY(0)';
+                    isScrollingDown = false;
+                }
+
+                lastScroll = currentScroll;
+                scrollTimeout = setTimeout(() => {
+                    if (window.pageYOffset <= scrollThreshold) {
+                        header.style.transform = 'translateY(0)';
+                        isScrollingDown = false;
+                    }
+                }, 100);
+            });
+
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.main-nav');
+
+            if (hamburger && nav) {
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('hamburger-active');
+                    nav.classList.toggle('nav-active');
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+                        hamburger.classList.remove('hamburger-active');
+                        nav.classList.remove('nav-active');
+                    }
+                });
+
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        localStorage.removeItem('nutritrack_token');
+                        window.location.href = '/index.html';
+                    });
+                }
+
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    if (link.id !== 'logoutBtn') {
+                        link.addEventListener('click', () => {
+                            hamburger.classList.remove('hamburger-active');
+                            nav.classList.remove('nav-active');
+                        });
+                    }
+                });
+            }
+
+            document.body.style.paddingTop = `${header.offsetHeight}px`;
+        }
+
+        function initApp() {
+            updateDateDisplay();
+            fetchMeals();
+
+            prevDayBtn.addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() - 1);
+                updateDateDisplay();
+                fetchMeals();
+            });
+
+            nextDayBtn.addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() + 1);
+                updateDateDisplay();
+                fetchMeals();
+            });
+
+            todayBtn.addEventListener('click', () => {
+                currentDate = new Date();
+                updateDateDisplay();
+                fetchMeals();
+            });
+
+            addMealBtn.addEventListener('click', () => {
                 mealNameInput.value = '';
                 mealTimeInput.value = '';
                 document.querySelector('#meal-modal .modal-title').textContent = 'Add New Meal';
                 saveMealBtn.textContent = 'Save';
                 delete saveMealBtn.dataset.mealId;
+                mealModal.classList.add('active');
             });
-            return;
-        }
 
-        mealsContainer.innerHTML = '';
+            closeMealModal.addEventListener('click', () => {
+                mealModal.classList.remove('active');
+            });
 
-        mealsData.sort((a, b) => {
-            const timeA = a.time || '00:00';
-            const timeB = b.time || '00:00';
-            return timeA.localeCompare(timeB);
-        });
+            cancelMealBtn.addEventListener('click', () => {
+                mealModal.classList.remove('active');
+            });
 
-        mealsData.forEach(meal => {
-            const mealCard = document.createElement('div');
-            mealCard.className = 'meal-card';
-            mealCard.dataset.mealId = meal._id;
+            saveMealBtn.addEventListener('click', () => {
+                const name = mealNameInput.value.trim();
+                const time = mealTimeInput.value;
 
-            const mealCalories = meal.calories || 0;
-            const mealProteinGrams = Math.round((meal.proteinCalories || 0) / 4 * 10) / 10;
-            const mealCarbGrams = Math.round((meal.carbCalories || 0) / 4 * 10) / 10;
-            const mealFatGrams = Math.round((meal.fatCalories || 0) / 9 * 10) / 10;
+                if (!name) {
+                    showToast('Please enter a meal name', 'error');
+                    mealNameInput.focus();
+                    return;
+                }
 
-            mealCard.innerHTML = `
-                <div class="meal-header">
-                    <div class="meal-title">
-                        <i class="fas fa-${getMealIcon(meal.name)}"></i>
-                        <span>${meal.name}</span>
-                        ${meal.time ? `<span>• ${formatTime(meal.time)}</span>` : ''}
-                    </div>
-                    <div class="meal-actions">
-                        <button class="action-btn add-food-to-meal-btn" data-meal-id="${meal._id}">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <button class="action-btn edit-meal-btn" data-meal-id="${meal._id}">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="action-btn delete-meal-btn" data-meal-id="${meal._id}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="meal-content">
-                    ${meal.items && meal.items.length > 0 ?
-                        meal.items.map(item => {
-                            const food = item.food;
-                            const amountInGrams = item.amount;
-                            const factor = amountInGrams / 100;
+                const mealData = { name, date: currentDate.toISOString() };
+                if (time) mealData.time = time;
 
-                            const itemCalories = Math.round(food.caloriesPer100g * factor);
-                            const itemProtein = Math.round(food.proteinPer100g * factor);
-                            const itemCarbs = Math.round(food.carbsPer100g * factor);
-                            const itemFat = Math.round(food.fatPer100g * factor);
-
-                            return `
-                            <div class="food-item" data-food-id="${food._id}" data-item-id="${item._id}">
-                                <div class="food-info">
-                                    <!-- Photo de l'aliment -->
-                                        <img
-                                            src="${food.photoUrl}"
-                                            alt="${food.name}"
-                                            class="food-photo"
-                                        />
-                                    <span class="food-name">${food.name}</span>
-                                    <div class="food-details">
-                                        <span class="calories">${itemCalories} kcal</span>
-                                        <span class="protein">${itemProtein}g protein</span>
-                                        <span class="carbs">${itemCarbs}g carbs</span>
-                                        <span class="fat" style="margin-top:4px">${itemFat}g fat</span>
-                                        <span class="amount" style="font-weight:bold; font-size:0.8rem;background-color: rgba(0,0,0,0.03);">
-                                            Amount: ${amountInGrams}g
-                                        </span>
-
-
-                                    </div>
-
-                                </div>
-                                <div class="food-actions">
-                                    <button class="action-btn edit-food-item-btn" data-meal-id="${meal._id}" data-item-id="${item._id}">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="action-btn delete-food-item-btn" data-meal-id="${meal._id}" data-item-id="${item._id}">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            `;
-                        }).join('') :
-                        `<p style="color: var(--text-light); text-align: center; margin-bottom: 1rem;">No food items added yet</p>`
-                    }
-                    <button class="add-food-btn add-food-to-meal-btn" data-meal-id="${meal._id}">
-                        <i class="fas fa-plus"></i> Add Food
-                    </button>
-                </div>
-                <div style="padding: 0 1.5rem 1.5rem;">
-                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-light);">
-                        <span>Meal Total:</span>
-                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                            <span>${mealCalories} kcal</span>
-                            <span>${mealProteinGrams}g protein</span>
-                            <span>${mealCarbGrams}g carbs</span>
-                            <span>${mealFatGrams}g fat</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            mealsContainer.appendChild(mealCard);
-        });
-
-        attachMealCardEventListeners();
-    }
-
-    function attachMealCardEventListeners() {
-        mealsContainer.removeEventListener('click', handleMealCardClick);
-        mealsContainer.addEventListener('click', handleMealCardClick);
-    }
-
-    function handleMealCardClick(e) {
-    // Trouver le bouton le plus proche qui a été cliqué
-    const target = e.target.closest('.action-btn, .add-food-btn, .add-food-to-meal-btn');
-    if (!target) return;
-
-    // Récupérer les IDs avec des vérifications
-    const mealId = target.dataset.mealId;
-    const itemId = target.dataset.itemId || target.dataset.foodId;
-
-    // Validation de base
-    if (!mealId) {
-        console.error('Missing mealId on:', target);
-        return;
-    }
-
-    try {
-        if (target.classList.contains('add-food-btn') || 
-            target.classList.contains('add-food-to-meal-btn')) {
-            currentMealId = mealId;
-            foodModal.classList.add('active');
-            foodSearch.focus();
-            resetFoodModal();
-        } 
-        else if (target.classList.contains('edit-meal-btn')) {
-            if (!isValidObjectId(mealId)) {
-                showToast('Invalid meal ID format', 'error');
-                return;
-            }
-            editMeal(mealId);
-        } 
-        else if (target.classList.contains('delete-meal-btn')) {
-            if (!isValidObjectId(mealId)) {
-                showToast('Invalid meal ID format', 'error');
-                return;
-            }
-            deleteMeal(mealId);
-        } 
-        else if (target.classList.contains('edit-food-item-btn')) {
-            if (!itemId || !isValidObjectId(itemId)) {
-                showToast('Invalid food item ID', 'error');
-                return;
-            }
-            editFoodItem(mealId, itemId);
-        } 
-        else if (target.classList.contains('delete-food-item-btn')) {
-            if (!itemId || !isValidObjectId(itemId)) {
-                showToast('Invalid food item ID', 'error');
-                return;
-            }
-            deleteFoodItem(mealId, itemId);
-        }
-    } catch (error) {
-        console.error('Error handling meal card click:', error);
-        showToast('Action failed: ' + error.message, 'error');
-    }
-}
-
-// Fonction pour attacher les écouteurs d'événements
-function attachMealCardEventListeners() {
-    document.querySelectorAll('.meal-card').forEach(card => {
-        card.addEventListener('click', handleMealCardClick);
-    });
-    
-    // Gestion spécifique du bouton "Add First Meal"
-    const addFirstMealBtn = document.getElementById('add-first-meal');
-    if (addFirstMealBtn) {
-        addFirstMealBtn.addEventListener('click', () => {
-            mealModal.classList.add('active');
-            document.getElementById('meal-name').value = '';
-            document.getElementById('meal-time').value = '';
-            document.querySelector('#meal-modal .modal-title').textContent = 'Add New Meal';
-            saveMealBtn.textContent = 'Save';
-            delete saveMealBtn.dataset.mealId;
-        });
-    }
-}
-    function getMealIcon(mealName) {
-        const name = mealName.toLowerCase();
-        if (name.includes('breakfast')) return 'sun';
-        if (name.includes('lunch')) return 'utensils';
-        if (name.includes('dinner')) return 'moon';
-        if (name.includes('snack')) return 'cookie';
-        return 'utensils';
-    }
-
-    function updateNutritionSummary() {
-        let totalCalories = 0;
-        let totalProteinCalories = 0;
-        let totalCarbCalories = 0;
-        let totalFatCalories = 0;
-
-        mealsData.forEach(meal => {
-            totalCalories += meal.calories || 0;
-            totalProteinCalories += meal.proteinCalories || 0;
-            totalCarbCalories += meal.carbCalories || 0;
-            totalFatCalories += meal.fatCalories || 0;
-        });
-
-        const totalProteinGrams = Math.round(totalProteinCalories / 4 * 10) / 10;
-        const totalCarbGrams = Math.round(totalCarbCalories / 4 * 10) / 10;
-        const totalFatGrams = Math.round(totalFatCalories / 9 * 10) / 10;
-
-        totalCaloriesEl.textContent = `${totalCalories} kcal`;
-        totalProteinEl.textContent = `${totalProteinGrams}g`;
-        totalCarbsEl.textContent = `${totalCarbGrams}g`;
-        totalFatEl.textContent = `${totalFatGrams}g`;
-
-        const progressPercent = Math.min((totalCalories / dailyCalorieGoal) * 100, 100);
-        caloriesProgress.style.width = `${progressPercent}%`;
-        caloriesProgress.style.backgroundColor = totalCalories > dailyCalorieGoal ? 'var(--danger-color)' : 'var(--primary-color)';
-    }
-
-    async function searchFoods(query) {
-        const token = localStorage.getItem('nutritrack_token');
-        if (!token) {
-            window.location.href = '/index.html';
-            return;
-        }
-
-        foodResultsDiv.innerHTML = `<div class="loading" style="padding: 1rem;"><div class="spinner" style="width: 1.5rem; height: 1.5rem;"></div><p style="font-size: 0.9rem;">Searching...</p></div>`;
-
-        try {
-            const response = await fetch(`${API_BASE_URL}/foods?search=${encodeURIComponent(query)}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
+                if (saveMealBtn.dataset.mealId) {
+                    updateMeal(saveMealBtn.dataset.mealId, mealData);
+                } else {
+                    addMeal(mealData);
                 }
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to search foods');
-            }
-
-            const foods = await response.json();
-            displayFoodResults(foods);
-        } catch (error) {
-            console.error('Error searching foods:', error);
-            foodResultsDiv.innerHTML = `<p style="padding: 1rem; color: var(--danger-color);">Failed to search foods. Please try again.</p>`;
-        }
-    }
-
-    function displayFoodResults(foods) {
-        if (foods.length === 0) {
-            foodResultsDiv.innerHTML = `<p style="padding: 1rem; color: var(--text-light);">No foods found. Try a different search term.</p>`;
-            return;
-        }
-
-        foodResultsDiv.innerHTML = foods.map(food => `
-            <div class="food-result-item" data-food-id="${food._id}">
-                <div style="font-weight: 500;">${food.name}</div>
-                <div style="display: flex; gap: 1rem; font-size: 0.85rem; color: var(--text-light); margin-top: 0.25rem;">
-                    <span>${food.caloriesPer100g} kcal/100g</span>
-                    <span>${food.proteinPer100g}g protein/100g</span>
-                    <span>${food.carbsPer100g}g carbs/100g</span>
-                    <span>${food.fatPer100g}g fat/100g</span>
-                </div>
-            </div>
-        `).join('');
-
-        foodResultsDiv.querySelectorAll('.food-result-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const foodId = item.dataset.foodId;
-                const food = foods.find(f => f._id === foodId);
-                selectFood(food);
-            });
-        });
-    }
-
-    function selectFood(food) {
-        selectedFood = food;
-        selectedFoodContainer.style.display = 'block';
-        selectedFoodInfo.innerHTML = `
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
-                <div style="font-weight: 600;">${food.name}</div>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; font-size: 0.85rem; color: var(--text-color);">
-                    <span>Calories: ${food.caloriesPer100g} kcal/100g</span>
-                    <span>Protein: ${food.proteinPer100g}g/100g</span>
-                    <span>Carbs: ${food.carbsPer100g}g/100g</span>
-                    <span>Fat: ${food.fatPer100g}g/100g</span>
-                </div>
-            </div>
-        `;
-        saveFoodBtn.disabled = false;
-        foodAmountInput.focus();
-    }
-
-    async function addMeal(mealData) {
-        const token = localStorage.getItem('nutritrack_token');
-        if (!token) {
-            window.location.href = '/index.html';
-            return;
-        }
-
-        try {
-            saveMealBtn.disabled = true;
-            saveMealBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-
-            const response = await fetch(`${API_BASE_URL}/meals`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(mealData)
+            closeFoodModal.addEventListener('click', () => {
+                foodModal.classList.remove('active');
+                resetFoodModal();
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to add meal');
-            }
-
-            const newMeal = await response.json();
-            mealsData.push(newMeal);
-            renderMeals();
-            updateNutritionSummary();
-            mealModal.classList.remove('active');
-            showToast('Meal added successfully');
-        } catch (error) {
-            console.error('Error adding meal:', error);
-            showToast('Failed to add meal. Please try again.', 'error');
-        } finally {
-            saveMealBtn.disabled = false;
-            saveMealBtn.innerHTML = 'Save';
-        }
-    }
-
-    function editMeal(mealId) {
-        const meal = mealsData.find(m => m._id === mealId);
-        if (!meal) {
-            showToast('Meal not found for editing', 'error');
-            return;
-        }
-
-        mealNameInput.value = meal.name;
-        mealTimeInput.value = meal.time || '';
-        document.querySelector('#meal-modal .modal-title').textContent = 'Edit Meal';
-        saveMealBtn.textContent = 'Update';
-        saveMealBtn.dataset.mealId = mealId;
-        mealModal.classList.add('active');
-    }
-
-    async function updateMeal(mealId, mealData) {
-        const token = localStorage.getItem('nutritrack_token');
-        if (!token) {
-            window.location.href = '/index.html';
-            return;
-        }
-
-        try {
-            saveMealBtn.disabled = true;
-            saveMealBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
-
-            const response = await fetch(`${API_BASE_URL}/meals/${mealId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(mealData)
+            cancelFoodBtn.addEventListener('click', () => {
+                foodModal.classList.remove('active');
+                resetFoodModal();
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to update meal');
-            }
+            saveFoodBtn.addEventListener('click', () => {
+                const amount = foodAmountInput.value;
 
-            const updatedMeal = await response.json();
-            const index = mealsData.findIndex(m => m._id === mealId);
-            if (index !== -1) {
-                mealsData[index] = updatedMeal;
-            }
+                if (!amount || parseInt(amount) <= 0) {
+                    showToast('Please enter a valid amount (grams)', 'error');
+                    foodAmountInput.focus();
+                    return;
+                }
 
-            renderMeals();
-            updateNutritionSummary();
-            mealModal.classList.remove('active');
-            showToast('Meal updated successfully');
-        } catch (error) {
-            console.error('Error updating meal:', error);
-            showToast('Failed to update meal. Please try again.', 'error');
-        } finally {
-            saveMealBtn.disabled = false;
-            saveMealBtn.innerHTML = 'Update';
-        }
-    }
+                if (!selectedFood) {
+                    showToast('Please select a food item first', 'error');
+                    return;
+                }
 
-    async function deleteMeal(mealId) {
-        if (!confirm('Are you sure you want to delete this meal and all its food items?')) {
-            return;
-        }
-
-        const token = localStorage.getItem('nutritrack_token');
-        if (!token) {
-            window.location.href = '/index.html';
-            return;
-        }
-
-        try {
-            const deleteBtn = document.querySelector(`.delete-meal-btn[data-meal-id="${mealId}"]`);
-            if (deleteBtn) {
-                deleteBtn.disabled = true;
-                deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            }
-
-            const response = await fetch(`${API_BASE_URL}/meals/${mealId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`
+                if (currentFoodItemId) {
+                    updateFoodItem(currentMealId, currentFoodItemId, amount);
+                } else {
+                    addFoodToMeal(currentMealId, selectedFood._id, amount);
                 }
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to delete meal');
-            }
+            let searchTimeout;
+            foodSearchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                const query = foodSearchInput.value.trim();
 
-            mealsData = mealsData.filter(m => m._id !== mealId);
-            renderMeals();
-            updateNutritionSummary();
-            showToast('Meal deleted successfully');
-        } catch (error) {
-            console.error('Error deleting meal:', error);
-            showToast('Failed to delete meal. Please try again.', 'error');
-        }
-    }
+                selectedFoodContainer.style.display = 'none';
+                selectedFood = null;
+                saveFoodBtn.disabled = true;
 
-    function openFoodModalForAdd() {
-        resetFoodModal();
-        foodModal.classList.add('active');
-        foodSearchInput.focus();
-        document.querySelector('#food-modal .modal-title').textContent = 'Add Food to Meal';
-        saveFoodBtn.textContent = 'Add Food';
-        currentFoodItemId = null;
-    }
-
-    async function addFoodToMeal(mealId, foodId, amount) {
-        const token = localStorage.getItem('nutritrack_token');
-        if (!token) {
-            window.location.href = '/index.html';
-            return;
-        }
-
-        try {
-            saveFoodBtn.disabled = true;
-            saveFoodBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
-            console.log(`Adding food ${foodId} to meal ${mealId}`);
-            const response = await fetch(`${API_BASE_URL}/meals/${mealId}/items`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    food: foodId,
-                    amount: parseInt(amount)
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to add food to meal');
-            }
-
-            const updatedMeal = await response.json();
-            const index = mealsData.findIndex(m => m._id === mealId);
-            if (index !== -1) {
-                mealsData[index] = updatedMeal;
-            }
-
-            renderMeals();
-            updateNutritionSummary();
-            foodModal.classList.remove('active');
-            resetFoodModal();
-            showToast('Food added to meal successfully');
-        } catch (error) {
-            console.error('Error adding food to meal:', error);
-            showToast('Failed to add food to meal. Please try again.', 'error');
-        } finally {
-            saveFoodBtn.disabled = false;
-            saveFoodBtn.innerHTML = 'Add Food';
-        }
-    }
-
-    function editFoodItem(mealId, itemId) {
-        const meal = mealsData.find(m => m._id === mealId);
-        if (!meal) {
-            showToast('Meal not found', 'error');
-            return;
-        }
-
-        const foodItem = meal.items.find(i => i._id === itemId);
-        if (!foodItem) {
-            showToast('Food item not found in meal', 'error');
-            return;
-        }
-
-        currentMealId = mealId;
-        currentFoodItemId = itemId;
-        selectedFood = foodItem.food;
-
-        selectedFoodContainer.style.display = 'block';
-        selectedFoodInfo.innerHTML = `
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem; background: #f5f5f5; border-radius: 8px;">
-                <div style="font-weight: 600;">${foodItem.food.name}</div>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; font-size: 0.85rem; color: var(--text-color);">
-                    <span>Calories: ${foodItem.food.caloriesPer100g} kcal/100g</span>
-                    <span>Protein: ${foodItem.food.proteinPer100g}g/100g</span>
-                    <span>Carbs: ${foodItem.food.carbsPer100g}g/100g</span>
-                    <span>Fat: ${foodItem.food.fatPer100g}g/100g</span>
-                </div>
-            </div>
-        `;
-        foodAmountInput.value = foodItem.amount;
-        saveFoodBtn.disabled = false;
-        foodSearchInput.value = foodItem.food.name;
-        foodResultsDiv.innerHTML = '';
-        document.querySelector('#food-modal .modal-title').textContent = 'Edit Food Item';
-        saveFoodBtn.textContent = 'Update Food';
-        foodModal.classList.add('active');
-        foodAmountInput.focus();
-    }
-
-    async function updateFoodItem(mealId, itemId, amount) {
-        const token = localStorage.getItem('nutritrack_token');
-        if (!token) {
-            window.location.href = '/index.html';
-            return;
-        }
-
-        try {
-            saveFoodBtn.disabled = true;
-            saveFoodBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
-            console.log(`Updating food item ${itemId} in meal ${mealId} with amount ${amount}`);
-            const response = await fetch(`${API_BASE_URL}/meals/${mealId}/items/${itemId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    amount: parseInt(amount)
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to update food item');
-            }
-
-            const updatedMeal = await response.json();
-            const index = mealsData.findIndex(m => m._id === mealId);
-            if (index !== -1) {
-                mealsData[index] = updatedMeal;
-            }
-
-            renderMeals();
-            updateNutritionSummary();
-            foodModal.classList.remove('active');
-            resetFoodModal();
-            showToast('Food item updated successfully');
-        } catch (error) {
-            console.error('Error updating food item:', error);
-            showToast('Failed to update food item. Please try again.', 'error');
-        } finally {
-            saveFoodBtn.disabled = false;
-            saveFoodBtn.innerHTML = 'Update Food';
-        }
-    }
-
-    async function deleteFoodItem(mealId, itemId) {
-    if (!confirm('Are you sure you want to remove this food from the meal?')) {
-        return;
-    }
-
-    const token = localStorage.getItem('nutritrack_token');
-    if (!token) {
-        window.location.href = '/index.html';
-        return;
-    }
-
-    try {
-        // Trouver le bouton de suppression et le désactiver pendant la requête
-        const deleteBtn = document.querySelector(`.delete-food-item-btn[data-meal-id="${mealId}"][data-item-id="${itemId}"]`);
-        if (deleteBtn) {
-            deleteBtn.disabled = true;
-            deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-        }
-        console.log(`Deleting food item ${itemId} from meal ${mealId}`);
-        const response = await fetch(`${API_BASE_URL}/meals/${mealId}/items/${itemId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Failed to delete food item');
-        }
-
-        // Deux cas possibles selon la réponse du serveur :
-        // 1. Le repas a été supprimé (si c'était le dernier item)
-        // 2. Le repas a été mis à jour (si il reste des items)
-        const result = await response.json();
-
-        if (result.meal) {
-            // Cas 2: Le repas a été mis à jour
-            const mealIndex = mealsData.findIndex(m => m._id === mealId);
-            if (mealIndex !== -1) {
-                mealsData[mealIndex] = result.meal;
-                calculateMealTotals(mealsData[mealIndex]);
-            }
-        } else {
-            // Cas 1: Le repas a été supprimé (car c'était le dernier item)
-            mealsData = mealsData.filter(m => m._id !== mealId);
-        }
-
-        // Re-rendre les meals et mettre à jour le résumé nutritionnel
-        renderMeals();
-        updateNutritionSummary();
-        showToast('Food item removed successfully');
-
-    } catch (error) {
-        console.error('Error deleting food item:', error);
-        showToast(error.message || 'Failed to delete food item. Please try again.', 'error');
-        
-        // Réactiver le bouton en cas d'erreur
-        const deleteBtn = document.querySelector(`.delete-food-item-btn[data-meal-id="${mealId}"][data-item-id="${itemId}"]`);
-        if (deleteBtn) {
-            deleteBtn.disabled = false;
-            deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-        }
-    }
-}
-
-    function calculateMealTotals(meal) {
-        let calories = 0;
-        let proteinCalories = 0;
-        let carbCalories = 0;
-        let fatCalories = 0;
-
-        meal.items.forEach(item => {
-            const food = item.food;
-            const factor = item.amount / 100;
-            
-            calories += food.caloriesPer100g * factor;
-            proteinCalories += food.proteinPer100g * factor * 4;
-            carbCalories += food.carbsPer100g * factor * 4;
-            fatCalories += food.fatPer100g * factor * 9;
-        });
-
-        meal.calories = Math.round(calories);
-        meal.proteinCalories = Math.round(proteinCalories);
-        meal.carbCalories = Math.round(carbCalories);
-        meal.fatCalories = Math.round(fatCalories);
-    }
-
-    function resetFoodModal() {
-        currentMealId = null;
-        selectedFood = null;
-        currentFoodItemId = null;
-        selectedFoodContainer.style.display = 'none';
-        selectedFoodInfo.innerHTML = '';
-        foodAmountInput.value = '100';
-        saveFoodBtn.disabled = true;
-        foodSearchInput.value = '';
-        foodResultsDiv.innerHTML = '';
-        document.querySelector('#food-modal .modal-title').textContent = 'Add Food to Meal';
-        saveFoodBtn.textContent = 'Add Food';
-    }
-
-    function updateDateDisplay() {
-        currentDateEl.textContent = formatDate(currentDate);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const selectedDate = new Date(currentDate);
-        selectedDate.setHours(0, 0, 0, 0);
-        nextDayBtn.disabled = selectedDate >= today;
-    }
-
-    function init() {
-        updateDateDisplay();
-        fetchMeals();
-
-        prevDayBtn.addEventListener('click', () => {
-            currentDate.setDate(currentDate.getDate() - 1);
-            updateDateDisplay();
-            fetchMeals();
-        });
-
-        nextDayBtn.addEventListener('click', () => {
-            currentDate.setDate(currentDate.getDate() + 1);
-            updateDateDisplay();
-            fetchMeals();
-        });
-
-        todayBtn.addEventListener('click', () => {
-            currentDate = new Date();
-            updateDateDisplay();
-            fetchMeals();
-        });
-
-        addMealBtn.addEventListener('click', () => {
-            mealNameInput.value = '';
-            mealTimeInput.value = '';
-            document.querySelector('#meal-modal .modal-title').textContent = 'Add New Meal';
-            saveMealBtn.textContent = 'Save';
-            delete saveMealBtn.dataset.mealId;
-            mealModal.classList.add('active');
-        });
-
-        closeMealModal.addEventListener('click', () => {
-            mealModal.classList.remove('active');
-        });
-
-        cancelMealBtn.addEventListener('click', () => {
-            mealModal.classList.remove('active');
-        });
-
-        saveMealBtn.addEventListener('click', () => {
-            const name = mealNameInput.value.trim();
-            const time = mealTimeInput.value;
-
-            if (!name) {
-                showToast('Please enter a meal name', 'error');
-                mealNameInput.focus();
-                return;
-            }
-
-            const mealData = { name, date: currentDate.toISOString() };
-            if (time) mealData.time = time;
-
-            if (saveMealBtn.dataset.mealId) {
-                updateMeal(saveMealBtn.dataset.mealId, mealData);
-            } else {
-                addMeal(mealData);
-            }
-        });
-
-        closeFoodModal.addEventListener('click', () => {
-            foodModal.classList.remove('active');
-            resetFoodModal();
-        });
-
-        cancelFoodBtn.addEventListener('click', () => {
-            foodModal.classList.remove('active');
-            resetFoodModal();
-        });
-
-        saveFoodBtn.addEventListener('click', () => {
-            const amount = foodAmountInput.value;
-
-            if (!amount || parseInt(amount) <= 0) {
-                showToast('Please enter a valid amount (grams)', 'error');
-                foodAmountInput.focus();
-                return;
-            }
-
-            if (!selectedFood) {
-                showToast('Please select a food item first', 'error');
-                return;
-            }
-
-            if (currentFoodItemId) {
-                updateFoodItem(currentMealId, currentFoodItemId, amount);
-            } else {
-                addFoodToMeal(currentMealId, selectedFood._id, amount);
-            }
-        });
-
-        let searchTimeout;
-        foodSearchInput.addEventListener('input', () => {
-            clearTimeout(searchTimeout);
-            const query = foodSearchInput.value.trim();
-
-            selectedFoodContainer.style.display = 'none';
-            selectedFood = null;
-            saveFoodBtn.disabled = true;
-
-            if (query.length > 2) {
-                searchTimeout = setTimeout(() => {
-                    searchFoods(query);
-                }, 300);
-            } else {
-                foodResultsDiv.innerHTML = `<p style="padding: 1rem; color: var(--text-light);">Type at least 3 characters to search for food.</p>`;
-            }
-        });
-    }
-
-    // Load header and initialize app
-    fetch('header.html')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(html => {
-            document.getElementById('header-placeholder').innerHTML = html;
-            setTimeout(() => {
-                initHeader();
-                init();
-            }, 50);
-        })
-        .catch(error => {
-            console.error('Error loading header:', error);
-            init();
-        });
-
-    function initHeader() {
-        const header = document.querySelector('.main-header');
-        if (!header) {
-            console.error('Header element not found');
-            return;
-        }
-
-        let lastScroll = window.pageYOffset;
-        const scrollThreshold = 10;
-        let isScrollingDown = false;
-        let scrollTimeout;
-
-        window.addEventListener('scroll', function() {
-            const currentScroll = window.pageYOffset;
-            clearTimeout(scrollTimeout);
-
-            if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
-                if (!isScrollingDown) {
-                    header.style.transform = 'translateY(-100%)';
-                    isScrollingDown = true;
-                }
-            } else if (currentScroll < lastScroll) {
-                header.style.transform = 'translateY(0)';
-                isScrollingDown = false;
-            }
-
-            lastScroll = currentScroll;
-            scrollTimeout = setTimeout(() => {
-                if (window.pageYOffset <= scrollThreshold) {
-                    header.style.transform = 'translateY(0)';
-                    isScrollingDown = false;
-                }
-            }, 100);
-        });
-
-        const hamburger = document.querySelector('.hamburger');
-        const nav = document.querySelector('.main-nav');
-
-        if (hamburger && nav) {
-            hamburger.addEventListener('click', function(e) {
-                e.stopPropagation();
-                this.classList.toggle('hamburger-active');
-                nav.classList.toggle('nav-active');
-            });
-
-            document.addEventListener('click', function(e) {
-                if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
-                    hamburger.classList.remove('hamburger-active');
-                    nav.classList.remove('nav-active');
-                }
-            });
-
-            const logoutBtn = document.getElementById('logoutBtn');
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    localStorage.removeItem('nutritrack_token');
-                    window.location.href = '/index.html';
-                });
-            }
-
-            document.querySelectorAll('.nav-link').forEach(link => {
-                if (link.id !== 'logoutBtn') {
-                    link.addEventListener('click', () => {
-                        hamburger.classList.remove('hamburger-active');
-                        nav.classList.remove('nav-active');
-                    });
+                if (query.length > 2) {
+                    searchTimeout = setTimeout(() => {
+                        searchFoods(query);
+                    }, 300);
+                } else {
+                    foodResultsDiv.innerHTML = `<p style="padding: 1rem; color: var(--text-light);">Type at least 3 characters to search for food.</p>`;
                 }
             });
         }
-
-        document.body.style.paddingTop = `${header.offsetHeight}px`;
-    }
-</script>
+    </script>
 </body>
 </html>
