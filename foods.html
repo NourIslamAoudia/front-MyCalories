@@ -18,13 +18,13 @@
             --light-color: #F5F5F6;
             --dark-color: #263238; /* Dark Grey Blue */
             --text-color: #37474F; /* Darker Text */
-            --text-light: #78909C; /* Lighter Text */
-            --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.06); /* Softer, larger shadow */
-            --hover-shadow: 0 16px 32px rgba(0, 0, 0, 0.12); /* More pronounced hover shadow */
+            --text-light: #607D8B; /* Adjusted for better contrast */
+            --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            --hover-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             --success-color: #00C853;
-            --warning-color: #FFAB00;
-            --danger-color: #FF5252;
+            --warning-color: #FF8F00; /* Adjusted for better contrast */
+            --danger-color: #FF3D00; /* Adjusted for better contrast */
             --border-radius-lg: 16px;
             --border-radius-md: 10px;
             --border-radius-sm: 8px;
@@ -40,11 +40,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif; /* Using Inter from Google Fonts */
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background-color: #F0F2F5; /* A softer background */
+            background-color: #F0F2F5;
             color: var(--text-color);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
@@ -52,7 +52,7 @@
         }
 
         .container {
-            max-width: 1280px; /* Slightly wider container for more content */
+            max-width: 1280px;
             margin: 0 auto;
             padding: var(--spacing-md);
         }
@@ -76,7 +76,7 @@
             opacity: 0.85;
             font-weight: 400;
             max-width: 800px;
-            margin: 0 auto var(--spacing-xl) auto; /* Add margin-bottom */
+            margin: 0 auto var(--spacing-xl) auto;
             text-align: center;
             color: var(--text-color);
         }
@@ -94,7 +94,7 @@
         }
 
         .hero-section {
-            background: linear-gradient(135deg, #e0f2f7 0%, #e8f5e9 100%); /* Light gradient background */
+            background: linear-gradient(135deg, #e0f2f7 0%, #e8f5e9 100%);
             padding: var(--spacing-xl) var(--spacing-md);
             text-align: center;
             margin-bottom: var(--spacing-lg);
@@ -112,7 +112,6 @@
         .food-display-section {
             padding-top: var(--spacing-md);
         }
-
 
         .results-count-wrapper {
             display: flex;
@@ -134,17 +133,17 @@
         }
 
         .nutrition-summary {
-            display: flex;
+            display: none;
             gap: var(--spacing-md);
             flex-wrap: wrap;
-            justify-content: center; /* Center items when they wrap */
+            justify-content: center;
         }
 
         .summary-item {
             display: flex;
             align-items: center;
             gap: var(--spacing-xs);
-            background-color: #F8F9FA; /* Slightly distinct background for items */
+            background-color: #F8F9FA;
             padding: 10px 15px;
             border-radius: var(--border-radius-md);
             border: 1px solid #ECEFF1;
@@ -159,7 +158,7 @@
             justify-content: center;
             color: white;
             font-size: 1.2rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle icon shadow */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .calories-icon { background-color: var(--danger-color); }
@@ -180,155 +179,156 @@
         }
 
         /* ==================== */
-/* FILTER CONTROLS MAIN */
-/* ==================== */
-.filter-controls {
-    display: flex;
-    gap: var(--spacing-md);
-    background: transparent;
-    flex-wrap: wrap;
-    align-items: center;
-    padding: 0; /* Suppression du padding par défaut */
-}
+        /* FILTER CONTROLS MAIN */
+        /* ==================== */
+        .filter-controls {
+            display: flex;
+            gap: var(--spacing-md);
+            background: transparent;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 0;
+        }
 
-/* ================ */
-/* SEARCH COMPONENT */ 
-/* ================ */
-.search-box {
-    flex: 1;
-    min-width: 280px;
-    position: relative;
-}
+        /* ================ */
+        /* SEARCH COMPONENT */
+        /* ================ */
+        .search-box {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
 
-.search-box input {
-    width: 100%;
-    padding: 12px 20px 12px 48px;
-    border: 2px solid #E0E0E0;
-    border-radius: 30px;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-color);
-    transition: var(--transition);
-    background-color: #FDFDFD;
-}
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 48px;
+            border: 2px solid #E0E0E0;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: var(--transition);
+            background-color: #FDFDFD;
+        }
 
-.search-box input::placeholder {
-    color: var(--text-light);
-    opacity: 0.7;
-}
+        .search-box input::placeholder {
+            color: var(--text-light);
+            opacity: 0.7;
+        }
 
-.search-box input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px rgba(0, 200, 83, 0.15);
-    background-color: white;
-}
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(0, 200, 83, 0.15);
+            background-color: white;
+        }
 
-.search-icon {
-    position: absolute;
-    left: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-light);
-    font-size: 1.1rem;
-    pointer-events: none;
-}
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.1rem;
+            pointer-events: none;
+        }
 
-/* ================== */
-/* CATEGORY SELECTOR */
-/* ================== */
-.category-filter {
-    position: relative;
-    min-width: 200px;
-    flex: 0 0 auto;
-}
+        /* ================== */
+        /* CATEGORY SELECTOR */
+        /* ================== */
+        .category-filter {
+            position: relative;
+            min-width: 200px;
+            flex: 0 0 auto;
+        }
 
-.category-filter select {
-    width: 100%;
-    padding: 12px 40px 12px 20px;
-    border: 2px solid #E0E0E0;
-    border-radius: 30px;
-    font-size: 1rem;
-    appearance: none;
-    background-color: #FDFDFD;
-    font-weight: 500;
-    color: var(--text-color);
-    cursor: pointer;
-    transition: var(--transition);
-}
+        .category-filter select {
+            width: 100%;
+            padding: 12px 40px 12px 20px;
+            border: 2px solid #E0E0E0;
+            border-radius: 30px;
+            font-size: 1rem;
+            appearance: none;
+            background-color: #FDFDFD;
+            font-weight: 500;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
 
-.category-filter select:focus {
-    border-color: var(--primary-color);
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(0, 200, 83, 0.15);
-    background-color: white;
-}
+        .category-filter select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(0, 200, 83, 0.15);
+            background-color: white;
+        }
 
-.select-arrow {
-    position: absolute;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-light);
-    pointer-events: none;
-    font-size: 0.9rem;
-}
+        .select-arrow {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+            font-size: 0.9rem;
+        }
 
-/* ===================== */
-/* RESPONSIVE ADJUSTMENTS */
-/* ===================== */
+        /* ===================== */
+        /* RESPONSIVE ADJUSTMENTS */
+        /* ===================== */
 
-/* ----- MOBILE (≤ 768px) ----- */
-@media (max-width: 768px) {
-    .filter-controls {
-        flex-direction: column;
-        gap: 12px;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        backdrop-filter: blur(5px);
-        padding: 8px;
-        margin: -12px -12px 12px -12px;
-    }
-    .hero-text {
-    margin-top: -40px; /* Valeur par défaut */
-    }
+        /* ----- MOBILE (≤ 768px) ----- */
+        @media (max-width: 768px) {
+            .filter-controls {
+                flex-direction: column;
+                gap: 12px;
+                position: sticky;
+                top: 0;
+                z-index: 9;
+                backdrop-filter: blur(5px);
+                padding: 8px var(--spacing-md);
+                margin: 0 0 var(--spacing-md) 0;
+            }
+            
+            .hero-text {
+                margin-top: 0;
+            }
 
-}
+            .search-box,
+            .category-filter {
+                min-width: 100%;
+            }
 
-    .search-box,
-    .category-filter {
-        min-width: 100%;
-    }
+            .search-box input {
+                padding-left: 44px;
+            }
 
-    .search-box input {
-        padding-left: 44px;
-    }
+            .search-icon {
+                left: 16px;
+            }
+        }
 
-    .search-icon {
-        left: 16px;
-    }
+        /* ----- TABLET (769-1024px) ----- */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .filter-controls {
+                gap: 12px;
+            }
 
-/* ----- TABLET (769-1024px) ----- */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .filter-controls {
-        gap: 12px;
-    }
+            .search-box {
+                min-width: 240px;
+            }
 
-    .search-box {
-        min-width: 240px;
-    }
+            .category-filter {
+                min-width: 180px;
+            }
+        }
 
-    .category-filter {
-        min-width: 180px;
-    }
-}
         /* --- Food Grid --- */
         .food-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Larger minimum card size */
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: var(--spacing-lg);
-            padding: 0; /* Remove extra padding */
+            padding: 0;
         }
 
         .food-card {
@@ -338,22 +338,22 @@
             box-shadow: var(--card-shadow);
             transition: var(--transition);
             position: relative;
-            border: 1px solid #EFF2F5; /* Lighter border */
-            display: flex; /* Flexbox for internal content */
-            flex-direction: column; /* Stack image and info */
+            border: 1px solid #EFF2F5;
+            display: flex;
+            flex-direction: column;
         }
 
         .food-card:hover {
-            transform: translateY(-10px); /* More pronounced lift */
+            transform: translateY(-10px);
             box-shadow: var(--hover-shadow);
             border-color: var(--primary-light);
         }
 
         .food-image {
-            height: 220px; /* Slightly taller images */
+            height: 220px;
             overflow: hidden;
             position: relative;
-            border-bottom: 1px solid #F0F2F5; /* Separator for image */
+            border-bottom: 1px solid #F0F2F5;
         }
 
         .food-image img {
@@ -364,7 +364,7 @@
         }
 
         .food-card:hover .food-image img {
-            transform: scale(1.05); /* Softer zoom on hover */
+            transform: scale(1.05);
         }
 
         .food-badge {
@@ -374,7 +374,7 @@
             background-color: var(--secondary-color);
             color: white;
             padding: 6px 14px;
-            border-radius: 25px; /* More rounded */
+            border-radius: 25px;
             font-size: 0.85rem;
             font-weight: 600;
             box-shadow: 0 3px 10px rgba(255, 109, 0, 0.25);
@@ -386,12 +386,11 @@
         .food-badge--fruit { background-color: var(--primary-dark); box-shadow: 0 3px 10px rgba(0, 150, 36, 0.25); }
         .food-badge--dairy { background-color: var(--accent-color); box-shadow: 0 3px 10px rgba(41, 98, 255, 0.25); }
 
-
         .food-info {
             padding: var(--spacing-md);
             display: flex;
             flex-direction: column;
-            flex-grow: 1; /* Allow info section to take remaining space */
+            flex-grow: 1;
         }
 
         .food-header {
@@ -406,7 +405,7 @@
             color: var(--danger-color);
             font-weight: 800;
             margin-left: var(--spacing-xs);
-            white-space: nowrap; /* Prevent breaking */
+            white-space: nowrap;
         }
 
         .food-category {
@@ -418,23 +417,23 @@
             font-size: 0.8rem;
             font-weight: 600;
             margin-bottom: var(--spacing-md);
-            text-transform: capitalize; /* Make category text look nicer */
-            width: fit-content; /* Adjust width to content */
+            text-transform: capitalize;
+            width: fit-content;
         }
 
         .nutrition-facts {
             display: flex;
             flex-wrap: wrap;
             gap: var(--spacing-xs);
-            margin-top: auto; /* Push nutrition facts to bottom of card */
+            margin-top: auto;
         }
 
         .nutrition-item {
             flex: 1;
-            min-width: 80px; /* Allow slight shrinking */
+            min-width: 80px;
             text-align: center;
             padding: 10px;
-            background-color: #f8f8f8; /* Lighter background for facts */
+            background-color: #f8f8f8;
             border-radius: var(--border-radius-sm);
             transition: background-color 0.2s ease-in-out;
             border: 1px solid #EEEEEE;
@@ -468,12 +467,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 300px; /* Ensure visibility */
-            grid-column: 1 / -1; /* Span full width in grid */
+            min-height: 300px;
+            grid-column: 1 / -1;
         }
 
         .spinner {
-            width: 60px; /* Slightly larger spinner */
+            width: 60px;
             height: 60px;
             border: 6px solid rgba(0, 0, 0, 0.1);
             border-radius: 50%;
@@ -496,7 +495,7 @@
         }
 
         .empty-icon {
-            font-size: 5rem; /* Larger icon */
+            font-size: 5rem;
             color: var(--text-light);
             margin-bottom: var(--spacing-lg);
             opacity: 0.6;
@@ -557,28 +556,27 @@
 
             .nutrition-summary {
                 width: 100%;
-                justify-content: space-around; /* Distribute items evenly */
+                justify-content: space-around;
             }
 
             .summary-item {
-                flex: 1 1 auto; /* Allow items to grow/shrink based on space */
-                min-width: unset; /* Remove min-width constraint */
+                flex: 1 1 auto;
+                min-width: unset;
                 padding: 8px 12px;
             }
 
-
             .search-box, .category-filter {
                 width: 100%;
-                min-width: unset; /* Remove min-width constraint */
+                min-width: unset;
             }
 
             .food-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Adjust grid for tablets */
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
                 gap: var(--spacing-md);
             }
 
             .food-card {
-                max-width: none; /* Remove max-width for smaller screens */
+                max-width: none;
             }
         }
 
@@ -612,7 +610,7 @@
             }
 
             .summary-item {
-                flex: 0 0 auto; /* Prevent stretching too much */
+                flex: 0 0 auto;
             }
 
             .summary-icon {
@@ -628,7 +626,6 @@
             .summary-label {
                 font-size: 0.8rem;
             }
-
 
             .search-box input,
             .category-filter select {
@@ -647,12 +644,12 @@
             }
 
             .food-grid {
-                grid-template-columns: 1fr; /* Single column on smallest screens */
+                grid-template-columns: 1fr;
                 gap: var(--spacing-md);
             }
 
             .food-card {
-                border-radius: var(--border-radius-md); /* Slightly smaller border-radius */
+                border-radius: var(--border-radius-md);
             }
 
             .food-image {
@@ -664,7 +661,7 @@
             }
 
             .food-header {
-                flex-direction: column; /* Stack name and calories */
+                flex-direction: column;
                 align-items: flex-start;
                 gap: 5px;
             }
@@ -716,25 +713,40 @@
     <div id="header-placeholder"></div>
 
     <script>
-        token = localStorage.getItem('nutritrack_token');
-        if (!token) {
-            window.location.href = '/index.html';
-        }
-        // Existing header loading and functionality script
-        fetch('header.html')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-            .then(html => {
-                document.getElementById('header-placeholder').innerHTML = html;
-                setTimeout(initHeader, 50);
-            })
-            .catch(error => {
-                console.error('Error loading header:', error);
-            });
+        // Enhanced token check with error handling
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('nutritrack_token');
+            if (!token) {
+                window.location.href = '/index.html';
+                return;
+            }
+
+            // Load header
+            fetch('header.html')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('header-placeholder').innerHTML = html;
+                    setTimeout(initHeader, 50);
+                })
+                .catch(error => {
+                    console.error('Error loading header:', error);
+                    // Fallback header or error message
+                    document.getElementById('header-placeholder').innerHTML = `
+                        <header class="main-header">
+                            <div class="container">
+                                <a href="/" class="logo">NutriTrack Pro</a>
+                                <button id="logoutBtn" class="btn btn-primary">Logout</button>
+                            </div>
+                        </header>
+                    `;
+                    initHeader();
+                });
+        });
 
         function initHeader() {
             const header = document.querySelector('.main-header');
@@ -750,22 +762,22 @@
 
             window.addEventListener('scroll', function() {
                 const currentScroll = window.pageYOffset;
-                
+
                 clearTimeout(scrollTimeout);
-                
+
                 if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
                     if (!isScrollingDown) {
                         header.style.transform = 'translateY(-100%)';
                         isScrollingDown = true;
                     }
-                } 
+                }
                 else if (currentScroll < lastScroll) {
                     header.style.transform = 'translateY(0)';
                     isScrollingDown = false;
                 }
-                
+
                 lastScroll = currentScroll;
-                
+
                 scrollTimeout = setTimeout(() => {
                     if (window.pageYOffset <= scrollThreshold) {
                         header.style.transform = 'translateY(0)';
@@ -776,21 +788,21 @@
 
             const hamburger = document.querySelector('.hamburger');
             const nav = document.querySelector('.main-nav');
-            
+
             if (hamburger && nav) {
                 hamburger.addEventListener('click', function(e) {
                     e.stopPropagation();
                     this.classList.toggle('hamburger-active');
                     nav.classList.toggle('nav-active');
                 });
-                
+
                 document.addEventListener('click', function(e) {
                     if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
                         hamburger.classList.remove('hamburger-active');
                         nav.classList.remove('nav-active');
                     }
                 });
-                
+
                 const logoutBtn = document.getElementById('logoutBtn');
                 if (logoutBtn) {
                     logoutBtn.addEventListener('click', function(e) {
@@ -799,7 +811,7 @@
                         window.location.href = '/index.html';
                     });
                 }
-                
+
                 document.querySelectorAll('.nav-link').forEach(link => {
                     if (link.id !== 'logoutBtn') {
                         link.addEventListener('click', () => {
@@ -809,24 +821,24 @@
                     }
                 });
             }
-            
+
             document.body.style.paddingTop = `${header.offsetHeight}px`;
         }
     </script>
 
     <main class="main-content">
         <div class="hero-section">
-            <section class=" container filters-section">
+            <section class="container filters-section">
                 <div class="filter-controls">
                     <div class="search-box">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" id="searchInput" placeholder="Search foods (e.g., apple, chicken...)">
+                        <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                        <input type="text" id="searchInput" placeholder="Search foods (e.g., apple, chicken...)" aria-label="Search foods">
                     </div>
                     <div class="category-filter">
-                        <select id="categoryFilter">
+                        <select id="categoryFilter" aria-label="Filter by food category">
                             <option value="">All Categories</option>
-                            </select>
-                        <i class="fas fa-chevron-down select-arrow"></i>
+                        </select>
+                        <i class="fas fa-chevron-down select-arrow" aria-hidden="true"></i>
                     </div>
                 </div>
             </section>
@@ -835,8 +847,7 @@
                 <p class="subtitle">
                     Explore a diverse range of foods, filter by categories, and get detailed nutritional information per 100g. Your healthy eating journey starts here.
                 </p>
-                </div>
-
+            </div>
         </div>
 
         <div class="container">
@@ -845,30 +856,30 @@
                     <div class="results-count-wrapper">
                         <span class="results-label">Showing</span> <span id="resultsCount" class="results-number">0</span> <span class="results-label">foods</span>
                     </div>
-                    <div class="nutrition-summary" style="display:none">
+                    <div class="nutrition-summary">
                         <div class="summary-item">
-                            <div class="summary-icon calories-icon"><i class="fas fa-fire"></i></div>
+                            <div class="summary-icon calories-icon"><i class="fas fa-fire" aria-hidden="true"></i></div>
                             <div>
                                 <div class="summary-value" id="totalCalories">0</div>
                                 <div class="summary-label">Calories</div>
                             </div>
                         </div>
                         <div class="summary-item">
-                            <div class="summary-icon protein-icon"><i class="fas fa-dumbbell"></i></div>
+                            <div class="summary-icon protein-icon"><i class="fas fa-dumbbell" aria-hidden="true"></i></div>
                             <div>
                                 <div class="summary-value" id="totalProtein">0g</div>
                                 <div class="summary-label">Protein</div>
                             </div>
                         </div>
                         <div class="summary-item">
-                            <div class="summary-icon carbs-icon"><i class="fas fa-bread-slice"></i></div>
+                            <div class="summary-icon carbs-icon"><i class="fas fa-bread-slice" aria-hidden="true"></i></div>
                             <div>
                                 <div class="summary-value" id="totalCarbs">0g</div>
                                 <div class="summary-label">Carbs</div>
                             </div>
                         </div>
                         <div class="summary-item">
-                            <div class="summary-icon fat-icon"><i class="fas fa-bacon"></i></div>
+                            <div class="summary-icon fat-icon"><i class="fas fa-bacon" aria-hidden="true"></i></div>
                             <div>
                                 <div class="summary-value" id="totalFat">0g</div>
                                 <div class="summary-label">Fat</div>
@@ -889,14 +900,13 @@
     </main>
 
     <script>
-        
         class FoodManager {
             constructor() {
                 this.foods = [];
                 this.filteredFoods = [];
                 this.categories = new Set();
                 this.API_URL = "https://my-calories-two.vercel.app/foods/allfood";
-                
+
                 this.domElements = {
                     foodGrid: document.getElementById('foodGrid'),
                     searchInput: document.getElementById('searchInput'),
@@ -907,29 +917,36 @@
                     totalCarbs: document.getElementById('totalCarbs'),
                     totalFat: document.getElementById('totalFat')
                 };
-                
+
                 this.initEventListeners();
                 this.fetchFoods();
             }
-            
+
             initEventListeners() {
                 this.domElements.searchInput.addEventListener('input', () => {
                     this.filterFoods();
                     this.updateResultsCount();
                 });
-                
+
                 this.domElements.categoryFilter.addEventListener('change', () => {
                     this.filterFoods();
                     this.updateResultsCount();
                 });
             }
-            
+
             async fetchFoods() {
                 try {
                     this.showLoading();
-                    const response = await fetch(this.API_URL);
-                    if (!response.ok) throw new Error('Network response was not ok');
+                    const response = await fetch(this.API_URL, {
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('nutritrack_token')}`
+                        }
+                    });
                     
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
                     this.foods = await response.json();
                     this.extractCategories();
                     this.filterFoods();
@@ -937,42 +954,42 @@
                     this.updateTotalNutrition();
                 } catch (error) {
                     console.error('Error fetching foods:', error);
-                    this.showError();
+                    this.showError(error.message);
                 }
             }
-            
+
             extractCategories() {
                 this.categories.clear();
                 this.foods.forEach(food => this.categories.add(food.category));
-                
+
                 this.domElements.categoryFilter.innerHTML = `
                     <option value="">All Categories</option>
-                    ${Array.from(this.categories).sort().map(category => 
+                    ${Array.from(this.categories).sort().map(category =>
                         `<option value="${category}">${category}</option>`
                     ).join('')}
                 `;
             }
-            
+
             filterFoods() {
                 const searchTerm = this.domElements.searchInput.value.toLowerCase();
                 const selectedCategory = this.domElements.categoryFilter.value;
-                
+
                 this.filteredFoods = this.foods.filter(food => {
                     const matchesSearch = food.name.toLowerCase().includes(searchTerm);
                     const matchesCategory = selectedCategory === '' || food.category === selectedCategory;
                     return matchesSearch && matchesCategory;
                 });
-                
+
                 this.renderFoods();
                 this.updateTotalNutrition();
             }
-            
+
             renderFoods() {
                 if (this.filteredFoods.length === 0) {
                     this.domElements.foodGrid.innerHTML = `
                         <div class="empty-state">
                             <div class="empty-icon">
-                                <i class="fas fa-utensils"></i>
+                                <i class="fas fa-utensils" aria-hidden="true"></i>
                             </div>
                             <p class="empty-text">No foods found matching your criteria</p>
                             <button class="btn btn-primary empty-action" onclick="foodManager.resetFilters()">Reset Filters</button>
@@ -980,13 +997,21 @@
                     `;
                     return;
                 }
-                
+
                 this.domElements.foodGrid.innerHTML = this.filteredFoods.map(food => `
-                    <div class="food-card">
-                        ${food.category === 'Fruits' ? '<span class="food-badge food-badge--fruit"><i class="fas fa-seedling"></i> Fresh</span>' : ''}
-                        ${food.category === 'Dairy' ? '<span class="food-badge food-badge--dairy"><i class="fas fa-cheese"></i> Dairy</span>' : ''}
+                    <div class="food-card" tabindex="0" aria-label="${food.name}, ${food.category}, ${food.caloriesPer100g} calories">
+                        ${food.category === 'Fruits' ? 
+                            `<span class="food-badge food-badge--fruit" aria-hidden="true">
+                                <i class="fas fa-seedling" aria-hidden="true"></i> Fresh
+                            </span>` : ''}
+                        ${food.category === 'Dairy' ? 
+                            `<span class="food-badge food-badge--dairy" aria-hidden="true">
+                                <i class="fas fa-cheese" aria-hidden="true"></i> Dairy
+                            </span>` : ''}
                         <div class="food-image">
-                            <img src="${food.photoUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'}" alt="${food.name}" loading="lazy">
+                            <img src="${food.photoUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'}" 
+                                 alt="${food.name}" 
+                                 loading="lazy">
                         </div>
                         <div class="food-info">
                             <div class="food-header">
@@ -995,15 +1020,15 @@
                             </div>
                             <span class="food-category">${food.category}</span>
                             <div class="nutrition-facts">
-                                <div class="nutrition-item">
+                                <div class="nutrition-item" aria-label="Protein: ${food.proteinPer100g} grams">
                                     <div class="nutrition-value nutrition-value--protein">${food.proteinPer100g}g</div>
                                     <div class="nutrition-label">Protein</div>
                                 </div>
-                                <div class="nutrition-item">
+                                <div class="nutrition-item" aria-label="Carbohydrates: ${food.carbsPer100g} grams">
                                     <div class="nutrition-value nutrition-value--carbs">${food.carbsPer100g}g</div>
                                     <div class="nutrition-label">Carbs</div>
                                 </div>
-                                <div class="nutrition-item">
+                                <div class="nutrition-item" aria-label="Fat: ${food.fatPer100g} grams">
                                     <div class="nutrition-value nutrition-value--fat">${food.fatPer100g}g</div>
                                     <div class="nutrition-label">Fat</div>
                                 </div>
@@ -1012,51 +1037,51 @@
                     </div>
                 `).join('');
             }
-            
+
             updateResultsCount() {
                 this.domElements.resultsCount.textContent = this.filteredFoods.length;
             }
-            
+
             updateTotalNutrition() {
                 const totalCalories = this.filteredFoods.reduce((sum, food) => sum + food.caloriesPer100g, 0);
                 const totalProtein = this.filteredFoods.reduce((sum, food) => sum + food.proteinPer100g, 0);
                 const totalCarbs = this.filteredFoods.reduce((sum, food) => sum + food.carbsPer100g, 0);
                 const totalFat = this.filteredFoods.reduce((sum, food) => sum + food.fatPer100g, 0);
-                
+
                 this.domElements.totalCalories.textContent = totalCalories.toFixed(0);
                 this.domElements.totalProtein.textContent = totalProtein.toFixed(1) + 'g';
                 this.domElements.totalCarbs.textContent = totalCarbs.toFixed(1) + 'g';
                 this.domElements.totalFat.textContent = totalFat.toFixed(1) + 'g';
             }
-            
+
             resetFilters() {
                 this.domElements.searchInput.value = '';
                 this.domElements.categoryFilter.value = '';
                 this.filterFoods();
                 this.updateResultsCount();
             }
-            
+
             showLoading() {
                 this.domElements.foodGrid.innerHTML = `
                     <div class="loading">
-                        <div class="spinner"></div>
+                        <div class="spinner" aria-label="Loading foods"></div>
                     </div>
                 `;
             }
-            
-            showError() {
+
+            showError(message = 'Failed to load foods. Please try again later.') {
                 this.domElements.foodGrid.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
+                            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
                         </div>
-                        <p class="empty-text">Failed to load foods. Please try again later.</p>
+                        <p class="empty-text">${message}</p>
                         <button class="btn btn-primary empty-action" onclick="foodManager.fetchFoods()">Retry</button>
                     </div>
                 `;
             }
         }
-        
+
         let foodManager;
         document.addEventListener('DOMContentLoaded', () => {
             foodManager = new FoodManager();
