@@ -412,55 +412,132 @@
             background: var(--danger-color);
         }
 
-        /* Loading Spinner */
-        .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 8px;
-        }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+/* ===================== */
+/* MOBILE RESPONSIVE (≤768px) */
+/* ===================== */
+@media (max-width: 768px) {
+    /* Layout principal */
+    .profile-section {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
 
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .profile-section {
-                grid-template-columns: 1fr;
-            }
-            
-            .profile-stats {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 16px;
-            }
-            
-            .calories-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-            }
+    /* Carte de profil */
+    .profile-card {
+        padding: 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        margin: 0 -1rem;
+        border: none;
+    }
 
-            .calories-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
+    /* Statistiques */
+    .profile-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+        padding: 1rem;
+        background: rgba(245,245,245,0.5);
+        border-radius: 0.75rem;
+        margin: 1rem 0;
+    }
 
-            .form-actions {
-                flex-direction: column;
-            }
-            .edit-profile-form {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-            }
-        }
+    /* Carte des calories */
+    .calories-card {
+        padding: 1.5rem;
+        border-radius: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .calories-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .calorie-item {
+        padding: 1.25rem;
+        border-radius: 0.75rem;
+    }
+
+    /* En-tête */
+    .calories-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Formulaire */
+    .edit-profile-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    /* Boutons */
+    .form-actions {
+        flex-direction: column-reverse; /* Bouton principal en bas */
+        gap: 0.75rem;
+        margin-top: 1rem;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 1rem;
+        border-radius: 0.75rem;
+        font-size: 1rem;
+    }
+
+    /* Micro-interactions */
+    .calorie-item:active {
+        transform: scale(0.98);
+    }
+
+    /* Optimisation tactile */
+    input, select, button {
+        min-height: 3rem;
+    }
+
+    /* Animation de chargement */
+    .spinner {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
+/* ===================== */
+/* AMÉLIORATIONS SPÉCIFIQUES MOBILE */
+/* ===================== */
+@media (max-width: 480px) {
+    .profile-stats {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .calorie-item.highlight::after {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .calorie-value {
+        font-size: 1.5rem;
+    }
+
+    .calorie-label {
+        font-size: 0.9rem;
+    }
+
+    /* Header sticky pour économiser l'espace */
+    .filter-controls {
+        top: -1px; /* Évite un petit espace */
+    }
+}
 
         /* Error State */
         .error-message {
@@ -903,7 +980,7 @@ async function loadCaloriesGoal() {
         if (!token) throw new Error('No authentication token');
 
         // Fixed endpoint URL to match backend route
-        const response = await fetch('http://localhost:1234/profil/caloriesGolal', {
+        const response = await fetch('https://my-calories-two.vercel.app/profil/caloriesGolal', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -933,7 +1010,7 @@ async function updateCaloriesGoal(goal) {
         if (!token) throw new Error('No authentication token');
 
         // Fixed endpoint URL to match backend route
-        const response = await fetch('http://localhost:1234/profil/caloriesGolal', {
+        const response = await fetch('https://my-calories-two.vercel.app/profil/caloriesGolal', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

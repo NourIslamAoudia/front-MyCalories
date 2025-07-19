@@ -3,110 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NutriTrack Pro</title>
+    <title>NutriTrack Pro - Food Catalog</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* --- Variables --- */
         :root {
-            --primary-color: #00C853;
+            --primary-color: #00C853; /* Green */
             --primary-light: #5EFC82;
             --primary-dark: #009624;
-            --secondary-color: #FF6D00;
+            --secondary-color: #FF6D00; /* Orange */
             --secondary-light: #FF9E40;
-            --accent-color: #2962FF;
+            --accent-color: #2962FF; /* Blue */
             --light-color: #F5F5F6;
-            --dark-color: #263238;
-            --text-color: #37474F;
-            --text-light: #78909C;
-            --card-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --dark-color: #263238; /* Dark Grey Blue */
+            --text-color: #37474F; /* Darker Text */
+            --text-light: #78909C; /* Lighter Text */
+            --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.06); /* Softer, larger shadow */
+            --hover-shadow: 0 16px 32px rgba(0, 0, 0, 0.12); /* More pronounced hover shadow */
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             --success-color: #00C853;
             --warning-color: #FFAB00;
             --danger-color: #FF5252;
+            --border-radius-lg: 16px;
+            --border-radius-md: 10px;
+            --border-radius-sm: 8px;
+            --spacing-xs: 8px;
+            --spacing-sm: 15px;
+            --spacing-md: 20px;
+            --spacing-lg: 30px;
+            --spacing-xl: 50px;
         }
 
+        /* --- Base Styles --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-
-        @supports (font-variation-settings: normal) {
-            * { font-family: 'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
+            font-family: 'Inter', sans-serif; /* Using Inter from Google Fonts */
         }
 
         body {
-            background-color: #FAFAFA;
+            background-color: #F0F2F5; /* A softer background */
             color: var(--text-color);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            font-size: 16px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px; /* Slightly wider container for more content */
             margin: 0 auto;
-            padding: 20px;
+            padding: var(--spacing-md);
         }
 
-        
-
+        /* --- Typography --- */
         h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+            font-size: 3.2rem;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--dark-color);
+        }
+
+        .page-title {
+            text-align: center;
+            padding-top: var(--spacing-xl);
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-size: 1.3rem;
+            opacity: 0.85;
             font-weight: 400;
-            max-width: 700px;
-            margin: 0 auto;
+            max-width: 800px;
+            margin: 0 auto var(--spacing-xl) auto; /* Add margin-bottom */
+            text-align: center;
+            color: var(--text-color);
         }
 
-        .stats-bar {
+        h3.food-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        /* --- Layout Sections --- */
+        .main-content {
+            padding-bottom: var(--spacing-xl);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #e0f2f7 0%, #e8f5e9 100%); /* Light gradient background */
+            padding: var(--spacing-xl) var(--spacing-md);
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .filters-section {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .summary-section {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .food-display-section {
+            padding-top: var(--spacing-md);
+        }
+
+
+        .results-count-wrapper {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            box-shadow: var(--card-shadow);
-            margin-top:10px;
-        }
-
-        .results-count {
+            align-items: baseline;
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--primary-dark);
-            font-size: 1.1rem;
         }
 
-        .results-count span {
-            font-weight: 700;
+        .results-label {
+            opacity: 0.9;
+        }
+
+        .results-number {
+            font-weight: 800;
             color: var(--secondary-color);
+            font-size: 1.5rem;
+            margin: 0 5px;
         }
 
         .nutrition-summary {
             display: flex;
-            gap: 20px;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            justify-content: center; /* Center items when they wrap */
         }
 
         .summary-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: var(--spacing-xs);
+            background-color: #F8F9FA; /* Slightly distinct background for items */
+            padding: 10px 15px;
+            border-radius: var(--border-radius-md);
+            border: 1px solid #ECEFF1;
         }
 
         .summary-icon {
-            width: 32px;
-            height: 32px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle icon shadow */
         }
 
         .calories-icon { background-color: var(--danger-color); }
@@ -115,112 +168,189 @@
         .fat-icon { background-color: var(--success-color); }
 
         .summary-value {
-            font-weight: 700;
-            font-size: 1.1rem;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--dark-color);
         }
 
         .summary-label {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-light);
-        }
-
-        .filter-controls {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: var(--card-shadow);
-            margin-top: 20px;
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 300px;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 14px 25px;
-            padding-left: 50px;
-            border: 2px solid #E0E0E0;
-            border-radius: 30px;
-            font-size: 1rem;
-            transition: var(--transition);
             font-weight: 500;
         }
 
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.2);
-        }
+        /* ==================== */
+/* FILTER CONTROLS MAIN */
+/* ==================== */
+.filter-controls {
+    display: flex;
+    gap: var(--spacing-md);
+    background: transparent;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0; /* Suppression du padding par défaut */
+}
 
-        .search-box i {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
+/* ================ */
+/* SEARCH COMPONENT */ 
+/* ================ */
+.search-box {
+    flex: 1;
+    min-width: 280px;
+    position: relative;
+}
 
-        .category-filter {
-            min-width: 220px;
-        }
+.search-box input {
+    width: 100%;
+    padding: 12px 20px 12px 48px;
+    border: 2px solid #E0E0E0;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: var(--transition);
+    background-color: #FDFDFD;
+}
 
-        .category-filter select {
-            width: 100%;
-            padding: 14px 20px;
-            border: 2px solid #E0E0E0;
-            border-radius: 30px;
-            font-size: 1rem;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 1em;
-            font-weight: 500;
-            transition: var(--transition);
-        }
+.search-box input::placeholder {
+    color: var(--text-light);
+    opacity: 0.7;
+}
 
-        .category-filter select:focus {
-            border-color: var(--primary-color);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.2);
-        }
+.search-box input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(0, 200, 83, 0.15);
+    background-color: white;
+}
 
+.search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    font-size: 1.1rem;
+    pointer-events: none;
+}
+
+/* ================== */
+/* CATEGORY SELECTOR */
+/* ================== */
+.category-filter {
+    position: relative;
+    min-width: 200px;
+    flex: 0 0 auto;
+}
+
+.category-filter select {
+    width: 100%;
+    padding: 12px 40px 12px 20px;
+    border: 2px solid #E0E0E0;
+    border-radius: 30px;
+    font-size: 1rem;
+    appearance: none;
+    background-color: #FDFDFD;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.category-filter select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 200, 83, 0.15);
+    background-color: white;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    pointer-events: none;
+    font-size: 0.9rem;
+}
+
+/* ===================== */
+/* RESPONSIVE ADJUSTMENTS */
+/* ===================== */
+
+/* ----- MOBILE (≤ 768px) ----- */
+@media (max-width: 768px) {
+    .filter-controls {
+        flex-direction: column;
+        gap: 12px;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(5px);
+        padding: 8px;
+        margin: -12px -12px 12px -12px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .search-box,
+    .category-filter {
+        min-width: 100%;
+    }
+
+    .search-box input {
+        padding-left: 44px;
+    }
+
+    .search-icon {
+        left: 16px;
+    }
+}
+
+/* ----- TABLET (769-1024px) ----- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .filter-controls {
+        gap: 12px;
+    }
+
+    .search-box {
+        min-width: 240px;
+    }
+
+    .category-filter {
+        min-width: 180px;
+    }
+}
+        /* --- Food Grid --- */
         .food-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Larger minimum card size */
+            gap: var(--spacing-lg);
+            padding: 0; /* Remove extra padding */
         }
 
         .food-card {
             background: white;
-            border-radius: 16px;
+            border-radius: var(--border-radius-lg);
             overflow: hidden;
             box-shadow: var(--card-shadow);
             transition: var(--transition);
             position: relative;
-            border: 1px solid #EEEEEE;
+            border: 1px solid #EFF2F5; /* Lighter border */
+            display: flex; /* Flexbox for internal content */
+            flex-direction: column; /* Stack image and info */
         }
 
         .food-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px); /* More pronounced lift */
+            box-shadow: var(--hover-shadow);
             border-color: var(--primary-light);
         }
 
         .food-image {
-            height: 200px;
+            height: 220px; /* Slightly taller images */
             overflow: hidden;
             position: relative;
+            border-bottom: 1px solid #F0F2F5; /* Separator for image */
         }
 
         .food-image img {
@@ -231,103 +361,118 @@
         }
 
         .food-card:hover .food-image img {
-            transform: scale(1.1);
+            transform: scale(1.05); /* Softer zoom on hover */
         }
 
         .food-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
             background-color: var(--secondary-color);
             color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 25px; /* More rounded */
+            font-size: 0.85rem;
             font-weight: 600;
-            box-shadow: 0 2px 8px rgba(255, 109, 0, 0.3);
+            box-shadow: 0 3px 10px rgba(255, 109, 0, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
+
+        .food-badge--fruit { background-color: var(--primary-dark); box-shadow: 0 3px 10px rgba(0, 150, 36, 0.25); }
+        .food-badge--dairy { background-color: var(--accent-color); box-shadow: 0 3px 10px rgba(41, 98, 255, 0.25); }
+
 
         .food-info {
-            padding: 25px;
+            padding: var(--spacing-md);
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Allow info section to take remaining space */
         }
 
-        .food-name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--dark-color);
+        .food-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: var(--spacing-xs);
         }
 
         .food-calories {
-            font-size: 1.2rem;
+            font-size: 1.35rem;
             color: var(--danger-color);
-            font-weight: 700;
+            font-weight: 800;
+            margin-left: var(--spacing-xs);
+            white-space: nowrap; /* Prevent breaking */
         }
 
         .food-category {
             display: inline-block;
             background-color: rgba(41, 98, 255, 0.1);
             color: var(--accent-color);
-            padding: 6px 12px;
+            padding: 7px 14px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: var(--spacing-md);
+            text-transform: capitalize; /* Make category text look nicer */
+            width: fit-content; /* Adjust width to content */
         }
 
         .nutrition-facts {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: var(--spacing-xs);
+            margin-top: auto; /* Push nutrition facts to bottom of card */
         }
 
         .nutrition-item {
             flex: 1;
-            min-width: 90px;
+            min-width: 80px; /* Allow slight shrinking */
             text-align: center;
-            padding: 12px;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            transition: var(--transition);
+            padding: 10px;
+            background-color: #f8f8f8; /* Lighter background for facts */
+            border-radius: var(--border-radius-sm);
+            transition: background-color 0.2s ease-in-out;
+            border: 1px solid #EEEEEE;
         }
 
         .food-card:hover .nutrition-item {
-            background-color: #f0f0f0;
+            background-color: #f1f1f1;
         }
 
         .nutrition-value {
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             margin-bottom: 3px;
+            color: var(--dark-color);
         }
 
-        .protein-value { color: var(--accent-color); }
-        .carbs-value { color: var(--warning-color); }
-        .fat-value { color: var(--success-color); }
+        .nutrition-value--protein { color: var(--accent-color); }
+        .nutrition-value--carbs { color: var(--warning-color); }
+        .nutrition-value--fat { color: var(--success-color); }
 
         .nutrition-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-light);
             font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* Loading State */
+        /* --- Loading State --- */
         .loading {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 300px;
-            grid-column: 1 / -1;
+            min-height: 300px; /* Ensure visibility */
+            grid-column: 1 / -1; /* Span full width in grid */
         }
 
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(0, 0, 0, 0.1);
+            width: 60px; /* Slightly larger spinner */
+            height: 60px;
+            border: 6px solid rgba(0, 0, 0, 0.1);
             border-radius: 50%;
             border-top-color: var(--primary-color);
             animation: spin 1s ease-in-out infinite;
@@ -337,106 +482,228 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Empty State */
+        /* --- Empty State --- */
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: var(--spacing-xl) var(--spacing-md);
             grid-column: 1 / -1;
             background: white;
-            border-radius: 16px;
+            border-radius: var(--border-radius-lg);
             box-shadow: var(--card-shadow);
         }
 
         .empty-icon {
-            font-size: 4rem;
+            font-size: 5rem; /* Larger icon */
             color: var(--text-light);
-            margin-bottom: 25px;
-            opacity: 0.7;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.6;
         }
 
         .empty-text {
             color: var(--text-light);
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 500;
-            margin-bottom: 20px;
+            margin-bottom: var(--spacing-md);
+            line-height: 1.5;
         }
 
-        .empty-action {
+        .btn {
             display: inline-block;
-            padding: 12px 25px;
-            background-color: var(--primary-color);
-            color: white;
+            padding: 14px 30px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
-            box-shadow: 0 4px 12px rgba(0, 200, 83, 0.3);
             border: none;
             cursor: pointer;
+            font-size: 1.05rem;
         }
 
-        .empty-action:hover {
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 6px 16px rgba(0, 200, 83, 0.3);
+        }
+
+        .btn-primary:hover {
             background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 200, 83, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 200, 83, 0.4);
         }
 
-        /* Responsive Adjustments */
-        @media (max-width: 1200px) {
-            .food-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            }
-        }
+        /* --- Responsive Adjustments --- */
 
+        /* For smaller tablets and large phones */
         @media (max-width: 992px) {
-            .nutrition-summary {
-                display: none;
+            .container {
+                padding: var(--spacing-sm);
             }
-        }
 
-        @media (max-width: 768px) {
-            
             h1 {
-                font-size: 2.2rem;
-            }
-            
-            .filter-controls {
-                flex-direction: column;
+                font-size: 2.8rem;
             }
 
-            .search-box, .category-filter {
-                width: 100%;
+            .subtitle {
+                font-size: 1.15rem;
             }
 
-            .food-grid {
-                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-                gap: 20px;
-            }
-            
             .stats-bar {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 15px;
+            }
+
+            .nutrition-summary {
+                width: 100%;
+                justify-content: space-around; /* Distribute items evenly */
+            }
+
+            .summary-item {
+                flex: 1 1 auto; /* Allow items to grow/shrink based on space */
+                min-width: unset; /* Remove min-width constraint */
+                padding: 8px 12px;
+            }
+
+
+            .search-box, .category-filter {
+                width: 100%;
+                min-width: unset; /* Remove min-width constraint */
+            }
+
+            .food-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Adjust grid for tablets */
+                gap: var(--spacing-md);
+            }
+
+            .food-card {
+                max-width: none; /* Remove max-width for smaller screens */
             }
         }
 
-        @media (max-width: 480px) {
-            
-            
+        /* For mobile phones */
+        @media (max-width: 768px) {
             h1 {
-                font-size: 1.8rem;
+                font-size: 2.2rem;
+                letter-spacing: -0.5px;
             }
-            
+
             .subtitle {
                 font-size: 1rem;
+                margin-bottom: var(--spacing-lg);
             }
-            
+
+            .stats-bar {
+                padding:0;
+            }
+
+            .results-count-wrapper {
+                font-size: 1rem;
+            }
+
+            .results-number {
+                font-size: 1.25rem;
+            }
+
+            .nutrition-summary {
+                gap: var(--spacing-sm);
+                justify-content: center;
+            }
+
+            .summary-item {
+                flex: 0 0 auto; /* Prevent stretching too much */
+            }
+
+            .summary-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+
+            .summary-value {
+                font-size: 1.05rem;
+            }
+
+            .summary-label {
+                font-size: 0.8rem;
+            }
+
+
+            .search-box input,
+            .category-filter select {
+                padding: 12px 20px;
+                padding-left: 45px;
+                font-size: 0.95rem;
+            }
+
+            .search-icon {
+                left: 18px;
+                font-size: 1rem;
+            }
+
+            .select-arrow {
+                right: 18px;
+            }
+
             .food-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Single column on smallest screens */
+                gap: var(--spacing-md);
             }
-            
+
             .food-card {
-                max-width: 100%;
+                border-radius: var(--border-radius-md); /* Slightly smaller border-radius */
+            }
+
+            .food-image {
+                height: 180px;
+            }
+
+            .food-info {
+                padding: var(--spacing-sm);
+            }
+
+            .food-header {
+                flex-direction: column; /* Stack name and calories */
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            h3.food-name {
+                font-size: 1.3rem;
+            }
+
+            .food-calories {
+                font-size: 1.15rem;
+                margin-left: 0;
+            }
+
+            .nutrition-facts {
+                gap: 8px;
+                justify-content: space-around;
+            }
+
+            .nutrition-item {
+                padding: 8px;
+            }
+
+            .nutrition-value {
+                font-size: 1rem;
+            }
+
+            .nutrition-label {
+                font-size: 0.75rem;
+            }
+
+            .empty-icon {
+                font-size: 3.5rem;
+                margin-bottom: var(--spacing-md);
+            }
+
+            .empty-text {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.95rem;
             }
         }
     </style>
@@ -446,6 +713,7 @@
     <div id="header-placeholder"></div>
 
     <script>
+        // Existing header loading and functionality script
         fetch('header.html')
             .then(response => {
                 if (!response.ok) {
@@ -455,7 +723,6 @@
             })
             .then(html => {
                 document.getElementById('header-placeholder').innerHTML = html;
-                // Petit délai pour s'assurer que le DOM est bien mis à jour
                 setTimeout(initHeader, 50);
             })
             .catch(error => {
@@ -474,20 +741,17 @@
             let isScrollingDown = false;
             let scrollTimeout;
 
-            // Animation au scroll
             window.addEventListener('scroll', function() {
                 const currentScroll = window.pageYOffset;
                 
                 clearTimeout(scrollTimeout);
                 
-                // Scroll vers le bas
                 if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
                     if (!isScrollingDown) {
                         header.style.transform = 'translateY(-100%)';
                         isScrollingDown = true;
                     }
                 } 
-                // Scroll vers le haut
                 else if (currentScroll < lastScroll) {
                     header.style.transform = 'translateY(0)';
                     isScrollingDown = false;
@@ -495,7 +759,6 @@
                 
                 lastScroll = currentScroll;
                 
-                // Réafficher le header si on reste en haut de page
                 scrollTimeout = setTimeout(() => {
                     if (window.pageYOffset <= scrollThreshold) {
                         header.style.transform = 'translateY(0)';
@@ -504,19 +767,16 @@
                 }, 100);
             });
 
-            // Hamburger menu functionality
             const hamburger = document.querySelector('.hamburger');
             const nav = document.querySelector('.main-nav');
             
             if (hamburger && nav) {
-                // Toggle hamburger menu
                 hamburger.addEventListener('click', function(e) {
                     e.stopPropagation();
                     this.classList.toggle('hamburger-active');
                     nav.classList.toggle('nav-active');
                 });
                 
-                // Close menu when clicking outside
                 document.addEventListener('click', function(e) {
                     if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
                         hamburger.classList.remove('hamburger-active');
@@ -524,7 +784,6 @@
                     }
                 });
                 
-                // Logout functionality
                 const logoutBtn = document.getElementById('logoutBtn');
                 if (logoutBtn) {
                     logoutBtn.addEventListener('click', function(e) {
@@ -534,7 +793,6 @@
                     });
                 }
                 
-                // Close mobile menu when clicking nav links
                 document.querySelectorAll('.nav-link').forEach(link => {
                     if (link.id !== 'logoutBtn') {
                         link.addEventListener('click', () => {
@@ -545,75 +803,80 @@
                 });
             }
             
-            // Ajouter un padding au body pour compenser le header fixed
             document.body.style.paddingTop = `${header.offsetHeight}px`;
         }
     </script>
 
-    <div class="container">
-        <div class="filter-controls">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search foods (e.g., apple, chicken...)">
-            </div>
-            <div class="category-filter">
-                <select id="categoryFilter">
-                    <option value="">All Categories</option>
-                </select>
-            </div>
+    <main class="main-content">
+        <div class="hero-section">
+            <section class=" container filters-section">
+                <div class="filter-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchInput" placeholder="Search foods (e.g., apple, chicken...)">
+                    </div>
+                    <div class="category-filter">
+                        <select id="categoryFilter">
+                            <option value="">All Categories</option>
+                            </select>
+                        <i class="fas fa-chevron-down select-arrow"></i>
+                    </div>
+                </div>
+            </section>
+            <h1 class="page-title">Discover Nutritious Foods</h1>
+            <p class="subtitle">Explore a diverse range of foods, filter by categories, and get detailed nutritional information per 100g. Your healthy eating journey starts here.</p>
         </div>
 
-        <div class="stats-bar">
-            <div class="results-count">Showing <span id="resultsCount">0</span> foods</div>
-            <div class="nutrition-summary">
-                <div class="summary-item">
-                    <div class="summary-icon calories-icon">
-                        <i class="fas fa-fire"></i>
+        <div class="container">
+            <section class="summary-section">
+                <div class="stats-bar">
+                    <div class="results-count-wrapper">
+                        <span class="results-label">Showing</span> <span id="resultsCount" class="results-number">0</span> <span class="results-label">foods</span>
                     </div>
-                    <div>
-                        <div class="summary-value" id="totalCalories">0</div>
-                        <div class="summary-label">Calories</div>
-                    </div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-icon protein-icon">
-                        <i class="fas fa-dumbbell"></i>
-                    </div>
-                    <div>
-                        <div class="summary-value" id="totalProtein">0g</div>
-                        <div class="summary-label">Protein</div>
-                    </div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-icon carbs-icon">
-                        <i class="fas fa-bread-slice"></i>
-                    </div>
-                    <div>
-                        <div class="summary-value" id="totalCarbs">0g</div>
-                        <div class="summary-label">Carbs</div>
-                    </div>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-icon fat-icon">
-                        <i class="fas fa-bacon"></i>
-                    </div>
-                    <div>
-                        <div class="summary-value" id="totalFat">0g</div>
-                        <div class="summary-label">Fat</div>
+                    <div class="nutrition-summary" style="display:none">
+                        <div class="summary-item">
+                            <div class="summary-icon calories-icon"><i class="fas fa-fire"></i></div>
+                            <div>
+                                <div class="summary-value" id="totalCalories">0</div>
+                                <div class="summary-label">Calories</div>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-icon protein-icon"><i class="fas fa-dumbbell"></i></div>
+                            <div>
+                                <div class="summary-value" id="totalProtein">0g</div>
+                                <div class="summary-label">Protein</div>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-icon carbs-icon"><i class="fas fa-bread-slice"></i></div>
+                            <div>
+                                <div class="summary-value" id="totalCarbs">0g</div>
+                                <div class="summary-label">Carbs</div>
+                            </div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-icon fat-icon"><i class="fas fa-bacon"></i></div>
+                            <div>
+                                <div class="summary-value" id="totalFat">0g</div>
+                                <div class="summary-label">Fat</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <div class="food-grid" id="foodGrid">
-            <div class="loading">
-                <div class="spinner"></div>
-            </div>
+            <section class="food-display-section">
+                <div class="food-grid" id="foodGrid">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </div>
+    </main>
 
     <script>
-        // Food Manager Class - Version simplifiée
         class FoodManager {
             constructor() {
                 this.foods = [];
@@ -621,7 +884,6 @@
                 this.categories = new Set();
                 this.API_URL = "https://my-calories-two.vercel.app/foods/allfood";
                 
-                // DOM Elements
                 this.domElements = {
                     foodGrid: document.getElementById('foodGrid'),
                     searchInput: document.getElementById('searchInput'),
@@ -633,19 +895,16 @@
                     totalFat: document.getElementById('totalFat')
                 };
                 
-                // Initialize
                 this.initEventListeners();
                 this.fetchFoods();
             }
             
             initEventListeners() {
-                // Search functionality
                 this.domElements.searchInput.addEventListener('input', () => {
                     this.filterFoods();
                     this.updateResultsCount();
                 });
                 
-                // Category filter
                 this.domElements.categoryFilter.addEventListener('change', () => {
                     this.filterFoods();
                     this.updateResultsCount();
@@ -673,7 +932,6 @@
                 this.categories.clear();
                 this.foods.forEach(food => this.categories.add(food.category));
                 
-                // Update category filter dropdown
                 this.domElements.categoryFilter.innerHTML = `
                     <option value="">All Categories</option>
                     ${Array.from(this.categories).sort().map(category => 
@@ -704,7 +962,7 @@
                                 <i class="fas fa-utensils"></i>
                             </div>
                             <p class="empty-text">No foods found matching your criteria</p>
-                            <button class="empty-action" onclick="foodManager.resetFilters()">Reset Filters</button>
+                            <button class="btn btn-primary empty-action" onclick="foodManager.resetFilters()">Reset Filters</button>
                         </div>
                     `;
                     return;
@@ -712,28 +970,28 @@
                 
                 this.domElements.foodGrid.innerHTML = this.filteredFoods.map(food => `
                     <div class="food-card">
-                        ${food.category === 'Fruits' ? '<span class="food-badge"><i class="fas fa-seedling"></i> Fresh</span>' : ''}
-                        ${food.category === 'Dairy' ? '<span class="food-badge"><i class="fas fa-cheese"></i> Dairy</span>' : ''}
+                        ${food.category === 'Fruits' ? '<span class="food-badge food-badge--fruit"><i class="fas fa-seedling"></i> Fresh</span>' : ''}
+                        ${food.category === 'Dairy' ? '<span class="food-badge food-badge--dairy"><i class="fas fa-cheese"></i> Dairy</span>' : ''}
                         <div class="food-image">
                             <img src="${food.photoUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'}" alt="${food.name}" loading="lazy">
                         </div>
                         <div class="food-info">
-                            <div class="food-name">
-                                ${food.name}
+                            <div class="food-header">
+                                <h3 class="food-name">${food.name}</h3>
                                 <span class="food-calories">${food.caloriesPer100g} kcal</span>
                             </div>
                             <span class="food-category">${food.category}</span>
                             <div class="nutrition-facts">
                                 <div class="nutrition-item">
-                                    <div class="nutrition-value protein-value">${food.proteinPer100g}g</div>
+                                    <div class="nutrition-value nutrition-value--protein">${food.proteinPer100g}g</div>
                                     <div class="nutrition-label">Protein</div>
                                 </div>
                                 <div class="nutrition-item">
-                                    <div class="nutrition-value carbs-value">${food.carbsPer100g}g</div>
+                                    <div class="nutrition-value nutrition-value--carbs">${food.carbsPer100g}g</div>
                                     <div class="nutrition-label">Carbs</div>
                                 </div>
                                 <div class="nutrition-item">
-                                    <div class="nutrition-value fat-value">${food.fatPer100g}g</div>
+                                    <div class="nutrition-value nutrition-value--fat">${food.fatPer100g}g</div>
                                     <div class="nutrition-label">Fat</div>
                                 </div>
                             </div>
@@ -780,13 +1038,12 @@
                             <i class="fas fa-exclamation-triangle"></i>
                         </div>
                         <p class="empty-text">Failed to load foods. Please try again later.</p>
-                        <button class="empty-action" onclick="foodManager.fetchFoods()">Retry</button>
+                        <button class="btn btn-primary empty-action" onclick="foodManager.fetchFoods()">Retry</button>
                     </div>
                 `;
             }
         }
         
-        // Initialize the application when DOM is loaded
         let foodManager;
         document.addEventListener('DOMContentLoaded', () => {
             foodManager = new FoodManager();
