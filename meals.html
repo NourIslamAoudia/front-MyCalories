@@ -1412,47 +1412,71 @@ function attachMealCardEventListeners() {
     }
 
     async function deleteFoodItem(mealId, itemId) {
-        if (!confirm('Are you sure you want to remove this food from the meal?')) {
-            return;
+    if (!confirm('Are you sure you want to remove this food from the meal?')) {
+        return;
+    }
+
+    const token = localStorage.getItem('nutritrack_token');
+    if (!token) {
+        window.location.href = '/index.html';
+        return;
+    }
+
+    try {
+        // Trouver le bouton de suppression et le désactiver pendant la requête
+        const deleteBtn = document.querySelector(`.delete-food-item-btn[data-meal-id="${mealId}"][data-item-id="${itemId}"]`);
+        if (deleteBtn) {
+            deleteBtn.disabled = true;
+            deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        }
+        console.log(`Deleting food item ${itemId} from meal ${mealId}`);
+        const response = await fetch(`${API_BASE_URL}/meals/${mealId}/items/${itemId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to delete food item');
         }
 
-        const token = localStorage.getItem('nutritrack_token');
-        if (!token) {
-            window.location.href = '/index.html';
-            return;
-        }
+        // Deux cas possibles selon la réponse du serveur :
+        // 1. Le repas a été supprimé (si c'était le dernier item)
+        // 2. Le repas a été mis à jour (si il reste des items)
+        const result = await response.json();
 
-        try {
-            const deleteBtn = document.querySelector(`.delete-food-item-btn[data-meal-id="${mealId}"][data-item-id="${itemId}"]`);
-            if (deleteBtn) {
-                deleteBtn.disabled = true;
-                deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            }
-            const response = await fetch(`${API_BASE_URL}/meals/${mealId}/items/${itemId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to delete food item');
-            }
-
+        if (result.meal) {
+            // Cas 2: Le repas a été mis à jour
             const mealIndex = mealsData.findIndex(m => m._id === mealId);
             if (mealIndex !== -1) {
-                mealsData[mealIndex].items = mealsData[mealIndex].items.filter(item => item._id !== itemId);
+                mealsData[mealIndex] = result.meal;
                 calculateMealTotals(mealsData[mealIndex]);
             }
+        } else {
+            // Cas 1: Le repas a été supprimé (car c'était le dernier item)
+            mealsData = mealsData.filter(m => m._id !== mealId);
+        }
 
-            renderMeals();
-            updateNutritionSummary();
-            showToast('Food item removed successfully');
-        } catch (error) {
-            console.error('Error deleting food item:', error);
-            showToast('Failed to delete food item. Please try again.', 'error');
+        // Re-rendre les meals et mettre à jour le résumé nutritionnel
+        renderMeals();
+        updateNutritionSummary();
+        showToast('Food item removed successfully');
+
+    } catch (error) {
+        console.error('Error deleting food item:', error);
+        showToast(error.message || 'Failed to delete food item. Please try again.', 'error');
+        
+        // Réactiver le bouton en cas d'erreur
+        const deleteBtn = document.querySelector(`.delete-food-item-btn[data-meal-id="${mealId}"][data-item-id="${itemId}"]`);
+        if (deleteBtn) {
+            deleteBtn.disabled = false;
+            deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
         }
     }
+}
 
     function calculateMealTotals(meal) {
         let calories = 0;
