@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>My Profile | NutriTrack</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -515,9 +515,32 @@
 /* AMÉLIORATIONS SPÉCIFIQUES MOBILE */
 /* ===================== */
 @media (max-width: 480px) {
+    /* Empêche le zoom automatique sur les champs de formulaire */
+    @viewport {
+        width: device-width;
+        zoom: 1.0;
+        max-zoom: 1.0;
+        min-zoom: 1.0;
+        user-zoom: fixed;
+    }
+
+    html {
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        touch-action: manipulation;
+    }
+
+    /* Styles pour les petits écrans */
     .profile-stats {
         grid-template-columns: 1fr;
         text-align: center;
+        gap: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    .calorie-item {
+        padding: 1rem;
     }
 
     .calorie-item.highlight::after {
@@ -531,13 +554,42 @@
 
     .calorie-label {
         font-size: 0.9rem;
+        margin-bottom: 0.25rem;
     }
 
-    /* Header sticky pour économiser l'espace */
     .filter-controls {
-        top: -1px; /* Évite un petit espace */
+        top: -1px;
+        padding: 0.75rem 1rem;
+    }
+
+    /* Correction spécifique pour les inputs */
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+        font-size: 16px !important; /* Empêche le zoom sur iOS */
+        min-height: 3rem;
+    }
+
+    /* Optimisation des formulaires */
+    .form-control {
+        font-size: 16px;
+        padding: 0.75rem 1rem;
+    }
+
+    /* Boutons optimisés pour le tactile */
+    .btn {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
     }
 }
+
+/* Meta viewport à ajouter dans le <head> de votre HTML */
+/*
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+*/
 
         /* Error State */
         .error-message {
