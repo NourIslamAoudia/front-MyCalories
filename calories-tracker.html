@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calories Tracker Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="healthy.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #00BF63;
+            --primary-light: #5EEFC8;
+            --primary-dark: #00964D;
+            --secondary-color: #FF8F00;
+            --secondary-light: #FFB347;
+            --accent-color: #3F51B5;
+            --light-color: #F8F9FA;
+            --dark-color: #212529;
+            --text-color: #495057;
+            --text-light: #6C757D;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --hover-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
+            --transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --success-color: #28A745;
+            --warning-color: #FFC107;
+            --danger-color: #DC3545;
+            --info-color: #17A2B8;
+            --border-radius-lg: 18px;
+            --border-radius-md: 12px;
+            --border-radius-sm: 8px;
+            --spacing-xs: 8px;
+            --spacing-sm: 15px;
+            --spacing-md: 20px;
+            --spacing-lg: 30px;
+            --spacing-xl: 50px;
+            --font-size-h1: 2.2rem;
+            --font-size-h2: 1.6rem;
+            --font-size-h3: 1.25rem;
+            --font-size-body: 1rem;
+            --font-size-sm: 0.875rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            font-size: var(--font-size-body);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: var(--spacing-md);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-top: 20px;
+        }
+
+        .header h1 {
+            font-size: var(--font-size-h1);
+            font-weight: 700;
+            color: var(--dark-color);
+            letter-spacing: -0.5px;
+        }
+
+        .month-selector {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background-color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--card-shadow);
+        }
+
+        .month-selector button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-light);
+            font-size: 24px;
+            transition: var(--transition);
+            padding: var(--spacing-xs);
+            border-radius: var(--border-radius-sm);
+        }
+
+        .month-selector button:hover {
+            color: var(--primary-color);
+            background-color: rgba(0, 191, 99, 0.1);
+            transform: scale(1.1);
+        }
+
+        .month-selector h2 {
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            min-width: 180px;
+            text-align: center;
+            color: var(--dark-color);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        .card {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--card-shadow);
+            padding: var(--spacing-lg);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            box-shadow: var(--hover-shadow);
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .card-title {
+            font-size: var(--font-size-h3);
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .summary-card {
+            grid-column: span 3;
+        }
+
+        .summary-value {
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-xs);
+            display: block;
+        }
+        
+        .summary-card:nth-child(2) .summary-value { color: var(--secondary-color); }
+        .summary-card:nth-child(3) .summary-value { color: var(--danger-color); }
+        .summary-card:nth-child(4) .summary-value { color: var(--accent-color); }
+
+        .summary-label {
+            color: var(--text-light);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .summary-trend {
+            display: flex;
+            align-items: center;
+            margin-top: auto;
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            gap: 4px;
+        }
+
+        .trend-up {
+            color: var(--success-color);
+        }
+
+        .trend-down {
+            color: var(--danger-color);
+        }
+
+        .goal-input-group {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+        .goal-input-group label {
+            font-size: var(--font-size-sm);
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        .goal-input-group input {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-sm);
+            width: 90px;
+            transition: border-color 0.3s ease;
+        }
+        .goal-input-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 191, 99, 0.2);
+        }
+
+        .chart-card {
+            grid-column: span 8;
+            height: 480px;
+            position: relative;
+        }
+        .chart-container {
+            position: relative;
+            height: calc(100% - 60px);
+        }
+
+        .daily-card {
+            grid-column: span 4;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .daily-list {
+            list-style: none;
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .daily-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: background-color 0.3s ease;
+        }
+
+        .daily-item:last-child {
+            border-bottom: none;
+        }
+
+        .daily-item:hover {
+            background-color: var(--light-color);
+        }
+
+        .daily-date {
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: var(--font-size-body);
+        }
+
+        .daily-calories {
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: var(--font-size-body);
+        }
+
+        .loading {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            min-height: 200px;
+            color: var(--text-light);
+            font-size: var(--font-size-body);
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 5px solid rgba(0, 191, 99, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: var(--danger-color);
+            text-align: center;
+            padding: var(--spacing-md);
+            font-weight: 500;
+        }
+
+        .no-data-item {
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        @media (max-width: 1200px) {
+            .dashboard {
+                grid-template-columns: repeat(8, 1fr);
+            }
+            
+            .summary-card {
+                grid-column: span 2;
+            }
+            
+            .chart-card {
+                grid-column: span 8;
+            }
+            
+            .daily-card {
+                grid-column: span 8;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .summary-card {
+                grid-column: span 3;
+            }
+            
+            .chart-card {
+                grid-column: span 6;
+                height: 400px;
+            }
+            
+            .daily-card {
+                grid-column: span 6;
+                max-height: 400px;
+            }
+            .daily-list {
+                max-height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: var(--spacing-sm);
+            }
+            .container {
+                padding: var(--spacing-sm);
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-md);
+                margin-bottom: var(--spacing-lg);
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .month-selector {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .month-selector h2 {
+                min-width: unset;
+                flex-grow: 1;
+                font-size: 18px;
+            }
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-card, .chart-card, .daily-card {
+                grid-column: span 1;
+            }
+            .chart-card {
+                height: 350px;
+            }
+            .daily-list {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary-card .summary-value {
+                font-size: 32px;
+            }
+            .card {
+                padding: var(--spacing-md);
+            }
+            .month-selector button {
+                font-size: 20px;
+            }
+            .month-selector h2 {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    <div class="container">
+        <div class="header">
+            <h1>Calories Tracker Dashboard</h1>
+            <div class="month-selector">
+                <button id="prev-month">&lt;</button>
+                <h2 id="current-month">June 2023</h2>
+                <button id="next-month">&gt;</button>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <!-- Summary Cards -->
+            <div class="card summary-card">
+                <div class="card-header">
+                    <div class="card-title">Average Daily Calories</div>
+                </div>
+                <span class="summary-value" id="avg-calories">Loading...</span>
+                <div class="summary-label">Compared to last month</div>
+                <div class="summary-trend trend-up">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 4L12.7071 3.29289L12 2.58579L11.2929 3.29289L12 4ZM18.7071 10.2929L12.7071 4.29289L11.2929 5.70711L17.2929 11.7071L18.7071 10.2929ZM11.2929 4.29289L5.29289 10.2929L6.70711 11.7071L12.7071 5.70711L11.2929 4.29289Z" fill="currentColor"/>
+                        <path d="M5 17V19H19V17H5Z" fill="currentColor"/>
+                    </svg>
+                    <span>--% increase</span>
+                </div>
+            </div>
+
+            <div class="card summary-card">
+                <div class="card-header">
+                    <div class="card-title">Total Monthly Calories</div>
+                </div>
+                <span class="summary-value" id="total-calories">Loading...</span>
+                <div class="summary-label">Compared to last month</div>
+                <div class="summary-trend trend-down">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 20L11.2929 20.7071L12 21.4142L12.7071 20.7071L12 20ZM5.29289 13.7071L11.2929 19.7071L12.7071 18.2929L6.70711 12.2929L5.29289 13.7071ZM12.7071 19.7071L18.7071 13.7071L17.2929 12.2929L11.2929 18.2929L12.7071 19.7071Z" fill="currentColor"/>
+                        <path d="M5 5V7H19V5Z" fill="currentColor"/>
+                    </svg>
+                    <span>--% decrease</span>
+                </div>
+            </div>
+
+            <div class="card summary-card">
+                <div class="card-header">
+                    <div class="card-title">Highest Day</div>
+                </div>
+                <span class="summary-value" id="highest-day">Loading...</span>
+                <div class="summary-label" id="highest-day-date"></div>
+                <div class="summary-trend trend-down">
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="card summary-card">
+                <div class="card-header">
+                    <div class="card-title">Lowest Day</div>
+                </div>
+                <span class="summary-value" id="lowest-day">Loading...</span>
+                <div class="summary-label" id="lowest-day-date"></div>
+                <div class="summary-trend trend-up">
+                    <span></span>
+                </div>
+            </div>
+
+            <!-- Main Chart -->
+            <div class="card chart-card" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <div class="card-title">Daily Calories Breakdown</div>
+                    <div class="goal-input-group">
+                        <label for="daily-goal">Daily Goal:</label>
+                        <input type="number" id="daily-goal" value="2200" min="1000" step="50">
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="caloriesChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Daily List -->
+            <div class="card daily-card" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <div class="card-title">Daily Details</div>
+                </div>
+                <ul class="daily-list" id="daily-list">
+                    <!-- Daily items will be inserted here by JavaScript -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+        <script>
+        // Chargement dynamique du footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(html => {
+            document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(err => console.error('Erreur de chargement du footer:', err));
+        </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header
+            fetch('header.html')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('header-placeholder').innerHTML = html;
+                    setTimeout(initHeader, 50);
+                })
+                .catch(error => {
+                    console.error('Error loading header:', error);
+                });
+
+            // Load profile data and calorie goal
+            loadProfileData();
+            loadCaloriesGoal();
+
+            // Setup form validation
+            setupFormValidation();
+            setupCalorieGoalValidation();
+        });
+
+        function initHeader() {
+            const header = document.querySelector('.main-header');
+            if (!header) {
+                console.error('Header element not found');
+                return;
+            }
+
+            let lastScroll = window.pageYOffset;
+            const scrollThreshold = 10;
+            let isScrollingDown = false;
+            let scrollTimeout;
+
+            window.addEventListener('scroll', function() {
+                const currentScroll = window.pageYOffset;
+                
+                clearTimeout(scrollTimeout);
+                
+                if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
+                    if (!isScrollingDown) {
+                        header.style.transform = 'translateY(-100%)';
+                        isScrollingDown = true;
+                    }
+                } else if (currentScroll < lastScroll) {
+                    header.style.transform = 'translateY(0)';
+                    isScrollingDown = false;
+                }
+                
+                lastScroll = currentScroll;
+                
+                scrollTimeout = setTimeout(() => {
+                    if (window.pageYOffset <= scrollThreshold) {
+                        header.style.transform = 'translateY(0)';
+                        isScrollingDown = false;
+                    }
+                }, 100);
+            });
+
+            // Hamburger menu functionality
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('.main-nav');
+            
+            if (hamburger && nav) {
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('hamburger-active');
+                    nav.classList.toggle('nav-active');
+                });
+                
+                document.addEventListener('click', function(e) {
+                    if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+                        hamburger.classList.remove('hamburger-active');
+                        nav.classList.remove('nav-active');
+                    }
+                });
+                
+                const logoutBtn = document.getElementById('logoutBtn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        localStorage.removeItem('nutritrack_token');
+                        window.location.href = '/index.html';
+                    });
+                }
+                
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    if (link.id !== 'logoutBtn') {
+                        link.addEventListener('click', () => {
+                            hamburger.classList.remove('hamburger-active');
+                            nav.classList.remove('nav-active');
+                        });
+                    }
+                });
+            }
+            
+            document.body.style.paddingTop = `${header.offsetHeight}px`;
+        }
+        // --- API Configuration ---
+        const API_BASE_URL = 'https://my-calories-two.vercel.app';
+        const AUTH_TOKEN = localStorage.getItem('nutritrack_token') || '';
+
+        console.log('Current AUTH_TOKEN:', AUTH_TOKEN);
+        if (!AUTH_TOKEN) {
+            console.error('No auth token found in localStorage. Please ensure you are logged in.');
+        }
+
+        // Current date tracking
+        let currentDate = new Date();
+        
+        // DOM Elements
+        const currentMonthEl = document.getElementById('current-month');
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+        const avgCaloriesEl = document.getElementById('avg-calories');
+        const totalCaloriesEl = document.getElementById('total-calories');
+        const highestDayEl = document.getElementById('highest-day');
+        const highestDayDateEl = document.getElementById('highest-day-date');
+        const lowestDayEl = document.getElementById('lowest-day');
+        const lowestDayDateEl = document.getElementById('lowest-day-date');
+        const dailyListEl = document.getElementById('daily-list');
+        const caloriesChartEl = document.getElementById('caloriesChart');
+        const dailyGoalInput = document.getElementById('daily-goal');
+        
+        // Chart instance
+        let caloriesChart;
+        
+        // Format date as "Month Year"
+        function formatMonthYear(date) {
+            return date.toLocaleString('default', { month: 'long', year: 'numeric' });
+        }
+        
+        // Get days in month
+        function getDaysInMonth(year, month) {
+            return new Date(year, month + 1, 0).getDate();
+        }
+        
+        // Format date as "Month Day"
+        function formatDay(date) {
+            return date.toLocaleString('default', { month: 'short', day: 'numeric' });
+        }
+        
+        // Fetch calories data from API
+        async function fetchCaloriesData(year, month) {
+            const daysInMonth = getDaysInMonth(year, month);
+            const monthlyData = [];
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                
+                let dailyTotalCalories = 0;
+                let hasData = false;
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/meals/per-day?date=${formattedDate}`, {
+                        headers: {
+                            'Authorization': `Bearer ${AUTH_TOKEN}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    console.log(`API call for ${formattedDate}:`, response);
+
+                    if (!response.ok) {
+                        console.warn(`No data or error for ${formattedDate}: ${response.status}`);
+                    } else {
+                        const meals = await response.json();
+                        console.log(`Meals data for ${formattedDate}:`, meals);
+                        
+                        if (meals && meals.length > 0) {
+                            hasData = true;
+                            meals.forEach(meal => {
+                                // Correction clé: utiliser meal.calories directement si disponible
+                                if (typeof meal.calories === 'number') {
+                                    dailyTotalCalories += meal.calories;
+                                }
+                                // Alternative: calcul manuel si nécessaire
+                                else if (meal.items && Array.isArray(meal.items)) {
+                                    meal.items.forEach(item => {
+                                        if (item.food && typeof item.food.calories === 'number') {
+                                            const quantity = item.quantity || 1;
+                                            dailyTotalCalories += item.food.calories * quantity;
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Error fetching data for ${formattedDate}:`, error);
+                }
+
+                monthlyData.push({
+                    date: date.toISOString().split('T')[0],
+                    formattedDate: formatDay(date),
+                    calories: dailyTotalCalories,
+                    hasData: hasData
+                });
+            }
+            
+            console.log('Monthly data prepared:', monthlyData);
+            return monthlyData;
+        }
+        
+        // Calculate summary statistics
+        function calculateSummary(data) {
+            // Inclure tous les jours ayant des données (hasData = true)
+            const daysWithData = data.filter(item => item.hasData);
+            
+            if (daysWithData.length === 0) {
+                return {
+                    avgCalories: '0',
+                    totalCalories: '0',
+                    highestDay: { value: '0', date: 'No data' },
+                    lowestDay: { value: '0', date: 'No data' },
+                    avgTrend: { percentage: '0', type: 'neutral' },
+                    totalTrend: { percentage: '0', type: 'neutral' }
+                };
+            }
+            
+            const caloriesValues = daysWithData.map(item => item.calories);
+            const total = caloriesValues.reduce((sum, val) => sum + val, 0);
+            const avg = Math.round(total / daysWithData.length);
+            
+            const highest = Math.max(...caloriesValues);
+            const highestDay = daysWithData.find(item => item.calories === highest);
+            
+            const lowest = Math.min(...caloriesValues);
+            const lowestDay = daysWithData.find(item => item.calories === lowest);
+
+            // Mock trends for demo
+            const avgTrend = { 
+                percentage: (Math.random() * 10).toFixed(1), 
+                type: Math.random() > 0.5 ? 'increase' : 'decrease' 
+            };
+            const totalTrend = { 
+                percentage: (Math.random() * 5).toFixed(1), 
+                type: Math.random() > 0.5 ? 'increase' : 'decrease' 
+            };
+            
+            return {
+                avgCalories: avg.toLocaleString(),
+                totalCalories: total.toLocaleString(),
+                highestDay: {
+                    value: highest.toLocaleString(),
+                    date: highestDay ? highestDay.formattedDate : 'No data'
+                },
+                lowestDay: {
+                    value: lowest.toLocaleString(),
+                    date: lowestDay ? lowestDay.formattedDate : 'No data'
+                },
+                avgTrend: avgTrend,
+                totalTrend: totalTrend
+            };
+        }
+        
+        // Render daily list
+        function renderDailyList(data) {
+            dailyListEl.innerHTML = '';
+            
+            if (!data || data.length === 0) {
+                dailyListEl.innerHTML = '<li class="no-data-item">No data available for this month.</li>';
+                return;
+            }
+
+            data.forEach(item => {
+                const li = document.createElement('li');
+                li.className = item.hasData ? 'daily-item' : 'daily-item no-data-item';
+                li.innerHTML = `
+                    <span class="daily-date">${item.formattedDate}</span>
+                    <span class="daily-calories">${item.calories.toLocaleString()} kcal</span>
+                `;
+                dailyListEl.appendChild(li);
+            });
+        }
+        
+        // Initialize or update chart
+        function updateChart(data, dailyGoal) {
+            const labels = data.map(item => item.formattedDate);
+            const caloriesData = data.map(item => item.calories);
+            
+            // Destroy previous chart if exists
+            if (caloriesChart) {
+                caloriesChart.destroy();
+            }
+
+            // Create canvas element if it doesn't exist
+            if (!document.getElementById('caloriesChart')) {
+                const canvas = document.createElement('canvas');
+                canvas.id = 'caloriesChart';
+                document.querySelector('.chart-container').appendChild(canvas);
+            }
+
+            const ctx = document.getElementById('caloriesChart').getContext('2d');
+            
+            caloriesChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Calories',
+                        data: caloriesData,
+                        backgroundColor: function(context) {
+                            const value = context.dataset.data[context.dataIndex];
+                            if (value > dailyGoal) return 'rgba(255, 143, 0, 0.7)';
+                            if (value < dailyGoal * 0.9) return 'rgba(63, 81, 181, 0.7)';
+                            return 'rgba(0, 191, 99, 0.7)';
+                        },
+                        borderColor: function(context) {
+                            const value = context.dataset.data[context.dataIndex];
+                            if (value > dailyGoal) return 'rgba(255, 143, 0, 1)';
+                            if (value < dailyGoal * 0.9) return 'rgba(63, 81, 181, 1)';
+                            return 'rgba(0, 191, 99, 1)';
+                        },
+                        borderWidth: 1,
+                        borderRadius: 6,
+                        hoverBackgroundColor: function(context) {
+                            const value = context.dataset.data[context.dataIndex];
+                            if (value > dailyGoal) return 'rgba(255, 143, 0, 0.9)';
+                            if (value < dailyGoal * 0.9) return 'rgba(63, 81, 181, 0.9)';
+                            return 'rgba(0, 191, 99, 0.9)';
+                        }
+                    }, {
+                        type: 'line',
+                        label: 'Daily Goal',
+                        data: Array(labels.length).fill(dailyGoal),
+                        borderColor: 'rgba(220, 53, 69, 0.8)',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        fill: false,
+                        pointRadius: 0,
+                        pointHoverRadius: 0,
+                        tension: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw.toLocaleString()} kcal`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            min: 0,
+                            max: Math.max(...caloriesData.concat([dailyGoal])) * 1.2 || 3000,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Load data for current month
+        async function loadData() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const dailyGoal = parseInt(dailyGoalInput.value) || 2200;
+
+            // Update month display
+            currentMonthEl.textContent = formatMonthYear(currentDate);
+            
+            // Show loading state
+            const chartContainer = document.querySelector('.chart-container');
+            chartContainer.innerHTML = '<div class="loading"><div class="spinner"></div><span>Loading data...</span></div>';
+            
+            avgCaloriesEl.textContent = 'Loading...';
+            totalCaloriesEl.textContent = 'Loading...';
+            highestDayEl.textContent = 'Loading...';
+            highestDayDateEl.textContent = '';
+            lowestDayEl.textContent = 'Loading...';
+            lowestDayDateEl.textContent = '';
+            dailyListEl.innerHTML = '<div class="loading"><div class="spinner"></div><span>Loading daily details...</span></div>';
+
+            try {
+                const data = await fetchCaloriesData(year, month);
+                console.log('Fetched data:', data);
+                
+                const summary = calculateSummary(data);
+                console.log('Calculated summary:', summary);
+                
+                // Update summary cards
+                avgCaloriesEl.textContent = summary.avgCalories;
+                totalCaloriesEl.textContent = summary.totalCalories;
+                highestDayEl.textContent = summary.highestDay.value;
+                highestDayDateEl.textContent = summary.highestDay.date;
+                lowestDayEl.textContent = summary.lowestDay.value;
+                lowestDayDateEl.textContent = summary.lowestDay.date;
+
+                // Update trends
+                document.querySelector('#avg-calories + .summary-label + .summary-trend span')
+                    .textContent = `${summary.avgTrend.percentage}% ${summary.avgTrend.type}`;
+                
+                document.querySelector('#total-calories + .summary-label + .summary-trend span')
+                    .textContent = `${summary.totalTrend.percentage}% ${summary.totalTrend.type}`;
+
+                // Restore chart container
+                chartContainer.innerHTML = '<canvas id="caloriesChart"></canvas>';
+                
+                // Update chart and list
+                updateChart(data, dailyGoal);
+                renderDailyList(data);
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                chartContainer.innerHTML = '<div class="error-message">Failed to load data. Please check console for details.</div>';
+                dailyListEl.innerHTML = '<div class="error-message">Failed to load daily details.</div>';
+            }
+        }
+        
+        // Event listeners
+        prevMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            loadData();
+        });
+        
+        nextMonthBtn.addEventListener('click', () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            loadData();
+        });
+
+        dailyGoalInput.addEventListener('change', () => {
+            loadData();
+        });
+        
+        // Initial load
+        loadData();
+    </script>
+</body>
+</html>
