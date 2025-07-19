@@ -289,8 +289,12 @@
         backdrop-filter: blur(5px);
         padding: 8px;
         margin: -12px -12px 12px -12px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
+    .hero-text {
+    margin-top: -40px; /* Valeur par défaut */
+    }
+
+}
 
     .search-box,
     .category-filter {
@@ -304,7 +308,6 @@
     .search-icon {
         left: 16px;
     }
-}
 
 /* ----- TABLET (769-1024px) ----- */
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -827,8 +830,13 @@
                     </div>
                 </div>
             </section>
-            <h1 class="page-title">Discover Nutritious Foods</h1>
-            <p class="subtitle">Explore a diverse range of foods, filter by categories, and get detailed nutritional information per 100g. Your healthy eating journey starts here.</p>
+           <div class="hero-text">
+                <h1 class="page-title">Discover Nutritious Foods</h1>
+                <p class="subtitle">
+                    Explore a diverse range of foods, filter by categories, and get detailed nutritional information per 100g. Your healthy eating journey starts here.
+                </p>
+                </div>
+
         </div>
 
         <div class="container">
