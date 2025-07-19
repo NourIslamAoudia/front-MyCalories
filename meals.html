@@ -237,6 +237,7 @@
         display: flex;
         gap: 0.25rem;
     }
+    
 
     .action-btn {
         background: none;
@@ -799,6 +800,17 @@
             </div>
         </div>
     </div>
+        <div id="footer-placeholder"></div>
+
+        <script>
+        // Chargement dynamique du footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(html => {
+            document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(err => console.error('Erreur de chargement du footer:', err));
+        </script>
 
     <script>
         // Enhanced token check

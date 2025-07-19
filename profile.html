@@ -914,7 +914,17 @@
         <i class="fas fa-check-circle"></i>
         <span id="toast-message">Profile updated successfully!</span>
     </div>
+<div id="footer-placeholder"></div>
 
+        <script>
+        // Chargement dynamique du footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(html => {
+            document.getElementById('footer-placeholder').innerHTML = html;
+            })
+            .catch(err => console.error('Erreur de chargement du footer:', err));
+        </script>
     <script>
         // if the token is not present, redirect to login and if expires, remove it
         if (!localStorage.getItem('nutritrack_token')) {
