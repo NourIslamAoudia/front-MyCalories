@@ -713,6 +713,10 @@
     <div id="header-placeholder"></div>
 
     <script>
+        token = localStorage.getItem('nutritrack_token');
+        if (!token) {
+            window.location.href = '/index.html';
+        }
         // Existing header loading and functionality script
         fetch('header.html')
             .then(response => {
@@ -877,6 +881,7 @@
     </main>
 
     <script>
+        
         class FoodManager {
             constructor() {
                 this.foods = [];

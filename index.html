@@ -437,7 +437,7 @@ body::before {
                 
                 // Redirect to dashboard or main page after 1.5 seconds
                 setTimeout(() => {
-                    window.location.href = 'foods.html';
+                    window.location.href = 'profile.html';
                 }, 1500);
                 
             } catch (error) {
@@ -494,7 +494,7 @@ body::before {
                 
                 // Redirect after 1.5 seconds
                 setTimeout(() => {
-                    window.location.href = 'foods.html';
+                    window.location.href = 'profile.html';
                 }, 1500);
                 
             } catch (error) {
@@ -509,7 +509,7 @@ body::before {
         
         // Check if user is already logged in
         if (localStorage.getItem('nutritrack_token')) {
-            window.location.href = 'foods.html';
+            window.location.href = 'profile.html';
         }
     </script>
 </body>

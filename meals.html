@@ -825,6 +825,10 @@
     </div>
 
    <script>
+    token = localStorage.getItem('nutritrack_token');
+        if (!token) {
+            window.location.href = '/index.html';
+        }
     // Global variables
     let currentDate = new Date();
     let mealsData = [];
